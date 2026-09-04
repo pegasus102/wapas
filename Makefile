@@ -1,4 +1,4 @@
-.PHONY: install test batch verify verify-results all clean
+.PHONY: install test batch verify verify-results dash all clean
 
 install:
 	pip install -r requirements.txt --break-system-packages || pip install -r requirements.txt
@@ -14,6 +14,9 @@ verify:
 
 verify-results:
 	python3 scripts/verify_readme.py
+
+dash:
+	streamlit run dashboard/app.py --server.address 0.0.0.0
 
 all: clean test batch verify verify-results
 	@echo ""

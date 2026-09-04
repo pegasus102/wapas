@@ -95,6 +95,32 @@ python3 scripts/run_batch.py --live
 Every response gets cached, so the second run onward is offline again
 regardless of the flag.
 
+## Dashboard (optional UI layer)
+
+The engine is a CLI/experiment system; the dashboard is a read-only command
+center over its artifacts — plus two SAFE live labs (the tamper lab forges a
+record on a temp copy; the kill-switch lab runs a 40-event in-memory
+simulation through the real gate and pulls the switch mid-flight):
+
+```bash
+pip install streamlit --break-system-packages   # the only extra dependency
+make dash                                        # → http://localhost:8501
+```
+
+- **Mission Control** — the staircase chart, stats (p-values, power, ceiling
+  capture), diagnosis accuracy, per-arm net ₹ and complaint counts. Recomputed
+  from `out/` on every load; if someone edits `RESULTS.md`, CI fails — the
+  dashboard doesn't trust the markdown either, it recomputes.
+- **Case Files** — browse any ledger arm, filter by outcome/cause, open one
+  payment end-to-end: AI diagnosis → gate decision → plain-English trace →
+  consent level → outcome. The `gate_trace` is written to be read.
+- **Tamper Lab** — forge `recovered` on a temp copy of the chain, watch
+  verification scream `CHAIN BROKEN at entry #N`.
+- **Kill-Switch Lab** — real Gate, real diagnosis, mid-flight halt: scheduled
+  actions cancelled, everything after refused with a written reason.
+
+Nothing in the dashboard mutates `out/` — it's the projector, not the engine.
+
 ## Results (regenerate with `make batch`; numbers below are one real run, n=12,000)
 
 | Line | n | Recovered | Recovery rate | 95% CI | ₹ recovered | Complaints |
