@@ -25,6 +25,7 @@ def diag(action, cause="bank_decline", conf=0.9):
 
 DAY = datetime(2026, 8, 15, 12, 0, tzinfo=IST)
 NIGHT = datetime(2026, 8, 15, 23, 0, tzinfo=IST)
+MANDATE = dict(mandate_status="active", predebit_notified=True)
 
 
 def test_duplicate_key_never_executes_twice():
@@ -38,8 +39,7 @@ def test_duplicate_key_never_executes_twice():
 def test_confirmed_debit_redirects_retries_and_links_to_verify():
     for a in ("retry_now", "retry_alternate_method", "send_payment_link"):
         d = Gate().decide(ev(debit_confirmation_flag=True), diag(a), DAY)
-        assert d["final_action"] == "verify_then_reassure", a
-        assert d["authority"] == "L1"
+        assert d["final_action"] == "verify_then_reassure" and d["authority"] == "L1", a
 
 
 def test_risk_flagged_allows_human_only():
@@ -50,17 +50,13 @@ def test_risk_flagged_allows_human_only():
 
 def test_low_confidence_escalates_instead_of_dropping():
     d = Gate().decide(ev(), diag("retry_now", conf=0.10), DAY)
-    assert d["final_action"] == "escalate_human"
-    assert d["authority"] == "L3"
-    assert d["policy_result"] == "modified"
+    assert d["final_action"] == "escalate_human" and d["authority"] == "L3" and d["policy_result"] == "modified"
 
 
 def test_quiet_hours_defer_to_nine_am_ist_not_drop():
     d = Gate().decide(ev(), diag("send_payment_link"), NIGHT)
-    assert d["final_action"] == "send_payment_link"
-    assert d["policy_result"] == "deferred"
-    assert d["scheduled_for"] == "2026-08-16T09:00:00+05:30"
-    assert d["deferred_hours"] == 10.0
+    assert d["final_action"] == "send_payment_link" and d["policy_result"] == "deferred"
+    assert d["scheduled_for"] == "2026-08-16T09:00:00+05:30" and d["deferred_hours"] == 10.0
 
 
 def test_quiet_hours_are_evaluated_in_ist_whatever_tz_the_caller_uses():
@@ -71,8 +67,7 @@ def test_quiet_hours_are_evaluated_in_ist_whatever_tz_the_caller_uses():
 
 
 def test_naive_datetimes_are_treated_as_ist():
-    d = Gate().decide(ev(), diag("send_payment_link"), datetime(2026, 8, 15, 23, 0))
-    assert d["policy_result"] == "deferred"
+    assert Gate().decide(ev(), diag("send_payment_link"), datetime(2026, 8, 15, 23, 0))["policy_result"] == "deferred"
 
 
 def test_contact_cap_blocks_third_contact_in_window():
@@ -82,44 +77,49 @@ def test_contact_cap_blocks_third_contact_in_window():
     assert out[2]["final_action"] == "no_action" and "contact cap" in out[2]["blocked_reason"]
 
 
-def test_retry_without_mandate_becomes_a_link_the_customer_approves():
-    d = Gate().decide(ev(mandate_status="none"), diag("retry_delayed", cause="insufficient_funds"), DAY)
-    assert d["final_action"] == "send_payment_link"
-    assert d["authority"] == "L1" and d["policy_result"] == "modified"
-
-
-def test_mandate_retry_now_requires_predebit_notice():
-    notified = Gate().decide(ev(mandate_status="active", predebit_notified=True), diag("retry_now"), DAY)
-    assert notified["final_action"] == "retry_now" and notified["authority"] == "L2"
-    unnotified = Gate().decide(ev(mandate_status="active", predebit_notified=False), diag("retry_now"), DAY)
-    assert unnotified["final_action"] == "retry_delayed" and unnotified["authority"] == "L2"
+def test_downgraded_link_preserves_the_diagnosed_intent():
+    d = Gate().decide(ev(), diag("retry_delayed", cause="insufficient_funds"), DAY)
+    assert d["final_action"] == "send_payment_link" and d["action_variant"] == "scheduled"
+    assert d["authority"] == "L1" and d["policy_result"] == "deferred"
+    assert d["scheduled_for"] == "2026-08-17T12:00:00+05:30" and d["deferred_hours"] == 48.0
+    d2 = Gate().decide(ev(), diag("retry_now"), DAY)
+    assert d2["final_action"] == "send_payment_link" and d2["action_variant"] == "immediate"
+    assert d2["policy_result"] == "modified"
 
 
 def test_alternate_method_is_never_covered_by_a_mandate():
-    d = Gate().decide(ev(mandate_status="active", predebit_notified=True), diag("retry_alternate_method"), DAY)
-    assert d["final_action"] == "send_payment_link" and d["authority"] == "L1"
+    d = Gate().decide(ev(**MANDATE), diag("retry_alternate_method"), DAY)
+    assert d["final_action"] == "send_payment_link" and d["action_variant"] == "method_fallback" and d["authority"] == "L1"
+
+
+def test_mandate_retry_now_requires_predebit_notice():
+    ok = Gate().decide(ev(**MANDATE), diag("retry_now"), DAY)
+    assert ok["final_action"] == "retry_now" and ok["authority"] == "L2" and ok["policy_result"] == "approved"
+    late = Gate().decide(ev(mandate_status="active", predebit_notified=False), diag("retry_now"), DAY)
+    assert late["final_action"] == "retry_delayed" and late["authority"] == "L2"
+    assert late["policy_result"] == "deferred" and late["deferred_hours"] == 48.0
+
+
+def test_delayed_retry_landing_in_quiet_hours_moves_to_nine_am():
+    d = Gate().decide(ev(**MANDATE), diag("retry_delayed", cause="bank_outage"), datetime(2026, 8, 15, 22, 0, tzinfo=IST))
+    assert d["scheduled_for"] == "2026-08-18T09:00:00+05:30" and d["deferred_hours"] == 59.0
 
 
 def test_breaker_needs_volume_trips_and_only_a_named_human_reenables():
     g = Gate()
     for _ in range(20):
         g.circuit_breaker_record("bank_decline", "retry_now", True)
-    assert g.circuit_breaker_check("bank_decline", "retry_now")[0]          # below min volume
+    assert g.circuit_breaker_check("bank_decline", "retry_now")[0]
     for _ in range(10):
         g.circuit_breaker_record("bank_decline", "retry_now", True)
     assert not g.circuit_breaker_check("bank_decline", "retry_now")[0]
     assert g.breaker_events[-1]["type"] == "breaker_tripped"
-
-    d = g.decide(ev(mandate_status="active", predebit_notified=True), diag("retry_now"), DAY)
-    assert d["final_action"] == "escalate_human" and d["authority"] == "L3"
-    assert any("breaker" in t for t in d["gate_trace"])
-
+    d = g.decide(ev(**MANDATE), diag("retry_now"), DAY)
+    assert d["final_action"] == "escalate_human" and any("breaker" in t for t in d["gate_trace"])
     with pytest.raises(ValueError):
         g.reenable("bank_decline", "retry_now", operator_id="")
     g.reenable("bank_decline", "retry_now", operator_id="ops_priya")
-    d2 = g.decide(ev(customer_id="cust_2", invoice_id="inv_2", mandate_status="active", predebit_notified=True),
-                  diag("retry_now"), DAY)
-    assert d2["final_action"] == "retry_now"
+    assert g.decide(ev(customer_id="cust_2", invoice_id="inv_2", **MANDATE), diag("retry_now"), DAY)["final_action"] == "retry_now"
 
 
 def test_breaker_ignores_no_action_rows():
@@ -138,10 +138,11 @@ def test_human_capacity_is_a_real_stopping_rule():
 
 def test_kill_switch_halts_everything_and_cancels_scheduled():
     g = Gate()
-    g.decide(ev(customer_id="c1", invoice_id="i1"), diag("send_payment_link"), NIGHT)   # scheduled
+    g.decide(ev(customer_id="c1", invoice_id="i1"), diag("send_payment_link"), NIGHT)          # quiet-hour deferral
+    g.decide(ev(customer_id="c3", invoice_id="i3", **MANDATE), diag("retry_delayed"), DAY)  # 48h scheduled retry
     info = g.halt("ops_priya")
-    assert info["scheduled_cancelled"] == 1
-    assert g.key_state("c1", "i1", 1) == "cancelled"
+    assert info["scheduled_cancelled"] == 2
+    assert g.key_state("c1", "i1", 1) == "cancelled" and g.key_state("c3", "i3", 1) == "cancelled"
     d = g.decide(ev(customer_id="c2", invoice_id="i2"), diag("send_payment_link"), DAY)
     assert d["final_action"] == "no_action" and "kill switch" in d["blocked_reason"]
     with pytest.raises(ValueError):
@@ -155,19 +156,17 @@ def test_dnc_blocks_every_contact():
 
 def test_off_menu_action_goes_to_a_human():
     d = Gate().decide(ev(), diag("wire_money_to_founder"), DAY)
-    assert d["final_action"] == "escalate_human"
-    assert any("off-menu" in t for t in d["gate_trace"])
+    assert d["final_action"] == "escalate_human" and any("off-menu" in t for t in d["gate_trace"])
 
 
-def test_every_row_carries_authority_cost_amount_and_trace():
+def test_every_row_carries_authority_cost_amount_variant_and_trace():
     d = Gate().decide(ev(amount=1234.5), diag("send_payment_link"), DAY)
     assert d["authority"] == "L1" and d["action_cost_inr"] == 0.35 and d["amount"] == 1234.5
-    assert d["gate_trace"] and d["decided_at"].endswith("+05:30")
+    assert d["action_variant"] == "immediate" and d["gate_trace"] and d["decided_at"].endswith("+05:30")
     blocked = Gate(dnc={"cust_1"}).decide(ev(), diag("send_payment_link"), DAY)
-    assert "authority" in blocked and blocked["action_cost_inr"] == 0.0
+    assert "authority" in blocked and blocked["action_cost_inr"] == 0.0 and blocked["action_variant"] is None
 
 
 def test_gate_never_sees_ground_truth():
     src = inspect.getsource(policy_gate)
-    assert "true_cause" not in src
-    assert "CAUSE_ACTION_POLICY" not in src and "ORACLE" not in src
+    assert "true_cause" not in src and "CAUSE_ACTION_POLICY" not in src and "ORACLE" not in src

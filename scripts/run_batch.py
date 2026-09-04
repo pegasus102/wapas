@@ -20,7 +20,10 @@ from wapas.data_foundry import generate_events, train_eval_split
 from wapas.measurement import run_experiment
 from wapas.eval_diagnosis import evaluate
 
-N_EVENTS = 1500
+N_EVENTS = 12000         # synthetic budget: n is a design parameter in a
+                         # simulator, and the honest effect of diagnosis is
+                         # ~3pp — 4,000/arm gives ~80%+ power for it (see
+                         # HYPOTHESES.md amendment v2; runtime still <1 min)
 GEN_SEED = 42
 EXPERIMENT_SEED = 2026
 

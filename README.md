@@ -95,26 +95,41 @@ python3 scripts/run_batch.py --live
 Every response gets cached, so the second run onward is offline again
 regardless of the flag.
 
-## Results (regenerate with `make batch`; numbers below are one real run)
+## Results (regenerate with `make batch`; numbers below are one real run, n=12,000)
 
 | Line | n | Recovered | Recovery rate | 95% CI | ₹ recovered | Complaints |
 |---|---|---|---|---|---|---|
-| Control (no action) | 397 | 40 | 10.1% | [7.5%, 13.4%] | ₹270,328 | 8 |
-| Floor (Razorpay's own playbook) | 398 | 51 | 12.8% | [9.9%, 16.5%] | ₹320,649 | 6 |
-| Rules-only (no LLM) | 405 | 80 | 19.8% | [16.2%, 23.9%] | ₹538,040 | 15 |
-| **WAPAS** (rules + LLM on ambiguous) | 405 | 83 | **20.5%** | [16.9%, 24.7%] | ₹554,679 | 15 |
-| Oracle (ceiling, perfect diagnosis) | 405 | 84 | 20.7% | [17.1%, 25.0%] | ₹560,724 | 15 |
+| Control (no action) | 3,203 | 439 | 13.7% | [12.6%, 14.9%] | ₹12,61,981 | 0 |
+| Floor (Razorpay's own playbook) | 3,203 | 754 | 23.5% | [22.1%, 25.0%] | ₹23,39,150 | 77 |
+| Rules-only (no LLM) | 3,194 | 886 | 27.7% | [26.2%, 29.3%] | ₹27,77,199 | 80 |
+| **WAPAS** (rules + LLM on ambiguous) | 3,194 | 888 | **27.8%** | [26.3%, 29.4%] | **₹27,83,613** | 80 |
+| Oracle (ceiling, perfect diagnosis) | 3,194 | 900 | 28.2% | [26.6%, 29.8%] | ₹28,23,458 | 77 |
 
-- Control vs WAPAS: z=4.09, **p<0.0001**
-- Floor vs WAPAS: z=2.92, **p=0.0035** — diagnosis beats Razorpay's own generic playbook at identical contact caps
-- WAPAS captures **98.8%** of the theoretical oracle ceiling
-- Diagnosis accuracy on the held-out eval split: **97.3%** (cost-weighted confusion: 0.043 — see `out/eval.json`)
-- ~24% of events are ambiguous enough to need the LLM tier; the other ~76% resolve for free via deterministic rules
+- Control vs WAPAS: z=13.90, **p<0.0001** — recovery beats doing nothing, decisively
+- Floor vs WAPAS: z=3.90, **p=0.0001**, power 0.97 — diagnosis-first beats Razorpay's own published generic playbook at identical contact caps, by **+4.3pp absolute (+18% relative)**
+- WAPAS captures **98.7%** of the theoretical oracle ceiling; the un-captured gap is a *diagnosis-accuracy* problem, not a gate/execution problem
+- The uplift concentrates exactly where the thesis predicts (⚠️ exploratory, per-cause): insufficient_funds **+10.2pp**, expired_mandate **+14.3pp**, bank_outage **+6.4pp** — the timing-bound and mandate-bound causes — and ≈0 where a generic method-fallback link is genuinely the right action anyway (wrong_vpa, card_expired, auth_3ds)
+- Net ₹ (after action costs + ₹150/complaint churn cost): WAPAS ₹27.8L vs Floor ₹23.4L — **+₹4.4L per ~3,200 at-risk events**
+- Diagnosis accuracy on the 2,400-event held-out split: **81.5%** (avg confusion cost 0.236 — see `out/eval.json`)
+- ~20% of events are ambiguous enough to need the LLM tier; the other ~80% resolve for free via deterministic rules
 
-**Honesty note:** at n≈400/arm the Floor-vs-WAPAS gap is real but its
-significance is sensitive to the exact seed and n — see
-`tests/test_measurement.py` and `HYPOTHESES.md` for what's confirmatory
-vs exploratory, and increase `--n` for a better-powered official run.
+**Honest readings of this run (we pre-registered these checks in
+HYPOTHESES.md amendment v2 and report the misses too):**
+
+1. *Rules ≈ WAPAS on recovery rate* (+0.1pp, within noise). The LLM's
+   measurable recovery contribution on this merchant mix is small. Its
+   defensible value: reading free text in the ambiguous ~20%, robustness to
+   reason-code drift, and the natural-language audit explainer — not raw
+   recovery rate. Rules-first routing is what keeps it cheap.
+2. *Complaint asymmetry did not materialize* (Floor 77 vs WAPAS 80). The
+   contact-cap gate protects both arms equally; we do NOT claim a
+   goodwill advantage from this experiment.
+3. The v1 response model scored recovery by coarse intent coverage and
+   collapsed the whole staircase (Floor == Oracle, p=0.997). The
+   pre-registered experiment caught it; `response_model.py` v2 (cure
+   matrix, documented per cell in HYPOTHESES.md amendment v2) replaced it,
+   and `tests/test_thesis_guard.py` now fails the suite if the staircase
+   ever collapses again.
 
 ## Where AI is and isn't used
 

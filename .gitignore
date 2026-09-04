@@ -7,3 +7,9 @@ out/
 out_validate/
 out_verify_tmp/
 data/
+out/
+out_verify_tmp/
+__pycache__/
+out_verify_tmp/
+__pycache__/
+.pytest_cache/
