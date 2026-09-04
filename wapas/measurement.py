@@ -74,13 +74,14 @@ def _summarize(name: str, rows: list[dict]) -> dict:
     }
 
 
-def run_experiment(events: list[tuple], out_dir: Path, seed: int = 2026) -> dict:
+def run_experiment(events: list[tuple], out_dir: Path, seed: int = 2026,
+                   live: bool = False) -> dict:
     from .stratify import stratified_split
     out_dir.mkdir(parents=True, exist_ok=True)
     arms = stratified_split(events, seed=seed)
 
     control = lambda ev: {"root_cause": "unknown", "confidence": 1.0, "action": "no_action", "source": "control"}
-    wapas = lambda ev: diagnosis_mod.diagnose_event(ev, live=False)
+    wapas = lambda ev: diagnosis_mod.diagnose_event(ev, live=live)
 
     results = {}
     results["control"] = run_line("control", arms["control"], control, out_dir / "ledger_control.jsonl", seed + 1)
@@ -99,4 +100,13 @@ def run_experiment(events: list[tuple], out_dir: Path, seed: int = 2026) -> dict
         "power_floor_vs_wapas_at_observed_effect": approx_power(f["recovery_rate"], w["recovery_rate"], n_per_arm=min(f["n"], w["n"])),
     }
     ceiling_capture = w["recovery_rate"] / results["oracle"]["recovery_rate"] if results["oracle"]["recovery_rate"] else 0.0
-    return {"results": results, "stats": stats, "ceiling_capture_pct": round(ceiling_capture * 100, 1)}
+    out = {"results": results, "stats": stats, "ceiling_capture_pct": round(ceiling_capture * 100, 1)}
+    if live:
+        # Honest provenance: how much of the wapas arm was actually decided
+        # by the real LLM provider vs the documented offline fallbacks.
+        mix: dict[str, int] = {}
+        for row in w["rows"]:
+            src = row.get("diagnosis_source") or "unknown"
+            mix[src] = mix.get(src, 0) + 1
+        out["wapas_diagnosis_source_mix"] = dict(sorted(mix.items(), key=lambda kv: -kv[1]))
+    return out

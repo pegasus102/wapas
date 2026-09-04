@@ -32,6 +32,27 @@ from .schema import EvidencePacket, CAUSES, ACTIONS, ORACLE_ACTION
 
 PROMPT_VERSION = "v1"
 DEFAULT_CACHE_PATH = Path(__file__).resolve().parent.parent / "cache" / "diagnosis_cache.json"
+LIVE_CACHE_PATH = Path(__file__).resolve().parent.parent / "cache" / "diagnosis_cache_live.json"
+
+# OpenRouter (OpenAI-compatible REST; stdlib urllib — no new dependencies).
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+OPENROUTER_DEFAULT_MODEL = "google/gemini-2.0-flash-exp:free"
+
+
+def _load_dotenv() -> None:
+    """Tiny stdlib .env loader: KEY=VALUE lines from ROOT/.env. Existing env wins."""
+    env_file = Path(__file__).resolve().parent.parent / ".env"
+    if not env_file.exists():
+        return
+    for line in env_file.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, _, v = line.partition("=")
+        os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+
+
+_load_dotenv()
 
 SYSTEM_PROMPT = """You are a payment-failure root-cause diagnosis assistant for an Indian \
 D2C merchant on Razorpay. Given a structured evidence packet, return ONLY a JSON object \
@@ -153,8 +174,68 @@ def _draft_message(cause: str) -> str:
     return templates.get(cause, "We're following up on your recent payment.")
 
 
+def _call_openrouter(evidence: EvidencePacket) -> Optional[dict]:
+    """Real LLM call via OpenRouter (OpenAI-compatible REST, stdlib urllib).
+    Needs OPENROUTER_API_KEY; model from OPENROUTER_MODEL (sensible free default).
+    Retries once on rate limits; returns None on any failure so the caller
+    falls back gracefully (recorded as such — never silently 'AI-washed')."""
+    import urllib.request
+    import urllib.error
+    import time as _time
+
+    api_key = os.environ.get("OPENROUTER_API_KEY")
+    if not api_key:
+        return None
+    model = os.environ.get("OPENROUTER_MODEL", OPENROUTER_DEFAULT_MODEL)
+
+    payload = {
+        "model": model,
+        "max_tokens": 400,
+        "temperature": 0.2,
+        "messages": [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": json.dumps(evidence.to_dict(), default=str)},
+        ],
+    }
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://github.com/pegasus102/wapas",
+        "X-Title": "WAPAS revenue recovery",
+    }
+
+    for attempt in range(2):  # one retry on transient/429
+        try:
+            req = urllib.request.Request(
+                OPENROUTER_URL, data=json.dumps(payload).encode("utf-8"),
+                headers=headers, method="POST")
+            with urllib.request.urlopen(req, timeout=25) as resp:
+                body = json.loads(resp.read().decode("utf-8"))
+            text = body["choices"][0]["message"]["content"].strip()
+            text = text.removeprefix("```json").removeprefix("```")
+            text = text.removesuffix("```").strip()
+            result = json.loads(text)
+            result["source"] = f"llm_openrouter:{model}"
+            result["model"] = model
+            return result
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 502, 503) and attempt == 0:
+                _time.sleep(6)   # rate limit: brief backoff, one retry
+                continue
+            return None
+        except Exception:
+            return None
+    return None
+
+
 def _call_live_llm(evidence: EvidencePacket) -> Optional[dict]:
-    """Real Anthropic API call. Only used with --live and ANTHROPIC_API_KEY set."""
+    """Live provider dispatch: OpenRouter first (key via env), Anthropic
+    direct as a fallback if that SDK/key is present. None -> caller falls
+    back to the documented heuristic."""
+    result = _call_openrouter(evidence)
+    if result is not None:
+        return result
+
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         return None
@@ -178,6 +259,7 @@ def _call_live_llm(evidence: EvidencePacket) -> Optional[dict]:
     except json.JSONDecodeError:
         return None
     result["source"] = "llm_live"
+    result["model"] = "claude-sonnet-4-6"
     return result
 
 
@@ -185,8 +267,13 @@ def diagnose(
     evidence: EvidencePacket,
     rules_hint: dict,
     live: bool = False,
-    cache_path: Path = DEFAULT_CACHE_PATH,
+    cache_path: Path | None = None,
 ) -> dict:
+    # Live runs use a SEPARATE cache file: real AI responses must never be
+    # silently mixed with the deterministic stand-in's. The official offline
+    # run (live=False) keeps its own cache and numbers, untouched.
+    if cache_path is None:
+        cache_path = LIVE_CACHE_PATH if live else DEFAULT_CACHE_PATH
     cache = _load_cache(cache_path)
     key = _cache_key(evidence)
 
@@ -213,6 +300,14 @@ def diagnose(
             "source": "repair_fallback",
         }
 
+    # In live mode, only REAL provider responses are persisted to the live
+    # cache. Fallbacks (heuristic/repair) are returned but not saved, so a
+    # later live run retries the API and the live cache stays pure provenance.
+    # (Note: "llm_heuristic" deliberately does NOT count as real.)
+    src = str(result.get("source", ""))
+    from_real = src.startswith("llm_openrouter") or src == "llm_live"
+    if live and not from_real:
+        return result
     cache[key] = result
     _save_cache(cache_path, cache)
     return result

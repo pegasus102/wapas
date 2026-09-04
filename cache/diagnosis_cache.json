@@ -3321,6 +3321,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "26d3ceb6cc9619f2acd2ccf7": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "27052085fdc9f277763afc24": {
     "action": "send_payment_link",
     "confidence": 0.55,
@@ -4939,6 +4950,17 @@
     "source": "llm_heuristic"
   },
   "3a25f08e8f253ac9c77df942": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "3a41540ab4504120b2b9f68c": {
     "action": "send_payment_link",
     "confidence": 0.6,
     "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
@@ -7587,6 +7609,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5834a2ad0fa66145f235210e": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "5896945067c1d45b13f11033": {
@@ -10293,6 +10326,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "79c34f37c15e798f46e9b70d": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "7a5d55d7a5a33fa36c026fbd": {
@@ -16048,6 +16092,17 @@
     "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
+  "bb61f3ed16de9570e0dc270c": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "bb9e554d0a3d76a25c554163": {
     "action": "retry_now",
     "confidence": 0.556,
@@ -18147,6 +18202,17 @@
       "error_source"
     ],
     "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "d78f3651f2212d2635c7f667": {
+    "action": "retry_now",
+    "confidence": 0.606,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
   "d7ac220b2ce2cc4718fb9354": {

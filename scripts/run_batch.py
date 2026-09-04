@@ -59,7 +59,10 @@ def render_table(result: dict) -> str:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--n", type=int, default=N_EVENTS)
-    parser.add_argument("--live", action="store_true", help="allow real LLM API calls (needs ANTHROPIC_API_KEY)")
+    parser.add_argument("--live", action="store_true",
+                        help="let the diagnosis agent make REAL LLM calls via OpenRouter "
+                             "(OPENROUTER_API_KEY in .env) on ambiguous events; responses "
+                             "are cached so this only costs API calls once")
     parser.add_argument("--out", type=str, default="out")
     args = parser.parse_args()
 
@@ -73,7 +76,13 @@ def main():
           f"({len(train_events)} train / {len(eval_events)} held-out eval).")
 
     print("\nRunning 3-arm experiment + oracle + rules-only lines...")
-    result = run_experiment(train_events, out_dir, seed=EXPERIMENT_SEED)
+    result = run_experiment(train_events, out_dir, seed=EXPERIMENT_SEED, live=args.live)
+    if args.live:
+        mix = result.get("wapas_diagnosis_source_mix", {})
+        total = sum(mix.values()) or 1
+        print("\nDiagnosis provenance (wapas arm):")
+        for src, n in mix.items():
+            print(f"  {src:40s} {n:5d}  ({n / total:.1%})")
 
     table = render_table(result)
     print("\n" + table)

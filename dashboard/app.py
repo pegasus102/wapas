@@ -14,6 +14,7 @@ import json
 import shutil
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 import streamlit as st
@@ -361,21 +362,23 @@ if page == "Mission Control":
                     ph.markdown(
                         f'<div class="kpi" style="border-top-color:{ARM_COLORS[k]}">'
                         f'<div class="l">{esc(LABELS[k])}</div>'
-                        f'<div class="v">{(a_["rec"] / a_["i"]):.1%}</div>'
+                        f'<div class="v">{(a_["rec"] / a_["i"]) if a_["i"] else 0:.1%}</div>'
                         f'<div class="s">{a_["rec"]:,} of {a_["i"]:,} recovered</div></div>',
                         unsafe_allow_html=True)
-                last = arm_rows["wapas"][i]
-                w = acc["wapas"]
-                ph_console.markdown(
-                    '<div class="console">'
-                    f"<span class='d'>case {esc(last['event_id'])}</span> · "
-                    f"{esc(last['customer_id'])} · ₹{last['amount']:,.0f} · "
-                    f"{esc(last['root_cause'])} ({float(last['confidence']):.2f}) → "
-                    f"{esc(last['final_action'])} · {esc(last['policy_result'])} · "
-                    + ('<span class="g">recovered</span>' if last["recovered"] else "open")
-                    + f"<br><span class='d'>wapas arm · {i + 1:,} / {max_n:,} decided · "
-                    f"₹{w['amt']:,.0f} recovered so far</span></div>",
-                    unsafe_allow_html=True)
+                w_rows = arm_rows["wapas"]
+                if w_rows:
+                    last = w_rows[min(i, len(w_rows) - 1)]   # arms finish at slightly different counts
+                    w = acc["wapas"]
+                    ph_console.markdown(
+                        '<div class="console">'
+                        f"<span class='d'>case {esc(last['event_id'])}</span> · "
+                        f"{esc(last['customer_id'])} · ₹{last['amount']:,.0f} · "
+                        f"{esc(last['root_cause'])} ({float(last['confidence']):.2f}) → "
+                        f"{esc(last['final_action'])} · {esc(last['policy_result'])} · "
+                        + ('<span class="g">recovered</span>' if last["recovered"] else "open")
+                        + f"<br><span class='d'>wapas arm · {min(i + 1, len(w_rows)):,} / "
+                        f"{len(w_rows):,} decided · ₹{w['amt']:,.0f} recovered so far</span></div>",
+                        unsafe_allow_html=True)
                 ph_bars.markdown(bars_html(
                     [(LABELS[k], DESCR[k],
                       (acc[k]["rec"] / acc[k]["i"]) if acc[k]["i"] else 0.0,
