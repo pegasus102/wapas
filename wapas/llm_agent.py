@@ -36,7 +36,25 @@ LIVE_CACHE_PATH = Path(__file__).resolve().parent.parent / "cache" / "diagnosis_
 
 # OpenRouter (OpenAI-compatible REST; stdlib urllib — no new dependencies).
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-OPENROUTER_DEFAULT_MODEL = "google/gemini-2.0-flash-exp:free"
+OPENROUTER_DEFAULT_MODEL = "google/gemma-4-31b-it:free"
+
+# Human-readable reason the most recent live call failed ("" on success).
+# Surfaced by scripts/live_demo.py so a silent fallback can never masquerade
+# as a real AI response.
+LAST_LIVE_ERROR: str = ""
+
+
+def set_last_live_error(msg: str) -> None:
+    global LAST_LIVE_ERROR
+    LAST_LIVE_ERROR = msg
+
+
+def is_real_provider(source: str) -> bool:
+    """True only for responses produced by an actual LLM provider.
+    Exact matching on purpose: "llm_heuristic" (the deterministic stand-in)
+    also starts with "llm_" and must NEVER count as real."""
+    s = str(source)
+    return s.startswith("llm_openrouter") or s == "llm_live"
 
 
 def _load_dotenv() -> None:
@@ -185,6 +203,7 @@ def _call_openrouter(evidence: EvidencePacket) -> Optional[dict]:
 
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
+        set_last_live_error("no OPENROUTER_API_KEY in environment")
         return None
     model = os.environ.get("OPENROUTER_MODEL", OPENROUTER_DEFAULT_MODEL)
 
@@ -217,13 +236,20 @@ def _call_openrouter(evidence: EvidencePacket) -> Optional[dict]:
             result = json.loads(text)
             result["source"] = f"llm_openrouter:{model}"
             result["model"] = model
+            set_last_live_error("")  # success clears any stale error
             return result
         except urllib.error.HTTPError as e:
+            try:
+                detail = e.read().decode("utf-8", "replace")[:220]
+            except Exception:
+                detail = ""
+            set_last_live_error(f"HTTP {e.code} from OpenRouter: {detail}".strip())
             if e.code in (429, 502, 503) and attempt == 0:
                 _time.sleep(6)   # rate limit: brief backoff, one retry
                 continue
             return None
-        except Exception:
+        except Exception as e:
+            set_last_live_error(f"{type(e).__name__}: {e}")
             return None
     return None
 
@@ -304,8 +330,7 @@ def diagnose(
     # cache. Fallbacks (heuristic/repair) are returned but not saved, so a
     # later live run retries the API and the live cache stays pure provenance.
     # (Note: "llm_heuristic" deliberately does NOT count as real.)
-    src = str(result.get("source", ""))
-    from_real = src.startswith("llm_openrouter") or src == "llm_live"
+    from_real = is_real_provider(result.get("source", ""))
     if live and not from_real:
         return result
     cache[key] = result

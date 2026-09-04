@@ -72,11 +72,13 @@ Individual targets:
 
 | Command | What it does |
 |---|---|
-| `make test` | runs the 16-test suite |
+| `make test` | runs the test suite (73 tests: engine, ledger, dashboard contract, live-LLM tier) |
 | `make batch` | regenerates data + runs the 3-arm experiment + writes `out/RESULTS.md` |
 | `make verify` | recomputes every ledger's hash chain, reports tamper if any |
 | `make verify-results` | regenerates results from scratch and diffs against the committed copy |
-| `make clean` | wipes generated output and the diagnosis cache |
+| `make clean` | wipes generated `out/` only — never the committed diagnosis cache |
+| `make live-demo` | diagnoses ambiguous cases with a REAL LLM (needs `OPENROUTER_API_KEY` in `.env`) |
+| `make live-batch` | full experiment with real LLM diagnoses (needs key; fallbacks stay honest) |
 
 ### Optional: `--live` mode (real LLM calls)
 

@@ -88,3 +88,33 @@ def test_fallback_not_persisted_to_live_cache(tmp_path, monkeypatch):
     out = llm_agent.diagnose(ev, rules_hint=hint, live=True, cache_path=live_p)
     assert out["source"] == "llm_heuristic"
     assert not live_p.exists()   # fallback returned, but live cache stays pure
+
+
+def test_is_real_provider_exact_match():
+    # the stand-in ALSO starts with "llm_" — only exact provider tags count
+    assert llm_agent.is_real_provider("llm_heuristic") is False
+    assert llm_agent.is_real_provider("repair_fallback") is False
+    assert llm_agent.is_real_provider("") is False
+    assert llm_agent.is_real_provider("llm_live") is True
+    assert llm_agent.is_real_provider("llm_openrouter:google/gemma-4-31b-it:free") is True
+
+
+def test_openrouter_http_error_is_surfaced_not_silent(tmp_path, monkeypatch):
+    # a 401 (bad key) must be visible in LAST_LIVE_ERROR, never swallowed
+    import io
+    import urllib.request
+    import urllib.error
+
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or-v1-dummy-key")
+    llm_agent.set_last_live_error("")
+
+    def fake_urlopen(req, timeout):
+        raise urllib.error.HTTPError(
+            "https://openrouter.ai/api/v1/chat/completions", 401, "Unauthorized",
+            hdrs=None, fp=io.BytesIO(b'{"error":{"message":"No auth credentials found"}}'))
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    ev = _packet()
+    out = llm_agent._call_openrouter(ev)
+    assert out is None
+    assert "401" in llm_agent.LAST_LIVE_ERROR
