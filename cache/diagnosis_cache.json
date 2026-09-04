@@ -32,6 +32,17 @@
     "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
+  "016de35083ff878e0217205d": {
+    "action": "retry_delayed",
+    "confidence": 0.599,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "0367ca17582482bdd772df39": {
     "action": "retry_now",
     "confidence": 0.573,
@@ -41,6 +52,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "038d4cfb3fbffdedff9a3bc0": {
+    "action": "retry_alternate_method",
+    "confidence": 0.799,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
   "03ce40e1b349bafa21af1c73": {
@@ -87,6 +109,28 @@
     "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
+  "069015566eda105a75abe797": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "087ed663cb6daca58920c40c": {
+    "action": "retry_now",
+    "confidence": 0.593,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "0880c73eda8e99d6aa375693": {
     "action": "retry_alternate_method",
     "confidence": 0.88,
@@ -98,6 +142,17 @@
     "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
+  "08a6e6e730b1b33e01e6efd1": {
+    "action": "retry_now",
+    "confidence": 0.575,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "0a0bf94111333107f3f5e5ff": {
     "action": "retry_now",
     "confidence": 0.578,
@@ -107,6 +162,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "0a92118c2ee04bde5cfdf1d5": {
+    "action": "retry_alternate_method",
+    "confidence": 0.791,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
   "0aa40b9e3992b63f404ce19c": {
@@ -142,6 +208,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "0c778522e6595d2ede82da50": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "0c7b6f8db358403fc8395814": {
     "action": "retry_alternate_method",
     "confidence": 0.796,
@@ -151,6 +228,17 @@
       "attempts_today"
     ],
     "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "0ccea2c0681a2ce70ab57ba5": {
+    "action": "retry_now",
+    "confidence": 0.576,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
   "0e29acface1a6d562a500224": {
@@ -186,6 +274,17 @@
     "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
+  "0ff12186fb460ba21eecad65": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "104c49a77389b71fd77f4853": {
     "action": "retry_now",
     "confidence": 0.663,
@@ -208,6 +307,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "113d6d6febf6afb58b3db87b": {
+    "action": "retry_delayed",
+    "confidence": 0.592,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "11810d0d785b135b27732f76": {
     "action": "retry_now",
     "confidence": 0.663,
@@ -217,6 +327,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "11d9ea21e23c5ff3a52e50eb": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "120fa67daf474d10550cab20": {
@@ -340,6 +461,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "15c45debc34935f5546e2f15": {
+    "action": "retry_alternate_method",
+    "confidence": 0.799,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
   "1643317fb1b5e10c9641a887": {
     "action": "retry_now",
     "confidence": 0.597,
@@ -349,6 +481,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "16a78f1b1432f7411411ab19": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
   "16ce0d1b7ba41cc5dfbb059a": {
@@ -373,6 +516,28 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "177364456fba9ac9dded4148": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "1985231e137eacf4d88b7cbf": {
+    "action": "retry_now",
+    "confidence": 0.592,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "19b813258c2d2a21fae8e615": {
     "action": "retry_delayed",
     "confidence": 0.58,
@@ -395,6 +560,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "1a51239846bd1c2571e9b2fe": {
+    "action": "retry_now",
+    "confidence": 0.58,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "1b6d474cdd62148bb92221e2": {
     "action": "retry_now",
     "confidence": 0.558,
@@ -406,6 +582,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "1c4d0adc9416619777a9f04d": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "1c96951aa2beb4627ffcd660": {
     "action": "retry_now",
     "confidence": 0.663,
@@ -415,6 +602,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "1cbc8cc1788a0d05757a78b7": {
+    "action": "retry_alternate_method",
+    "confidence": 0.795,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
   "1d1560da9a378896ac418f88": {
@@ -439,6 +637,28 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "1eba106c53175590ba478fad": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "1f1e33dc65229b5aa9419533": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "1f71fc07e9b631f6a714499f": {
     "action": "retry_delayed",
     "confidence": 0.563,
@@ -461,6 +681,50 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "201e8f1e36ba15691de6e0c4": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "20444114b3286f9dc7d943aa": {
+    "action": "retry_delayed",
+    "confidence": 0.555,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "21e912699083c1b2445002a0": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "2218403a2aa5c03d928970f5": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "22669f1eeec4d0cfdf48f52e": {
     "action": "retry_now",
     "confidence": 0.663,
@@ -481,6 +745,72 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "22efaf5ffae4f72292a03316": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "2374ffaf04443bb06cb3a8d8": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "23f23e3e3e283d3c3d57e4e8": {
+    "action": "retry_alternate_method",
+    "confidence": 0.792,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "25554538c416e1abebc05723": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "264644cfdfa4960ab27f0f30": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "283ebf6fb61bb417aabc1655": {
+    "action": "retry_now",
+    "confidence": 0.554,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
   "28689058d4cdc1af13c1135c": {
@@ -538,6 +868,39 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "2b3dbbd53e78c32e42537122": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "2bd3f873f26fcf72cc469022": {
+    "action": "retry_alternate_method",
+    "confidence": 0.799,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "2bdbd7c29337a2cd75879b92": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "2c68777d75e15607e295b041": {
     "action": "retry_delayed",
     "confidence": 0.663,
@@ -560,6 +923,83 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "2cf8e2a0e6767b14372f869b": {
+    "action": "retry_delayed",
+    "confidence": 0.55,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "2d0715a0060f1ad9b5d6f782": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "2d72c05162e872653b88a32e": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "2dcc4afed720fd13c1cac490": {
+    "action": "retry_now",
+    "confidence": 0.573,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "2dd949a8e3b8f330e4b70011": {
+    "action": "retry_delayed",
+    "confidence": 0.558,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "2e7028f48e47dec901202b10": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "2f288e32bc1294c4278b929b": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "2f4afb5b86388ab9818a9b5c": {
     "action": "retry_now",
     "confidence": 0.557,
@@ -571,6 +1011,28 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "2f599e8572a447912e509ae4": {
+    "action": "retry_delayed",
+    "confidence": 0.552,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "2f7ef3836e6cd084893428db": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "2f82703c6bb2ff8dba4180fc": {
     "action": "retry_now",
     "confidence": 0.648,
@@ -580,6 +1042,39 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "2fb05bf7cfe924dc7ba43199": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "3076eed205c2745e86684c09": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "30933677253d3df49ddb4922": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "3179e60d4c095404c604e29b": {
@@ -615,6 +1110,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "339de3182f4e2ad5ef2afb77": {
+    "action": "retry_now",
+    "confidence": 0.604,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "33e12a300635821d6aa46e45": {
     "action": "retry_alternate_method",
     "confidence": 0.8,
@@ -626,9 +1132,42 @@
     "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
+  "3446bf32e25bf5e436cb51d4": {
+    "action": "retry_now",
+    "confidence": 0.567,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "3446bff944dea9f34fb2b650": {
     "action": "retry_now",
     "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "34ae491fcabcb5f87468a57f": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "34d7b32279e73ae72bb633e2": {
+    "action": "retry_now",
+    "confidence": 0.585,
     "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
     "evidence_citations": [
       "bank_health_score",
@@ -657,6 +1196,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "35b4c2538f826a0325acea28": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "35e68f6f9cab85545b632e12": {
@@ -692,9 +1242,42 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "367f6122da7e4a1274a47e57": {
+    "action": "retry_now",
+    "confidence": 0.558,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "369dbba42618885cf69989f4": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "36c9272d657d1f5ccf438d53": {
     "action": "retry_delayed",
     "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "37b1099d35550a5632c72a10": {
+    "action": "retry_delayed",
+    "confidence": 0.553,
     "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
     "evidence_citations": [
       "bank_health_score",
@@ -712,6 +1295,50 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "3807486010184a5df1d29e93": {
+    "action": "retry_delayed",
+    "confidence": 0.611,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "382a5c3a4effc62060dc9292": {
+    "action": "retry_delayed",
+    "confidence": 0.608,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "3866b214caf6ec230121340a": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "388259669200b97feaf98939": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "3885d9b4bb26871636ddd1c0": {
@@ -747,6 +1374,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "3a1c9f7e8d23c31229a5a31d": {
+    "action": "retry_now",
+    "confidence": 0.597,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "3a30d3268f744495c82998f0": {
     "action": "retry_now",
     "confidence": 0.584,
@@ -756,6 +1394,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "3ab2f5aa04b2ec3bb3c1d7af": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "3abe2edfe3e82d5a99dfc8c6": {
@@ -769,6 +1418,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "3af14710b8430512b3cc2082": {
+    "action": "retry_delayed",
+    "confidence": 0.55,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "3b1dc0f8470d094fa09fbe60": {
     "action": "retry_alternate_method",
     "confidence": 0.8,
@@ -778,6 +1438,17 @@
       "attempts_today"
     ],
     "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "3bbac0f037f464088478ae33": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "3c67a27d1f818cdfa35b995e": {
@@ -802,6 +1473,28 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "3e5f4e971ad3b1dea123647b": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "3f06f6ddbde795a147c7bdc2": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "3ffeb4597fdf4850d2f75a45": {
     "action": "retry_now",
     "confidence": 0.663,
@@ -811,6 +1504,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4025260427a9ac05e899dcf0": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "41d306975fc4aaf9e5bef803": {
@@ -835,9 +1539,42 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "43736d774ccca620ca3a3e70": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "43b1535c4cdd2de582622665": {
     "action": "retry_now",
     "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "44827e73d9ea332365dd85da": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "448d78fbbbbc94522326e0ac": {
+    "action": "retry_now",
+    "confidence": 0.552,
     "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
     "evidence_citations": [
       "bank_health_score",
@@ -868,6 +1605,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "4512a89496e7a6014cb92079": {
+    "action": "retry_delayed",
+    "confidence": 0.554,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "452405447295bdd27635962e": {
     "action": "retry_delayed",
     "confidence": 0.606,
@@ -890,6 +1638,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "455f1a698a61955829ddf1ea": {
+    "action": "retry_now",
+    "confidence": 0.595,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "458327ed261172cdb1a3ae91": {
     "action": "retry_now",
     "confidence": 0.556,
@@ -901,9 +1660,42 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "4599066a4a9077813cc7d185": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "45a821239f993de6b66aa5d9": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "4667c4bc26685657a13d024b": {
     "action": "retry_delayed",
     "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "46e217f3159ea6b61fa16da7": {
+    "action": "retry_delayed",
+    "confidence": 0.555,
     "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
     "evidence_citations": [
       "bank_health_score",
@@ -923,6 +1715,39 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "4829c3833b18e41f9ff63902": {
+    "action": "retry_delayed",
+    "confidence": 0.559,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "486d2bc41e77e9b26d01fdd4": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "48b374066259eac7fd015e4c": {
+    "action": "retry_now",
+    "confidence": 0.571,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "49ebb2288d2c6ba3f9cca214": {
     "action": "retry_now",
     "confidence": 0.555,
@@ -932,6 +1757,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4a66554b555071549ead9d46": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "4ab500565c861b7015ff0b05": {
@@ -1000,6 +1836,28 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "4dbd85963bce110b3eb63461": {
+    "action": "retry_delayed",
+    "confidence": 0.587,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "4decba842480dcd0ad61f0a0": {
+    "action": "retry_alternate_method",
+    "confidence": 0.798,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
   "4e452c76bd267f08296b34a7": {
     "action": "retry_now",
     "confidence": 0.588,
@@ -1022,6 +1880,39 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "4e74543aee17d0b301b0d2f7": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "4eef7e4056ed3288089dd63b": {
+    "action": "retry_delayed",
+    "confidence": 0.555,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "4f8d2562a9dbb72c24682ad3": {
+    "action": "retry_now",
+    "confidence": 0.579,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "504f16028cd7979de37f0128": {
     "action": "retry_delayed",
     "confidence": 0.574,
@@ -1031,6 +1922,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "519f618e7e5c9f672e9cc77d": {
+    "action": "retry_now",
+    "confidence": 0.559,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
   "51f1985a72076a5615abc48e": {
@@ -1053,6 +1955,28 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5414e6e151a3f08910f88add": {
+    "action": "retry_delayed",
+    "confidence": 0.611,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "54bae05057c23019d0447849": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "550c2ee1cd9d521b66b75f12": {
@@ -1080,6 +2004,17 @@
   "55886de8c46e22d0eab05369": {
     "action": "retry_now",
     "confidence": 0.581,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "55b1dba7a7b2bb0267a99013": {
+    "action": "retry_now",
+    "confidence": 0.58,
     "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
     "evidence_citations": [
       "bank_health_score",
@@ -1132,6 +2067,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "5b4fb4f19dff1e7ec3199639": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "5b65bb980ca4cd7e1b3a198a": {
     "action": "retry_now",
     "confidence": 0.56,
@@ -1141,6 +2087,28 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5bcd59bc9ef6ed4f7eef8e3e": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "5bd7fdd95a27f66299f019fa": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "5c50097a735abee89e6803a0": {
@@ -1165,6 +2133,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "5cd58ae28f048aafcd0f6dd9": {
+    "action": "retry_alternate_method",
+    "confidence": 0.797,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
   "5db901eed5726874245ff595": {
     "action": "retry_now",
     "confidence": 0.594,
@@ -1174,6 +2153,28 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5dc1a79f920923fe1ac01246": {
+    "action": "retry_delayed",
+    "confidence": 0.559,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "5e1d289d387d930a15e10c16": {
+    "action": "retry_delayed",
+    "confidence": 0.557,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
   "5e321b00d82ee26d716f812d": {
@@ -1198,6 +2199,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "5eee0716f72b2cd36c13110d": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "5ef74382703585457c17ec17": {
     "action": "retry_now",
     "confidence": 0.589,
@@ -1218,6 +2230,50 @@
       "attempts_today"
     ],
     "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "611b23d39eb4969932e9fc26": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "6135e9a0f982171e6953b36a": {
+    "action": "retry_alternate_method",
+    "confidence": 0.795,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "619b14f7eee0d7321745930b": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "627847d96583877b530978ae": {
+    "action": "retry_now",
+    "confidence": 0.573,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
   "635435da09d5a816066f223f": {
@@ -1242,6 +2298,127 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "63fd65905aca7ea1f1815529": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "6556e4ba165e0b20d3f7ed4e": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "66036effb33d47f3462ee8de": {
+    "action": "retry_delayed",
+    "confidence": 0.56,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "6654bc625a5ef413400e1ac2": {
+    "action": "retry_alternate_method",
+    "confidence": 0.795,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "6668e9a36ec87b805b053fbe": {
+    "action": "retry_now",
+    "confidence": 0.553,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "66b47af53ad28e751433a9c5": {
+    "action": "retry_now",
+    "confidence": 0.557,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "673ce7388988e5a13db29605": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "677e423a97848e3bd43838f0": {
+    "action": "retry_delayed",
+    "confidence": 0.555,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "67b7aa6fc169989e6cac7575": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "67fe9930f865f0a589894974": {
+    "action": "retry_now",
+    "confidence": 0.609,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "68321911039d95dbd3bc112f": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "68a24d008aef010ce7fb0b36": {
     "action": "retry_delayed",
     "confidence": 0.571,
@@ -1251,6 +2428,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "68b7249f30d79319d8315414": {
+    "action": "retry_alternate_method",
+    "confidence": 0.798,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
   "6905faefd59a3c31a4d9abc3": {
@@ -1289,6 +2477,39 @@
   "6a411ad4bf3a69c6c24a7d39": {
     "action": "retry_delayed",
     "confidence": 0.57,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "6a4ce76f6acfbc54dec0d1d9": {
+    "action": "retry_now",
+    "confidence": 0.558,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "6a5bb8903100efc59e062ceb": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "6ae2c11978830c21cf9f9e6d": {
+    "action": "retry_delayed",
+    "confidence": 0.552,
     "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
     "evidence_citations": [
       "bank_health_score",
@@ -1363,6 +2584,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "6f5578a55822662c9bb07f06": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "6fde5be4abae599dbd1e2db7": {
     "action": "retry_delayed",
     "confidence": 0.577,
@@ -1372,6 +2604,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "70b44fd02f46dc913dd18525": {
+    "action": "retry_alternate_method",
+    "confidence": 0.797,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
   "70c909b575d2695063c235d3": {
@@ -1407,6 +2650,28 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "71b375e3b99dd5adb40ec91e": {
+    "action": "retry_delayed",
+    "confidence": 0.599,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "71c3d10dade1e090af62a427": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "71e732e27dbc79c3326ddeaf": {
     "action": "retry_now",
     "confidence": 0.585,
@@ -1416,6 +2681,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "71ef83a12729cea7a83c66c3": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "722d841ee70d0b2ef5dd65a5": {
@@ -1438,6 +2714,50 @@
       "attempts_today"
     ],
     "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "72e7b832f153bd5e6e76c476": {
+    "action": "retry_now",
+    "confidence": 0.568,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "735b7ceafff4521b9fe0b82a": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "73731d793b22c3b1fb69bb60": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "73794e9fe66e46635c909d10": {
+    "action": "retry_delayed",
+    "confidence": 0.555,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
   "751903fbbc51d3fc40285a65": {
@@ -1473,6 +2793,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "7681891fe3d1dac6bec5e10e": {
+    "action": "retry_now",
+    "confidence": 0.563,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "76ce681c96fce788c9491b47": {
     "action": "retry_now",
     "confidence": 0.587,
@@ -1495,6 +2826,105 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "7a5d55d7a5a33fa36c026fbd": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "7a84e7bf7107eee231dc346b": {
+    "action": "retry_now",
+    "confidence": 0.588,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "7a9056b578719a4a478b6ee4": {
+    "action": "retry_now",
+    "confidence": 0.574,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "7ae028f85f32c17ae45bb2cf": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "7afae53b3c0bc5e9a8f5db0e": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "7b2839a17805c19b5d0e3bd8": {
+    "action": "retry_alternate_method",
+    "confidence": 0.795,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "7b4a4ce7c6b9244ba32ed46f": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "7bcb956b3afee24c63f9bc3b": {
+    "action": "retry_delayed",
+    "confidence": 0.554,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "7c3b6b85952722b3bed8dc0e": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
   "7c95b45997858cc4e3cc6133": {
     "action": "retry_delayed",
     "confidence": 0.624,
@@ -1504,6 +2934,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "7cdfa93ea279b6c26c7f4227": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "7d09a104acc9ef25b2309604": {
@@ -1517,6 +2958,39 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "7d5593282dc41e89327c3847": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "7dd03f4cbd6f03bf336dac61": {
+    "action": "retry_delayed",
+    "confidence": 0.559,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "7df36eaec4998e77e5e076bc": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "7e5450e299ed771e341ff821": {
     "action": "retry_alternate_method",
     "confidence": 0.88,
@@ -1528,6 +3002,50 @@
     "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
+  "7e76571e9166a6f778dcdb2b": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "7ea274ef3821bde04ce38f3a": {
+    "action": "retry_now",
+    "confidence": 0.599,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "7f3f439bb3f4fb192ddd1c39": {
+    "action": "retry_now",
+    "confidence": 0.554,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "7f48079c26864ff7fe6d6e01": {
+    "action": "retry_now",
+    "confidence": 0.583,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "7fb578ed70afb79e6edf9933": {
     "action": "retry_now",
     "confidence": 0.574,
@@ -1537,6 +3055,50 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "7fcf96c0510ad0d4db605c01": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "7fd3910717a836fae95a46ef": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "7fe27c304bc53d8704a1f7ad": {
+    "action": "retry_delayed",
+    "confidence": 0.591,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "800c1d473f7af723332769c6": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "801fbdb921d1dbd21c637d32": {
@@ -1561,6 +3123,39 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "80cabd25ac8219c1d02be511": {
+    "action": "retry_now",
+    "confidence": 0.553,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "80d4b8b7b49b182197f1334c": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "80db4d030dfefefccd9e5927": {
+    "action": "retry_alternate_method",
+    "confidence": 0.796,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
   "810833c277bd5bea7f28e9f5": {
     "action": "retry_delayed",
     "confidence": 0.562,
@@ -1572,6 +3167,61 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "8157b1fd77e11904d5d8ff4c": {
+    "action": "retry_now",
+    "confidence": 0.575,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "81cb118af471e4936b2d5a61": {
+    "action": "retry_now",
+    "confidence": 0.564,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "8203239297f3a6fef13358ff": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "82f230ce4392b85f0f682a98": {
+    "action": "retry_alternate_method",
+    "confidence": 0.791,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "832106823fa1da07b44498b3": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "832137c05e9afbafdce8ce46": {
     "action": "retry_now",
     "confidence": 0.625,
@@ -1581,6 +3231,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "83461d865c9cbb29bcea6a9a": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "8376c1c34d7e2e95515817ce": {
@@ -1616,6 +3277,39 @@
     "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
+  "845638cf1edf70cfd1fd82e2": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "84beef2f02a82a21104cf9f6": {
+    "action": "retry_delayed",
+    "confidence": 0.562,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "84e515ae0ba2190e1cce04bb": {
+    "action": "retry_delayed",
+    "confidence": 0.611,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "8640847fd961d5b107b45e34": {
     "action": "retry_now",
     "confidence": 0.56,
@@ -1625,6 +3319,39 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "86636963dd32d905995819e9": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "86bea548204fbf7adec283f2": {
+    "action": "retry_delayed",
+    "confidence": 0.561,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "87772b9ed625e494e50a373a": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "8787796a4181d2e3a6d85448": {
@@ -1660,6 +3387,28 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "899c4e8bb43e0479dddef26f": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "89d1773b15bcc5bfe2f397b3": {
+    "action": "retry_delayed",
+    "confidence": 0.553,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "8a0b5a4942d72613f241e7c4": {
     "action": "retry_delayed",
     "confidence": 0.573,
@@ -1669,6 +3418,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "8a6a51af1d321d3589fa8e0f": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
   "8a976306dfcc1ceae59adaae": {
@@ -1682,6 +3442,94 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "8ac632a9ddaa0b68d200e47d": {
+    "action": "retry_now",
+    "confidence": 0.585,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "8b4338109d79e23148a3a1da": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "8b6423801f3dfdb92b85b967": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "8b6acaa326e3d9023513fa27": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "8b833463551a8cb6c3fef85d": {
+    "action": "retry_now",
+    "confidence": 0.558,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "8d610ef041944f2cb67f3622": {
+    "action": "retry_delayed",
+    "confidence": 0.552,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "8d72f60f00fb1da0182c4f1c": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "8d8ce87ae54254312d3e0cb2": {
+    "action": "retry_delayed",
+    "confidence": 0.562,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "8ea3203727a3859c5ae77fbf": {
     "action": "retry_delayed",
     "confidence": 0.561,
@@ -1691,6 +3539,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "8ef89ae7e9f4a3be97848c23": {
+    "action": "retry_alternate_method",
+    "confidence": 0.799,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
   "8fc4d9b71434e17d6a97a413": {
@@ -1715,6 +3574,28 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "912faa370587826f3853e90c": {
+    "action": "retry_now",
+    "confidence": 0.553,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "915c486092ce6aaa1a6263d3": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "917d1b60942e074088613999": {
     "action": "retry_delayed",
     "confidence": 0.566,
@@ -1724,6 +3605,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "931e26a4cd76aea79d8b1f00": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "93bc79ec01e2922852a78478": {
@@ -1748,6 +3640,50 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "94a697edfaabee85caa7f763": {
+    "action": "retry_now",
+    "confidence": 0.55,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "94ccc1133d8cdd26d342a9fd": {
+    "action": "retry_delayed",
+    "confidence": 0.561,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "954cd758f86ff47f9de58977": {
+    "action": "retry_delayed",
+    "confidence": 0.574,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "958bc779d443e079f88122f5": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "961b6688f8c7c18d0882a4aa": {
     "action": "retry_now",
     "confidence": 0.576,
@@ -1757,6 +3693,50 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "9623c5504736c4c0d371355c": {
+    "action": "retry_now",
+    "confidence": 0.587,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "96381193c96a3ff63f2edd0b": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "96408ca8ec7f4c9e802cb699": {
+    "action": "retry_now",
+    "confidence": 0.566,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "96636575aba406bc06e480a6": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "96aeb563349282bfcf7a4821": {
@@ -1803,6 +3783,28 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "9994b3e3386f766d9f1f9cbd": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "99bcfa106f83b5243e2487e4": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "9a50258b19f3fa1a3c6dbd73": {
     "action": "retry_delayed",
     "confidence": 0.663,
@@ -1812,6 +3814,61 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "9a5b9d83fe4c35458a73964e": {
+    "action": "retry_delayed",
+    "confidence": 0.575,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "9a8f9161e509564528cc77bd": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "9aef8a40602a7aec79a8c25f": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "9b3a86b2e7b3413506079872": {
+    "action": "retry_alternate_method",
+    "confidence": 0.799,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "9b4704d93cf03dc3d45c2b15": {
+    "action": "retry_now",
+    "confidence": 0.6,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
   "9b7f245d7e20bcd35e4be668": {
@@ -1836,6 +3893,17 @@
     "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
+  "9bf41a15f213373e804eb510": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "9c8707d83382c9904d86bb81": {
     "action": "retry_now",
     "confidence": 0.597,
@@ -1845,6 +3913,28 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "9cb0a3bf87f48abc403b924d": {
+    "action": "retry_delayed",
+    "confidence": 0.563,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "9e372814fb2df58d2c35e8b0": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "9e735301f0159c1e3e4d6a82": {
@@ -1867,6 +3957,61 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "a0db62ba7bfab4d4f9bb345e": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "a1a2981c876696cd1be75305": {
+    "action": "retry_delayed",
+    "confidence": 0.558,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "a1bb81487d921218455c6e4e": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "a1d4582924d09343328e59ee": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "a248d8d9127993095bcf162a": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "a24ec6667131ff0993f28c63": {
@@ -1924,9 +4069,64 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "a4b56279477c1428dce49ae6": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "a5780e1c2e3770858664b05c": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "a5a018f5e8efba765e8271d3": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "a5d8f31b99ab2f55565b9502": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "a5ec45e1c792b5b247164c77": {
     "action": "retry_alternate_method",
     "confidence": 0.798,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "a5fdddc37637e4d799fa1c3c": {
+    "action": "retry_alternate_method",
+    "confidence": 0.795,
     "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
     "evidence_citations": [
       "bank_health_score",
@@ -1957,6 +4157,28 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "a72478b26dc02beefc7be3f5": {
+    "action": "retry_delayed",
+    "confidence": 0.576,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "a73223f8bb6a8dc680c7b5c6": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "a762ee55bac798b2ea23c110": {
     "action": "retry_now",
     "confidence": 0.589,
@@ -1966,6 +4188,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "a77c66263d316705ba6cebf8": {
+    "action": "retry_alternate_method",
+    "confidence": 0.793,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
   "a805f9313617ca644be05f56": {
@@ -1988,6 +4221,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "a843bbe872ec3efc99ca363c": {
+    "action": "retry_delayed",
+    "confidence": 0.604,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
   "aa5b897e8929c94a7f43974d": {
@@ -2023,6 +4267,28 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "aaec8e6ddd8ea1894eed0d93": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "aaf598e244fba3b95e10e8e6": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "ab03779e1accffe1c479a506": {
     "action": "retry_now",
     "confidence": 0.663,
@@ -2056,9 +4322,64 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "acff62b6e6444383d2b154d2": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "ad0655ba379f942e531a9eac": {
     "action": "retry_now",
     "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "adef074cc6a50f8e64806326": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "ae4e4d792dd0cea96b88c809": {
+    "action": "retry_now",
+    "confidence": 0.589,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ae7352e5369e8eca1e77da0c": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "af40deed3b16f4bbd4682443": {
+    "action": "retry_now",
+    "confidence": 0.57,
     "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
     "evidence_citations": [
       "bank_health_score",
@@ -2089,6 +4410,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "b220f40369fbd2f70a5bbf40": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "b23b50340565051d27f9f1be": {
     "action": "retry_alternate_method",
     "confidence": 0.88,
@@ -2098,6 +4430,17 @@
       "attempts_today"
     ],
     "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "b2bb7253569fe63b2cb6a7b8": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "b33d10d60690729b23e91ae7": {
@@ -2133,6 +4476,39 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "b4d786e54a7bd7ebe449a70f": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "b503316dbc610e4a9e4edd4a": {
+    "action": "retry_delayed",
+    "confidence": 0.588,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "b5542606f1ced6f62e2c82d9": {
+    "action": "retry_delayed",
+    "confidence": 0.555,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "b55a5cee064eb4c848315d79": {
     "action": "retry_alternate_method",
     "confidence": 0.8,
@@ -2164,6 +4540,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "b7020426765a3d873b54c60c": {
+    "action": "retry_now",
+    "confidence": 0.555,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
   "b889976321ebdda56662a7d8": {
@@ -2210,6 +4597,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "b9c954c0b1f23c68f50de762": {
+    "action": "retry_alternate_method",
+    "confidence": 0.796,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
   "bb63eb557909cd5d9e09b59f": {
     "action": "retry_delayed",
     "confidence": 0.565,
@@ -2243,6 +4641,28 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "bc05dccec91c38614598bc64": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "bc0de5b2644f09e3f3087e17": {
+    "action": "retry_now",
+    "confidence": 0.558,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "bd23061c8eb9ed22649d8155": {
     "action": "retry_now",
     "confidence": 0.591,
@@ -2252,6 +4672,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "be104f5b3c22aaa11b44e045": {
+    "action": "retry_delayed",
+    "confidence": 0.558,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
   "becb59bd6d8c9ec683a5e0a8": {
@@ -2265,6 +4696,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "bf259e4e6204501108c5da7a": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "bfdae3aac542424a34e28baf": {
     "action": "retry_delayed",
     "confidence": 0.576,
@@ -2276,6 +4718,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "c0083bf7afe226eff51faae6": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "c043a36e7f86d59bae1c570d": {
     "action": "retry_delayed",
     "confidence": 0.574,
@@ -2285,6 +4738,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "c06a50fe674de537e04eb343": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "c21704aba285cb9f64128aea": {
@@ -2309,9 +4773,53 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "c3cb2e3b536de21840318730": {
+    "action": "retry_now",
+    "confidence": 0.568,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "c4a83d9259b397ae97ea4e02": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "c4e70cf8a8eeded4f30f849c": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "c56531b0081e8841639bf8a0": {
     "action": "retry_now",
     "confidence": 0.567,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "c5b523fc7224155b661e9b9b": {
+    "action": "retry_now",
+    "confidence": 0.564,
     "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
     "evidence_citations": [
       "bank_health_score",
@@ -2329,6 +4837,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "c60ea8d4ae206c13e49e80eb": {
+    "action": "retry_now",
+    "confidence": 0.552,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
   "c6b71a7da647a10f99a728cd": {
@@ -2353,6 +4872,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "c825681d3e14d3f688a1fd39": {
+    "action": "retry_delayed",
+    "confidence": 0.556,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "ca85b484e02a86e635da2675": {
     "action": "retry_now",
     "confidence": 0.588,
@@ -2362,6 +4892,28 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "cac01835ca7ad3754105c087": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "cadf6dcafe9419ae377c59e7": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "caf3e9d06d5dc8afe2479ab5": {
@@ -2386,6 +4938,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "cb7a5c00088422191cef3c08": {
+    "action": "retry_now",
+    "confidence": 0.587,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "cbac1df3cf4879bb9dea987f": {
     "action": "retry_now",
     "confidence": 0.569,
@@ -2395,6 +4958,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "cc26e244bb32a99f6e902899": {
+    "action": "retry_alternate_method",
+    "confidence": 0.795,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
     "source": "llm_heuristic"
   },
   "cc8ddc34a1e043b50deecf5a": {
@@ -2419,9 +4993,42 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "cca6221b54b7caa494baed1c": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "ce508acf60058f758ba0f6fe": {
     "action": "retry_delayed",
     "confidence": 0.563,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "cecdaa268cd6b8d9a71bad64": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "cf146b7cce1d3a90459357f4": {
+    "action": "retry_delayed",
+    "confidence": 0.56,
     "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
     "evidence_citations": [
       "bank_health_score",
@@ -2439,6 +5046,72 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "d027cf96363e44950d708aaa": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "d0ac9654ab5c946af953dba7": {
+    "action": "retry_now",
+    "confidence": 0.597,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "d0b1a1d8c4ceaa7b06b02164": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "d165c2ac16dc6a7192a34c0e": {
+    "action": "retry_now",
+    "confidence": 0.553,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "d190f5e2823d62128275a788": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "d258955c45e523941b621100": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "d35603c3c876ef2f51c2b450": {
@@ -2540,9 +5213,53 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "d8c992384c33044f5c33e58b": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "d93a60eadf701387c8be197f": {
+    "action": "retry_delayed",
+    "confidence": 0.561,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "d943d7aa5cc172eb892dc9e6": {
     "action": "retry_delayed",
     "confidence": 0.552,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "d9a81f25c9e8446112b5d09a": {
+    "action": "retry_delayed",
+    "confidence": 0.553,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "da774a454164f0df1f69c01a": {
+    "action": "retry_delayed",
+    "confidence": 0.557,
     "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
     "evidence_citations": [
       "bank_health_score",
@@ -2560,6 +5277,39 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "dba925095cde4b53d5124d4b": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "dbbe778adb6abd9aa302cbb7": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "dbf5958572912d036e74c747": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "dc0715d0c8c34963a7b7f7e9": {
@@ -2606,6 +5356,72 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "dcbf6e5bbb3f5af452b42e5b": {
+    "action": "retry_delayed",
+    "confidence": 0.561,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "dccea2eab3529066660e24e8": {
+    "action": "retry_delayed",
+    "confidence": 0.563,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "dd746fa0ebe8e1697e7d46d8": {
+    "action": "retry_delayed",
+    "confidence": 0.55,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "ddf3f16dfe50636f24bcd8a4": {
+    "action": "retry_delayed",
+    "confidence": 0.565,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "de24f3a55f34c95b3bfaa5e8": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "de7242ddd468a79bd1f4a053": {
+    "action": "retry_delayed",
+    "confidence": 0.579,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "df8d3ff1290062b9991ff4f5": {
     "action": "retry_delayed",
     "confidence": 0.561,
@@ -2626,6 +5442,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e045dc5af9ba9034672a27ec": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "e04a695b3d3e39534e294ac7": {
@@ -2683,6 +5510,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "e1d656ed28664dde59aa756d": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "e2c0fa2b7450053015c70465": {
     "action": "retry_now",
     "confidence": 0.554,
@@ -2716,9 +5554,31 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "e32d50726b4fba3058f730ff": {
+    "action": "retry_now",
+    "confidence": 0.6,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "e474b06f897d360d82375cd7": {
     "action": "retry_alternate_method",
     "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "e4862274348d5720385c3093": {
+    "action": "retry_alternate_method",
+    "confidence": 0.795,
     "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
     "evidence_citations": [
       "bank_health_score",
@@ -2747,6 +5607,50 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e52b0dbcc815a8c1d8d11bd1": {
+    "action": "retry_delayed",
+    "confidence": 0.55,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "e536a3a2eccf8813f0dc0ad5": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "e6c5adba793ed5f691c17176": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "e7ca9b5ed556a1c4c0531b4a": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "e86f9563646a5f067a99fbbe": {
@@ -2793,6 +5697,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "e99e15f08c64ee26cc54657e": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "e9bae71f80ac59f49798bbfa": {
     "action": "retry_now",
     "confidence": 0.576,
@@ -2802,6 +5717,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ea700062efafaa4029eb57ff": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "eb3cc107fb2b40448574e8da": {
@@ -2815,6 +5741,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "eb47ddcdbb58da18e759cd8f": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "ecad569399c567d78819af20": {
     "action": "retry_now",
     "confidence": 0.663,
@@ -2824,6 +5761,39 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ecbfc7d10841a0ff7f069f80": {
+    "action": "retry_alternate_method",
+    "confidence": 0.795,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "ed2a4b738d8f9c1530427a1a": {
+    "action": "retry_now",
+    "confidence": 0.554,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ee5e073580614fa19d24a808": {
+    "action": "retry_delayed",
+    "confidence": 0.559,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
   "eef32f27bddc18c7f257bdf3": {
@@ -2881,6 +5851,39 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "f0fdf1be2678a3fb2bc2e686": {
+    "action": "retry_now",
+    "confidence": 0.554,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "f16e276b43dd23ba77366c0b": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "f266ff3ce683aade4bc26e50": {
+    "action": "retry_delayed",
+    "confidence": 0.553,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "f27592b9a246976bd7ba17d2": {
     "action": "retry_delayed",
     "confidence": 0.663,
@@ -2914,6 +5917,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "f439c2a4c8e803e015d734bc": {
+    "action": "retry_delayed",
+    "confidence": 0.596,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "f4b99eb0479e72d30fd9689b": {
     "action": "retry_now",
     "confidence": 0.57,
@@ -2936,6 +5950,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "f53f7435e8476a5ed32a5895": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
   "f5b2f32866bd501d4a68e3d0": {
     "action": "retry_delayed",
     "confidence": 0.663,
@@ -2945,6 +5970,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "f6792331d03f7b352459520f": {
+    "action": "retry_now",
+    "confidence": 0.555,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
   "f6c12f2d6acca2940a9c623e": {
@@ -2958,6 +5994,17 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "f7427f5c232fe4ffbb0b6eaf": {
+    "action": "retry_delayed",
+    "confidence": 0.557,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
   "f7e08f8a3acaea6f07460b12": {
     "action": "retry_delayed",
     "confidence": 0.568,
@@ -2969,6 +6016,50 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "f84527220a27f5918238d8ea": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "f9898d9d42e5b003c4e328bc": {
+    "action": "retry_now",
+    "confidence": 0.569,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "f9ec722db47c66def33e3502": {
+    "action": "retry_now",
+    "confidence": 0.574,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "f9f62b054cc8fd6ae86e5012": {
+    "action": "retry_now",
+    "confidence": 0.587,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "fa09bf52bba4d4068763c03e": {
     "action": "retry_now",
     "confidence": 0.663,
@@ -2978,6 +6069,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "fa17ed78166f4920c47cbbe3": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "fa3b6005af4604f173daf6b3": {
@@ -3000,6 +6102,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "faf279bea66d7ddc874ad57d": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "fb4dccbb2702e55e60a3afdc": {
@@ -3046,9 +6159,53 @@
     "root_cause": "bank_decline",
     "source": "llm_heuristic"
   },
+  "fcd5edfec5e1fe9afb2b96cf": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
+  "fd1c28d7af2338b34faf2f07": {
+    "action": "retry_delayed",
+    "confidence": 0.561,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "fd7d1e62efa0ac568c46a5a3": {
+    "action": "retry_now",
+    "confidence": 0.555,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "fd7ea1a4b74606654827f0b3": {
     "action": "retry_now",
     "confidence": 0.557,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "fdfeb8cf993b72c8a4ad8f30": {
+    "action": "retry_now",
+    "confidence": 0.586,
     "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
     "evidence_citations": [
       "bank_health_score",
@@ -3077,6 +6234,17 @@
       "attempts_today"
     ],
     "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "ffee3b4d5b45ddeae5d7d848": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   }
 }
