@@ -118,3 +118,41 @@ def test_openrouter_http_error_is_surfaced_not_silent(tmp_path, monkeypatch):
     out = llm_agent._call_openrouter(ev)
     assert out is None
     assert "401" in llm_agent.LAST_LIVE_ERROR
+
+
+def test_rate_limited_model_fails_over_to_next_in_chain(monkeypatch):
+    import io, json as _json
+    import urllib.request
+    import urllib.error
+
+    llm_agent._MODEL_COOLDOWN.clear()
+    monkeypatch.delenv("OPENROUTER_MODEL", raising=False)   # built-in chain
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or-v1-dummy")
+    monkeypatch.setattr("time.sleep", lambda s: None)       # no real backoff wait
+    chain = llm_agent._model_chain()
+    assert len(chain) >= 2
+
+    calls = {"n": 0}
+
+    class FakeResp:
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def read(self):
+            content = _json.dumps({"root_cause": "intent_drop", "confidence": 0.7,
+                                   "action": "send_payment_link",
+                                   "evidence_citations": ["x"], "draft_message": "ok"})
+            return _json.dumps({"choices": [{"message": {"content": content}}]}).encode()
+
+    def fake_urlopen(req, timeout):
+        calls["n"] += 1
+        if calls["n"] <= 2:  # head model 429s on BOTH of its attempts
+            raise urllib.error.HTTPError("url", 429, "rate limited", hdrs=None,
+                                         fp=io.BytesIO(b'{"error":{"code":429}}'))
+        return FakeResp()    # second model in the chain answers
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    out = llm_agent._call_openrouter(_packet())
+    assert out is not None, llm_agent.LAST_LIVE_ERROR
+    assert calls["n"] == 3                       # 2 saturated attempts + 1 success
+    assert out["source"].startswith(f"llm_openrouter:{chain[1]}"), out["source"]
+    assert chain[0] in llm_agent._MODEL_COOLDOWN  # benched: later events skip it

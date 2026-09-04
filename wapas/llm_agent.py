@@ -37,6 +37,32 @@ LIVE_CACHE_PATH = Path(__file__).resolve().parent.parent / "cache" / "diagnosis_
 # OpenRouter (OpenAI-compatible REST; stdlib urllib — no new dependencies).
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 OPENROUTER_DEFAULT_MODEL = "google/gemma-4-31b-it:free"
+# Free-model pools get saturated independently, so a 429 on one model says
+# nothing about the others. On rate limits we walk this chain; whichever
+# model actually answers is recorded in the response's `source` tag, so
+# provenance stays honest. All verified present in OpenRouter's free
+# catalog on 2026-09-05.
+OPENROUTER_FALLBACK_MODELS = [
+    "google/gemma-4-31b-it:free",
+    "z-ai/glm-5.2:free",
+    "minimax/minimax-m3:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
+    "inclusionai/ling-3.0-flash-fin:free",
+]
+# Once a model rate-limits us, bench it for a while so batch runs don't
+# hammer a saturated pool on every single event.
+_MODEL_COOLDOWN: dict = {}
+COOLDOWN_SECONDS = 180.0
+
+
+def _model_chain() -> list:
+    """OPENROUTER_MODEL overrides the HEAD of the chain (comma-separate for
+    several); the remaining built-in free models follow, so a user who set
+    the old single-model env var still gets automatic failover."""
+    env = os.environ.get("OPENROUTER_MODEL", "").strip()
+    head = [m.strip() for m in env.split(",") if m.strip()] if env else OPENROUTER_FALLBACK_MODELS[:1]
+    tail = [m for m in OPENROUTER_FALLBACK_MODELS if m not in head]
+    return head + tail
 
 # Human-readable reason the most recent live call failed ("" on success).
 # Surfaced by scripts/live_demo.py so a silent fallback can never masquerade
@@ -194,9 +220,11 @@ def _draft_message(cause: str) -> str:
 
 def _call_openrouter(evidence: EvidencePacket) -> Optional[dict]:
     """Real LLM call via OpenRouter (OpenAI-compatible REST, stdlib urllib).
-    Needs OPENROUTER_API_KEY; model from OPENROUTER_MODEL (sensible free default).
-    Retries once on rate limits; returns None on any failure so the caller
-    falls back gracefully (recorded as such — never silently 'AI-washed')."""
+    Needs OPENROUTER_API_KEY. Walks the free-model chain on rate limits
+    (429/404: one quick retry, then the next model; benched models are
+    skipped for COOLDOWN_SECONDS). 401/402 (bad key / no credits) fail fast
+    — those are true for every model. Returns None on total failure so the
+    caller falls back gracefully (recorded as such — never 'AI-washed')."""
     import urllib.request
     import urllib.error
     import time as _time
@@ -205,10 +233,19 @@ def _call_openrouter(evidence: EvidencePacket) -> Optional[dict]:
     if not api_key:
         set_last_live_error("no OPENROUTER_API_KEY in environment")
         return None
-    model = os.environ.get("OPENROUTER_MODEL", OPENROUTER_DEFAULT_MODEL)
 
-    payload = {
-        "model": model,
+    now = _time.time()
+    chain = [m for m in _model_chain() if now - _MODEL_COOLDOWN.get(m, 0) >= COOLDOWN_SECONDS]
+    chain = chain or _model_chain()  # everything benched -> try anyway
+    errors = []
+
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://github.com/pegasus102/wapas",
+        "X-Title": "WAPAS revenue recovery",
+    }
+    base_payload = {
         "max_tokens": 400,
         "temperature": 0.2,
         "messages": [
@@ -216,41 +253,45 @@ def _call_openrouter(evidence: EvidencePacket) -> Optional[dict]:
             {"role": "user", "content": json.dumps(evidence.to_dict(), default=str)},
         ],
     }
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://github.com/pegasus102/wapas",
-        "X-Title": "WAPAS revenue recovery",
-    }
 
-    for attempt in range(2):  # one retry on transient/429
-        try:
-            req = urllib.request.Request(
-                OPENROUTER_URL, data=json.dumps(payload).encode("utf-8"),
-                headers=headers, method="POST")
-            with urllib.request.urlopen(req, timeout=25) as resp:
-                body = json.loads(resp.read().decode("utf-8"))
-            text = body["choices"][0]["message"]["content"].strip()
-            text = text.removeprefix("```json").removeprefix("```")
-            text = text.removesuffix("```").strip()
-            result = json.loads(text)
-            result["source"] = f"llm_openrouter:{model}"
-            result["model"] = model
-            set_last_live_error("")  # success clears any stale error
-            return result
-        except urllib.error.HTTPError as e:
+    for model in chain:
+        payload = dict(base_payload, model=model)
+        for attempt in range(2):  # one retry per model on transient/429
             try:
-                detail = e.read().decode("utf-8", "replace")[:220]
-            except Exception:
-                detail = ""
-            set_last_live_error(f"HTTP {e.code} from OpenRouter: {detail}".strip())
-            if e.code in (429, 502, 503) and attempt == 0:
-                _time.sleep(6)   # rate limit: brief backoff, one retry
-                continue
-            return None
-        except Exception as e:
-            set_last_live_error(f"{type(e).__name__}: {e}")
-            return None
+                req = urllib.request.Request(
+                    OPENROUTER_URL, data=json.dumps(payload).encode("utf-8"),
+                    headers=headers, method="POST")
+                with urllib.request.urlopen(req, timeout=25) as resp:
+                    body = json.loads(resp.read().decode("utf-8"))
+                text = body["choices"][0]["message"]["content"].strip()
+                text = text.removeprefix("```json").removeprefix("```")
+                text = text.removesuffix("```").strip()
+                result = json.loads(text)
+                result["source"] = f"llm_openrouter:{model}"
+                result["model"] = model
+                _MODEL_COOLDOWN.pop(model, None)
+                set_last_live_error("")  # success clears any stale error
+                return result
+            except urllib.error.HTTPError as e:
+                try:
+                    detail = e.read().decode("utf-8", "replace")[:200]
+                except Exception:
+                    detail = ""
+                msg = f"[{model}] HTTP {e.code}: {detail}".strip()
+                if e.code in (401, 402):  # key/credits problem — same for all models
+                    set_last_live_error(msg)
+                    return None
+                if e.code in (429, 502, 503) and attempt == 0:
+                    _time.sleep(5)   # brief backoff, one retry on same model
+                    continue
+                errors.append(msg)
+                if e.code in (429, 404):
+                    _MODEL_COOLDOWN[model] = _time.time()  # bench saturated/dead model
+                break  # next model
+            except Exception as e:
+                errors.append(f"[{model}] {type(e).__name__}: {e}")
+                break
+    set_last_live_error("; ".join(errors) if errors else "all OpenRouter attempts failed")
     return None
 
 

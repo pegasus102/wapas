@@ -72,7 +72,7 @@ Individual targets:
 
 | Command | What it does |
 |---|---|
-| `make test` | runs the test suite (73 tests: engine, ledger, dashboard contract, live-LLM tier) |
+| `make test` | runs the test suite (74 tests: engine, ledger, dashboard contract, live-LLM tier) |
 | `make batch` | regenerates data + runs the 3-arm experiment + writes `out/RESULTS.md` |
 | `make verify` | recomputes every ledger's hash chain, reports tamper if any |
 | `make verify-results` | regenerates results from scratch and diffs against the committed copy |
