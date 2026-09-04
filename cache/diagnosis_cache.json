@@ -1,0 +1,3082 @@
+{
+  "002b4d014a6dfbc7d5699f27": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "0035eb8d5f27bd6cab7fe49a": {
+    "action": "retry_now",
+    "confidence": 0.581,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "012ceddcc7466d81683e4d72": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "0367ca17582482bdd772df39": {
+    "action": "retry_now",
+    "confidence": 0.573,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "03ce40e1b349bafa21af1c73": {
+    "action": "retry_delayed",
+    "confidence": 0.562,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "0554988596168ffe37fe3c96": {
+    "action": "retry_now",
+    "confidence": 0.598,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "0605a4f5cb4c941aee44aa5d": {
+    "action": "retry_delayed",
+    "confidence": 0.579,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "067ac4c009b16c95c3cd09d5": {
+    "action": "retry_alternate_method",
+    "confidence": 0.796,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "0880c73eda8e99d6aa375693": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "0a0bf94111333107f3f5e5ff": {
+    "action": "retry_now",
+    "confidence": 0.578,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "0aa40b9e3992b63f404ce19c": {
+    "action": "retry_now",
+    "confidence": 0.563,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "0bc3499d78056ce97cc02d00": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "0bc6d9fec997930b12930b96": {
+    "action": "retry_now",
+    "confidence": 0.562,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "0c7b6f8db358403fc8395814": {
+    "action": "retry_alternate_method",
+    "confidence": 0.796,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "0e29acface1a6d562a500224": {
+    "action": "retry_now",
+    "confidence": 0.584,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "0e525e82402953bbb27c6425": {
+    "action": "retry_delayed",
+    "confidence": 0.578,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "0fb96a763857f94fb4e4ebac": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "104c49a77389b71fd77f4853": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "10568ef37ee17c8529691325": {
+    "action": "retry_now",
+    "confidence": 0.558,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "11810d0d785b135b27732f76": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "120fa67daf474d10550cab20": {
+    "action": "retry_delayed",
+    "confidence": 0.552,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "128177f98ae445fdcccf6a13": {
+    "action": "retry_now",
+    "confidence": 0.567,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "12a249c3dd5eaf1048c86560": {
+    "action": "retry_now",
+    "confidence": 0.575,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "12f036fad6dcdf1c51d0f4fa": {
+    "action": "retry_now",
+    "confidence": 0.557,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "131dabf8e53a0109393fb265": {
+    "action": "retry_now",
+    "confidence": 0.577,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "1404bbc5e9fa40e7b14cb118": {
+    "action": "retry_now",
+    "confidence": 0.558,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "14148180eff7930e086a1677": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "1479f95ac0eecb62387f6d40": {
+    "action": "retry_now",
+    "confidence": 0.593,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "148c826d10f88bac36d7d231": {
+    "action": "retry_now",
+    "confidence": 0.569,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "14cafc3a0ac93508cf69e9fe": {
+    "action": "retry_delayed",
+    "confidence": 0.562,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "1569c97fcb81cbca3eef6827": {
+    "action": "retry_now",
+    "confidence": 0.576,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "1643317fb1b5e10c9641a887": {
+    "action": "retry_now",
+    "confidence": 0.597,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "16ce0d1b7ba41cc5dfbb059a": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "173eb6e8f39a3842b129d970": {
+    "action": "retry_delayed",
+    "confidence": 0.635,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "19b813258c2d2a21fae8e615": {
+    "action": "retry_delayed",
+    "confidence": 0.58,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "1a146ab9697f3aee28c677bb": {
+    "action": "retry_now",
+    "confidence": 0.581,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "1b6d474cdd62148bb92221e2": {
+    "action": "retry_now",
+    "confidence": 0.558,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "1c96951aa2beb4627ffcd660": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "1d1560da9a378896ac418f88": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "1d8848f98ff4e8fa22789b5f": {
+    "action": "retry_delayed",
+    "confidence": 0.562,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "1f71fc07e9b631f6a714499f": {
+    "action": "retry_delayed",
+    "confidence": 0.563,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "1fc2ab716dd0ce23dbf85e93": {
+    "action": "retry_delayed",
+    "confidence": 0.564,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "22669f1eeec4d0cfdf48f52e": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "22b894864097f481a80ab85b": {
+    "action": "retry_delayed",
+    "confidence": 0.618,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "28689058d4cdc1af13c1135c": {
+    "action": "retry_now",
+    "confidence": 0.585,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "28cab2471d9b14904778c2b4": {
+    "action": "retry_now",
+    "confidence": 0.579,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "2a3e9238f82ac5c56e022a65": {
+    "action": "retry_now",
+    "confidence": 0.611,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "2a6985cecd03843be9fdaede": {
+    "action": "retry_now",
+    "confidence": 0.568,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "2ae4936fbfc6206adcf09cce": {
+    "action": "retry_now",
+    "confidence": 0.574,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "2c68777d75e15607e295b041": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "2cf41552c2c524ce69c03994": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "2f4afb5b86388ab9818a9b5c": {
+    "action": "retry_now",
+    "confidence": 0.557,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "2f82703c6bb2ff8dba4180fc": {
+    "action": "retry_now",
+    "confidence": 0.648,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "3179e60d4c095404c604e29b": {
+    "action": "retry_now",
+    "confidence": 0.571,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "321e05b3e1765b1ac2d5d844": {
+    "action": "retry_alternate_method",
+    "confidence": 0.792,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "3342d57960da86057da3c931": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "33e12a300635821d6aa46e45": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "3446bff944dea9f34fb2b650": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "34eec0f9bef155f54c325891": {
+    "action": "retry_delayed",
+    "confidence": 0.573,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "3504c6d515324ee81d643be4": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "35e68f6f9cab85545b632e12": {
+    "action": "retry_now",
+    "confidence": 0.557,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "364bc8e6f122c632277830e5": {
+    "action": "retry_now",
+    "confidence": 0.592,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "3677647dc1ff1a891c402ba2": {
+    "action": "retry_now",
+    "confidence": 0.555,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "36c9272d657d1f5ccf438d53": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "37dc15a2db77bcaa1db5e241": {
+    "action": "retry_delayed",
+    "confidence": 0.648,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "3885d9b4bb26871636ddd1c0": {
+    "action": "retry_now",
+    "confidence": 0.564,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "38c282eb901424c02068e5c0": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "3902ced01b50d7c71d207161": {
+    "action": "retry_delayed",
+    "confidence": 0.551,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "3a30d3268f744495c82998f0": {
+    "action": "retry_now",
+    "confidence": 0.584,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "3abe2edfe3e82d5a99dfc8c6": {
+    "action": "retry_now",
+    "confidence": 0.593,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "3b1dc0f8470d094fa09fbe60": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "3c67a27d1f818cdfa35b995e": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "3c8e08a8f6efc06b33bf0ec1": {
+    "action": "retry_now",
+    "confidence": 0.582,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "3ffeb4597fdf4850d2f75a45": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "41d306975fc4aaf9e5bef803": {
+    "action": "retry_now",
+    "confidence": 0.551,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "42d364872e3e4f6b29f9925f": {
+    "action": "retry_delayed",
+    "confidence": 0.619,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "43b1535c4cdd2de582622665": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "449e99736591c627fa07a3bf": {
+    "action": "retry_delayed",
+    "confidence": 0.646,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "44f1171fc30587b6c90e040d": {
+    "action": "retry_delayed",
+    "confidence": 0.644,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "452405447295bdd27635962e": {
+    "action": "retry_delayed",
+    "confidence": 0.606,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "455008c95ad1f08a9219ff90": {
+    "action": "retry_delayed",
+    "confidence": 0.551,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "458327ed261172cdb1a3ae91": {
+    "action": "retry_now",
+    "confidence": 0.556,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4667c4bc26685657a13d024b": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "47f791dc9cd8789fe3392d9f": {
+    "action": "retry_delayed",
+    "confidence": 0.57,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "49ebb2288d2c6ba3f9cca214": {
+    "action": "retry_now",
+    "confidence": 0.555,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4ab500565c861b7015ff0b05": {
+    "action": "retry_now",
+    "confidence": 0.578,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4bdb8a4f0e5b318e0c5d4498": {
+    "action": "retry_now",
+    "confidence": 0.585,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4c1b322e89de23618c2f5805": {
+    "action": "retry_now",
+    "confidence": 0.64,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4c9fe33317092185bb4928d5": {
+    "action": "retry_now",
+    "confidence": 0.644,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4cdebbc90f88b5cf8873f76e": {
+    "action": "retry_now",
+    "confidence": 0.573,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4da8d775b9e824e0a58e4b78": {
+    "action": "retry_now",
+    "confidence": 0.586,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4e452c76bd267f08296b34a7": {
+    "action": "retry_now",
+    "confidence": 0.588,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "4e5102c603ab3a70134c88f3": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "504f16028cd7979de37f0128": {
+    "action": "retry_delayed",
+    "confidence": 0.574,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "51f1985a72076a5615abc48e": {
+    "action": "retry_now",
+    "confidence": 0.59,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "529a7260534abdfacc400283": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "550c2ee1cd9d521b66b75f12": {
+    "action": "retry_now",
+    "confidence": 0.56,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5577d376c00e2cb264fa0560": {
+    "action": "retry_alternate_method",
+    "confidence": 0.792,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "55886de8c46e22d0eab05369": {
+    "action": "retry_now",
+    "confidence": 0.581,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "56d2f01f383ddd5e73d8e969": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5849867ef9b97e29e5c098b8": {
+    "action": "retry_delayed",
+    "confidence": 0.579,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "58eb44c4fc8b2e2a02d542ef": {
+    "action": "retry_delayed",
+    "confidence": 0.572,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "59a1dadd00f867cba6b3b791": {
+    "action": "retry_now",
+    "confidence": 0.592,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5b65bb980ca4cd7e1b3a198a": {
+    "action": "retry_now",
+    "confidence": 0.56,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5c50097a735abee89e6803a0": {
+    "action": "retry_delayed",
+    "confidence": 0.579,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "5c81831a2778990d2e104aef": {
+    "action": "retry_now",
+    "confidence": 0.614,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5db901eed5726874245ff595": {
+    "action": "retry_now",
+    "confidence": 0.594,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5e321b00d82ee26d716f812d": {
+    "action": "retry_now",
+    "confidence": 0.576,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5e5a044e85788b69298687cc": {
+    "action": "retry_now",
+    "confidence": 0.592,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "5ef74382703585457c17ec17": {
+    "action": "retry_now",
+    "confidence": 0.589,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "60263ef6cad7e608df041207": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "635435da09d5a816066f223f": {
+    "action": "retry_alternate_method",
+    "confidence": 0.799,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "635f880fd607d67d94022eed": {
+    "action": "retry_now",
+    "confidence": 0.565,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "68a24d008aef010ce7fb0b36": {
+    "action": "retry_delayed",
+    "confidence": 0.571,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "6905faefd59a3c31a4d9abc3": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "69507cb1137f4026dc03316e": {
+    "action": "retry_now",
+    "confidence": 0.565,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "6953e663dfc22add5266870e": {
+    "action": "retry_delayed",
+    "confidence": 0.633,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "6a411ad4bf3a69c6c24a7d39": {
+    "action": "retry_delayed",
+    "confidence": 0.57,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "6aea73a5c5f3b67ec79544f0": {
+    "action": "retry_now",
+    "confidence": 0.583,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "6cc1418d42dacc3729b1e497": {
+    "action": "retry_now",
+    "confidence": 0.584,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "6e14163d9707043e5c4744f3": {
+    "action": "retry_now",
+    "confidence": 0.59,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "6f2e69577b8f01286454fe60": {
+    "action": "retry_now",
+    "confidence": 0.557,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "6f44b23ef492b25486a55778": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "6f4599fe8b687e03a245050f": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "6fde5be4abae599dbd1e2db7": {
+    "action": "retry_delayed",
+    "confidence": 0.577,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "70c909b575d2695063c235d3": {
+    "action": "retry_now",
+    "confidence": 0.564,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "715033ae76f2a35b1e140596": {
+    "action": "retry_now",
+    "confidence": 0.585,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "71509c556a6dde2bbd1491c8": {
+    "action": "retry_now",
+    "confidence": 0.581,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "71e732e27dbc79c3326ddeaf": {
+    "action": "retry_now",
+    "confidence": 0.585,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "722d841ee70d0b2ef5dd65a5": {
+    "action": "retry_delayed",
+    "confidence": 0.573,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "725b7db82e78984e60288ba2": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "751903fbbc51d3fc40285a65": {
+    "action": "retry_delayed",
+    "confidence": 0.632,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "7533b5762e810bea058fe8ea": {
+    "action": "retry_now",
+    "confidence": 0.569,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "755b9311e8fca35eced408e1": {
+    "action": "retry_now",
+    "confidence": 0.577,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "76ce681c96fce788c9491b47": {
+    "action": "retry_now",
+    "confidence": 0.587,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "7859f596a33874920829341d": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "7c95b45997858cc4e3cc6133": {
+    "action": "retry_delayed",
+    "confidence": 0.624,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "7d09a104acc9ef25b2309604": {
+    "action": "retry_now",
+    "confidence": 0.572,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "7e5450e299ed771e341ff821": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "7fb578ed70afb79e6edf9933": {
+    "action": "retry_now",
+    "confidence": 0.574,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "801fbdb921d1dbd21c637d32": {
+    "action": "retry_now",
+    "confidence": 0.651,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "80a66188dc09f3f80d659e0c": {
+    "action": "retry_delayed",
+    "confidence": 0.56,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "810833c277bd5bea7f28e9f5": {
+    "action": "retry_delayed",
+    "confidence": 0.562,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "832137c05e9afbafdce8ce46": {
+    "action": "retry_now",
+    "confidence": 0.625,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "8376c1c34d7e2e95515817ce": {
+    "action": "retry_delayed",
+    "confidence": 0.57,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "840d759337cc45a4c02184e8": {
+    "action": "retry_delayed",
+    "confidence": 0.575,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "844628bf242d3f013c77f2b0": {
+    "action": "retry_alternate_method",
+    "confidence": 0.797,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "8640847fd961d5b107b45e34": {
+    "action": "retry_now",
+    "confidence": 0.56,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "8787796a4181d2e3a6d85448": {
+    "action": "retry_delayed",
+    "confidence": 0.575,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "8809ed4cf18c99c3124fb638": {
+    "action": "retry_now",
+    "confidence": 0.596,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "898b2d50e7485c8c96717102": {
+    "action": "retry_delayed",
+    "confidence": 0.59,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "8a0b5a4942d72613f241e7c4": {
+    "action": "retry_delayed",
+    "confidence": 0.573,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "8a976306dfcc1ceae59adaae": {
+    "action": "retry_now",
+    "confidence": 0.577,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "8ea3203727a3859c5ae77fbf": {
+    "action": "retry_delayed",
+    "confidence": 0.561,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "8fc4d9b71434e17d6a97a413": {
+    "action": "retry_delayed",
+    "confidence": 0.552,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "904e0fd2017fc6fcf4dd56a5": {
+    "action": "retry_now",
+    "confidence": 0.596,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "917d1b60942e074088613999": {
+    "action": "retry_delayed",
+    "confidence": 0.566,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "93bc79ec01e2922852a78478": {
+    "action": "retry_now",
+    "confidence": 0.57,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "945cebb6866bb194754db076": {
+    "action": "retry_delayed",
+    "confidence": 0.651,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "961b6688f8c7c18d0882a4aa": {
+    "action": "retry_now",
+    "confidence": 0.576,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "96aeb563349282bfcf7a4821": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "97785297f8005660bae898ae": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "979be481fc0ff2edb5940e58": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "98ddfffd577f4bb5a7ec0520": {
+    "action": "retry_delayed",
+    "confidence": 0.575,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "9a50258b19f3fa1a3c6dbd73": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "9b7f245d7e20bcd35e4be668": {
+    "action": "retry_now",
+    "confidence": 0.553,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "9bcdacb8df245dad95791d9f": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "9c8707d83382c9904d86bb81": {
+    "action": "retry_now",
+    "confidence": 0.597,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "9e735301f0159c1e3e4d6a82": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "9fe38a7728b64af33c9635b8": {
+    "action": "retry_now",
+    "confidence": 0.57,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "a24ec6667131ff0993f28c63": {
+    "action": "retry_alternate_method",
+    "confidence": 0.798,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "a3d5330d98994672dbb1d609": {
+    "action": "retry_now",
+    "confidence": 0.588,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "a43158de46a5e38d1c5e2f65": {
+    "action": "retry_delayed",
+    "confidence": 0.579,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "a457e1f871d4a9927b44b5b2": {
+    "action": "retry_now",
+    "confidence": 0.569,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "a460cd4905a35072d7805c11": {
+    "action": "retry_now",
+    "confidence": 0.581,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "a5ec45e1c792b5b247164c77": {
+    "action": "retry_alternate_method",
+    "confidence": 0.798,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "a6741f319ecc62895a01d5fd": {
+    "action": "retry_delayed",
+    "confidence": 0.567,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "a6eaea81539e46c88d67fb87": {
+    "action": "retry_delayed",
+    "confidence": 0.573,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "a762ee55bac798b2ea23c110": {
+    "action": "retry_now",
+    "confidence": 0.589,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "a805f9313617ca644be05f56": {
+    "action": "retry_now",
+    "confidence": 0.564,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "a81ad2358a3849041700885b": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "aa5b897e8929c94a7f43974d": {
+    "action": "retry_now",
+    "confidence": 0.596,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "aadfdee12858ce886efa0a74": {
+    "action": "retry_now",
+    "confidence": 0.568,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "aae04d8897fdec9a133a03c4": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ab03779e1accffe1c479a506": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ab9e5ffa722ba40923d933f2": {
+    "action": "retry_now",
+    "confidence": 0.575,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ac46c737837182460b921a90": {
+    "action": "retry_now",
+    "confidence": 0.556,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ad0655ba379f942e531a9eac": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "af6a17c0791f2c75ba01e819": {
+    "action": "retry_now",
+    "confidence": 0.592,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "afdf5cb092655ee782b1d440": {
+    "action": "retry_now",
+    "confidence": 0.592,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "b23b50340565051d27f9f1be": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "b33d10d60690729b23e91ae7": {
+    "action": "retry_delayed",
+    "confidence": 0.565,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "b389575170839c357962f11e": {
+    "action": "retry_now",
+    "confidence": 0.587,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "b3e0f46671a8ea333221bbf2": {
+    "action": "retry_now",
+    "confidence": 0.578,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "b55a5cee064eb4c848315d79": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "b5e44436d42db20f1e4a5854": {
+    "action": "retry_delayed",
+    "confidence": 0.645,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "b60f23cd05d90cbf83db0fb6": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "b889976321ebdda56662a7d8": {
+    "action": "retry_now",
+    "confidence": 0.618,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "b95c0b8348df5426453d4b43": {
+    "action": "retry_now",
+    "confidence": 0.576,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "b970beb11ed5bda2b00088f6": {
+    "action": "retry_now",
+    "confidence": 0.607,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "b9c1c874c2b1d88c1c264c6a": {
+    "action": "retry_delayed",
+    "confidence": 0.552,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "bb63eb557909cd5d9e09b59f": {
+    "action": "retry_delayed",
+    "confidence": 0.565,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "bbaa5136f11185d7918d775e": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "bbfda131019648e848a5ffcc": {
+    "action": "retry_now",
+    "confidence": 0.567,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "bd23061c8eb9ed22649d8155": {
+    "action": "retry_now",
+    "confidence": 0.591,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "becb59bd6d8c9ec683a5e0a8": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "bfdae3aac542424a34e28baf": {
+    "action": "retry_delayed",
+    "confidence": 0.576,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "c043a36e7f86d59bae1c570d": {
+    "action": "retry_delayed",
+    "confidence": 0.574,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "c21704aba285cb9f64128aea": {
+    "action": "retry_delayed",
+    "confidence": 0.551,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "c26295c9963b68523bc4debe": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "c56531b0081e8841639bf8a0": {
+    "action": "retry_now",
+    "confidence": 0.567,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "c5d1d4700498fafc3562d9df": {
+    "action": "retry_delayed",
+    "confidence": 0.58,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "c6b71a7da647a10f99a728cd": {
+    "action": "retry_delayed",
+    "confidence": 0.552,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "c81795216edbbeed0bb6f617": {
+    "action": "retry_now",
+    "confidence": 0.633,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ca85b484e02a86e635da2675": {
+    "action": "retry_now",
+    "confidence": 0.588,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "caf3e9d06d5dc8afe2479ab5": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "caff1ea0d42d33837864a79a": {
+    "action": "retry_delayed",
+    "confidence": 0.559,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "cbac1df3cf4879bb9dea987f": {
+    "action": "retry_now",
+    "confidence": 0.569,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "cc8ddc34a1e043b50deecf5a": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "cc9138e977941bd48ab650c2": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ce508acf60058f758ba0f6fe": {
+    "action": "retry_delayed",
+    "confidence": 0.563,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "d0178fce2803ad88d21f7d3c": {
+    "action": "retry_delayed",
+    "confidence": 0.641,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "d35603c3c876ef2f51c2b450": {
+    "action": "retry_delayed",
+    "confidence": 0.581,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "d3ef359ecbc01eb59944c316": {
+    "action": "retry_delayed",
+    "confidence": 0.553,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "d4525312ebb6b9a45f394ff0": {
+    "action": "retry_delayed",
+    "confidence": 0.581,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "d49c2359ce189e24b09e4c57": {
+    "action": "retry_now",
+    "confidence": 0.581,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "d549263e5e738696a40ee213": {
+    "action": "retry_now",
+    "confidence": 0.553,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "d607ac16cc172d8e3497c07c": {
+    "action": "retry_now",
+    "confidence": 0.567,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "d852fb3a1d0e69b53e6492c5": {
+    "action": "retry_now",
+    "confidence": 0.587,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "d85c7c79173dcbe46a0e51c6": {
+    "action": "retry_delayed",
+    "confidence": 0.579,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "d8996dd908838fcc53165544": {
+    "action": "retry_delayed",
+    "confidence": 0.58,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "d943d7aa5cc172eb892dc9e6": {
+    "action": "retry_delayed",
+    "confidence": 0.552,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "dafd24d12cd7aca6af7d26e5": {
+    "action": "retry_now",
+    "confidence": 0.589,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "dc0715d0c8c34963a7b7f7e9": {
+    "action": "retry_alternate_method",
+    "confidence": 0.793,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "dc09864aa4214afad201274b": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "dc7e1e835152ff11ccd62975": {
+    "action": "retry_delayed",
+    "confidence": 0.559,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "dc9dba263ecdc30afb315c31": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "df8d3ff1290062b9991ff4f5": {
+    "action": "retry_delayed",
+    "confidence": 0.561,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "e01089b3353df5af009b8ba5": {
+    "action": "retry_now",
+    "confidence": 0.581,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e04a695b3d3e39534e294ac7": {
+    "action": "retry_delayed",
+    "confidence": 0.593,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "e0cf58fa380563b5892ac300": {
+    "action": "retry_now",
+    "confidence": 0.558,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e0d169fa8ca7f0d846fe6f94": {
+    "action": "retry_alternate_method",
+    "confidence": 0.799,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "e0e7639beba77308808e4b40": {
+    "action": "retry_now",
+    "confidence": 0.582,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e13c0f01f6fa75adc471f647": {
+    "action": "retry_delayed",
+    "confidence": 0.656,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "e2c0fa2b7450053015c70465": {
+    "action": "retry_now",
+    "confidence": 0.554,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e2e57726fc1f472ae4f884bb": {
+    "action": "retry_now",
+    "confidence": 0.56,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e2fe9f0012f471c24fcf8692": {
+    "action": "retry_now",
+    "confidence": 0.57,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e474b06f897d360d82375cd7": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "e48f15571f4edb3ae449b45d": {
+    "action": "retry_delayed",
+    "confidence": 0.569,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "e4cec83e1767285c61d57b05": {
+    "action": "retry_now",
+    "confidence": 0.575,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e86f9563646a5f067a99fbbe": {
+    "action": "retry_now",
+    "confidence": 0.584,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e8bd56c9a430e1a0345f42f0": {
+    "action": "retry_delayed",
+    "confidence": 0.55,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "e8c320fed2df24cbaae09825": {
+    "action": "retry_now",
+    "confidence": 0.587,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e8e8407511ae4050eb2f9fdb": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "e9bae71f80ac59f49798bbfa": {
+    "action": "retry_now",
+    "confidence": 0.576,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "eb3cc107fb2b40448574e8da": {
+    "action": "retry_delayed",
+    "confidence": 0.572,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "ecad569399c567d78819af20": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "eef32f27bddc18c7f257bdf3": {
+    "action": "retry_now",
+    "confidence": 0.644,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "ef9371bb10e3a0a4e79d9ce9": {
+    "action": "retry_alternate_method",
+    "confidence": 0.795,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "efd1188caa2aebf946d98f9a": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "f07dae09e010824f3da577ea": {
+    "action": "retry_now",
+    "confidence": 0.563,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "f08e6693fccdaf5b44277b8e": {
+    "action": "retry_now",
+    "confidence": 0.562,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "f27592b9a246976bd7ba17d2": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "f2947d8adba044ee8e901706": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "f2b7f872ad5ce88cff48a90a": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "f4b99eb0479e72d30fd9689b": {
+    "action": "retry_now",
+    "confidence": 0.57,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "f4c0ed184eebd32366a447df": {
+    "action": "retry_delayed",
+    "confidence": 0.564,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "f5b2f32866bd501d4a68e3d0": {
+    "action": "retry_delayed",
+    "confidence": 0.663,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "f6c12f2d6acca2940a9c623e": {
+    "action": "retry_now",
+    "confidence": 0.563,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "f7e08f8a3acaea6f07460b12": {
+    "action": "retry_delayed",
+    "confidence": 0.568,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "fa09bf52bba4d4068763c03e": {
+    "action": "retry_now",
+    "confidence": 0.663,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "fa3b6005af4604f173daf6b3": {
+    "action": "retry_now",
+    "confidence": 0.58,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "fa69cc2ae15a5600dc033646": {
+    "action": "retry_delayed",
+    "confidence": 0.573,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "fb4dccbb2702e55e60a3afdc": {
+    "action": "retry_alternate_method",
+    "confidence": 0.797,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "fc4e53f5ac60ed60aeb2ae10": {
+    "action": "retry_delayed",
+    "confidence": 0.552,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "fcc5c56a02e41032dc0f0191": {
+    "action": "retry_delayed",
+    "confidence": 0.577,
+    "draft_message": "We noticed your bank had a temporary issue \u2014 we'll retry automatically once it clears.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_outage",
+    "source": "llm_heuristic"
+  },
+  "fccfc971d8d5145157cd0cc4": {
+    "action": "retry_now",
+    "confidence": 0.56,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "fd7ea1a4b74606654827f0b3": {
+    "action": "retry_now",
+    "confidence": 0.557,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "fe67befe035c9e9892d82139": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "ff9278f3078246ab14d8887c": {
+    "action": "retry_alternate_method",
+    "confidence": 0.88,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  }
+}

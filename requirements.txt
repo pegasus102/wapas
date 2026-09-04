@@ -1,0 +1,12 @@
+# Core engine (data_foundry, diagnosis, policy_gate, executor, ledger,
+# measurement, eval) uses ONLY the Python standard library — this is
+# deliberate, not an oversight (see adr/why-no-heavy-deps.md): fewer
+# dependencies means `make all` can never fail because of a broken
+# pip install on a judge's machine.
+
+pytest>=7.0
+
+# Optional, only needed for --live mode (real Claude API calls on the
+# ~24% of events the rules tier can't resolve on its own). Not required
+# for `make all` — offline replay from the committed cache is the default.
+# anthropic>=0.40.0
