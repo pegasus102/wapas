@@ -1,37 +1,49 @@
 """
 wapas.policy_gate
 -------------------
-The deterministic core. The LLM NEVER executes here — it only produced a
-*proposed* root_cause/action upstream. This module decides whether that
-proposal is allowed to happen, and if not, what happens instead.
+The deterministic core. The LLM never executes here — upstream it produced
+a PROPOSAL (root_cause, action, confidence). This module decides what, if
+anything, actually happens, in a fixed order:
 
-Four checks, in order, any of which can veto the LLM's proposal:
-  1. AUTHORITY  (consent ladder)      -> policy_gate.authority()
-  2. STATIC SAFETY (caps, hours, DNC) -> policy_gate.static_safety()
-  3. ADAPTIVE SAFETY (circuit breaker)-> Gate.circuit_breaker_check()
-  4. IDEMPOTENCY (dedupe)             -> Gate.idempotency_check()
+  0. kill switch        -> nothing happens until a named human lifts it
+  1. idempotency        -> the same (customer, invoice, attempt) never executes twice
+  2. allowlist          -> an off-menu action goes to a human
+  3. confidence         -> a low-confidence diagnosis goes to a human (never dropped)
+  4. hard safety        -> evidence-only rules that hold even for policies that
+                           ignore diagnosis: risk-flagged -> human only;
+                           bank-confirmed debit -> verify, never re-charge
+  5. authority ladder   -> L1 live approval | L2 standing mandate | L3 human.
+                           "No authority, no action": a pull with no mandate
+                           becomes a link the customer must approve; an
+                           alternate method is never covered by a mandate;
+                           an immediate mandate debit without the RBI
+                           pre-debit notice becomes a delayed one.
+  6. circuit breaker    -> (root_cause, action) pairs with a high rolling
+                           complaint rate are suspended; re-enable is human-only
+  7. static safety      -> DNC, contact cap, human capacity, daily budget;
+                           TRAI quiet hours DEFER to 09:00 IST, they don't drop
+  8. execute            -> record contact, spend, consume the idempotency key
 
-"No authority, no action" — every decision carries an `authority` field
-into the ledger, even blocked ones.
+Every decision — including blocked ones — carries an `authority` field and
+the full `gate_trace` into the ledger. Nothing in this module imports or
+reads the hidden cause (enforced by tests/test_policy_gate.py).
 """
 
 from __future__ import annotations
 from dataclasses import dataclass, field
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
+from typing import Optional
 
-from .schema import EvidencePacket, NEVER_RETRY_CAUSES, ACTIONS
+from .schema import EvidencePacket, ACTIONS, RETRY_SHAPED_ACTIONS, LINK_ACTIONS, IST
 
-RETRY_SHAPED_ACTIONS = {"retry_now", "retry_delayed", "retry_alternate_method"}
-LINK_ACTIONS = {"send_payment_link", "send_reauth_mandate_link"}
+HUMAN_ONLY = {"escalate_human", "no_action"}
+CHARGE_SHAPED = RETRY_SHAPED_ACTIONS | LINK_ACTIONS     # anything that could move money again
 
-QUIET_HOURS_START = time(21, 0)   # 21:00 IST — TRAI TCCCPR unsolicited-comms window
-QUIET_HOURS_END = time(9, 0)      # 09:00 IST
-
-CONTACT_CAP_PER_WINDOW = 2
-CONTACT_WINDOW_DAYS = 7
-CONFIDENCE_THRESHOLD = 0.55
-DAILY_BUDGET = 5000.0            # ₹, simulated
-ACTION_COST = {                  # ₹ cost per contact channel, simulated
+# Simulated per-action cost in INR (SMS/link fees, human time). Reported as
+# net ₹ in measurement; the daily budget cap below is a real stopping rule
+# but does not bind at this batch's volume (~13 events/day) — it is the
+# knob the kill-switch/budget demo turns.
+ACTION_COST_INR = {
     "send_payment_link": 0.35,
     "send_reauth_mandate_link": 0.35,
     "verify_then_reassure": 0.10,
@@ -39,196 +51,287 @@ ACTION_COST = {                  # ₹ cost per contact channel, simulated
     "retry_delayed": 0.05,
     "retry_alternate_method": 0.05,
     "refund": 0.0,
-    "escalate_human": 8.0,       # human time, simulated
+    "escalate_human": 8.0,
     "no_action": 0.0,
 }
 
-# Adaptive circuit breaker parameters
-BREAKER_MIN_VOLUME = 8
-BREAKER_COMPLAINT_RATE_THRESHOLD = 0.30
+
+@dataclass(frozen=True)
+class GateConfig:
+    """Per-merchant knobs (merchant.yaml in a later step)."""
+    contact_cap_per_window: int = 2
+    contact_window_days: int = 7
+    quiet_start: time = time(21, 0)        # TRAI TCCCPR quiet window, IST
+    quiet_end: time = time(9, 0)
+    confidence_threshold: float = 0.55
+    daily_budget_inr: float = 2000.0
+    human_capacity_per_day: int = 6        # one support agent's realistic escalation load
+    breaker_window: int = 50
+    breaker_min_volume: int = 30
+    breaker_complaint_rate: float = 0.30
 
 
-def authority(evidence: EvidencePacket, root_cause: str, action: str) -> tuple[str | None, str]:
-    """Returns (authority_level, reason). authority_level in {L1, L2, L3, None}."""
+DEFAULT_CONFIG = GateConfig()
+
+
+# ---------------------------------------------------------------------------
+# time helpers — everything is evaluated in IST, whatever tz the caller used
+# ---------------------------------------------------------------------------
+def to_ist(now: datetime) -> datetime:
+    return now.replace(tzinfo=IST) if now.tzinfo is None else now.astimezone(IST)
+
+
+def is_quiet_hours(now: datetime, cfg: GateConfig = DEFAULT_CONFIG) -> bool:
+    t = to_ist(now).time()
+    return t >= cfg.quiet_start or t < cfg.quiet_end
+
+
+def next_allowed_time(now: datetime, cfg: GateConfig = DEFAULT_CONFIG) -> datetime:
+    now = to_ist(now)
+    day = now.date() if now.time() < cfg.quiet_end else now.date() + timedelta(days=1)
+    return datetime.combine(day, cfg.quiet_end, tzinfo=IST)
+
+
+# ---------------------------------------------------------------------------
+# pure checks
+# ---------------------------------------------------------------------------
+def hard_safety(evidence: EvidencePacket, action: str) -> tuple[str, Optional[str]]:
+    """Evidence-only rules. Protect even a policy that ignores diagnosis."""
+    if evidence.error_reason == "RISK_BLOCKED" and action not in HUMAN_ONLY:
+        return "escalate_human", "hard_block: risk-flagged payment -> human only"
+    if evidence.debit_confirmation_flag and action in CHARGE_SHAPED:
+        return "verify_then_reassure", "hard_block: bank confirmed debit -> verify, never re-charge"
+    return action, None
+
+
+def authority(evidence: EvidencePacket, action: str) -> tuple[Optional[str], str, str]:
+    """Returns (level, possibly-downgraded action, reason). level in {L1,L2,L3,None}."""
     if action == "no_action":
-        return None, "no action taken; no authority needed"
-
-    # Hard never-retry rules, evidence-based (NOT hidden-truth-based) so they
-    # protect the system even against a policy that ignores diagnosis
-    # entirely (e.g. the naive baseline arm B): if the bank confirms debit,
-    # or the merchant's own risk system already flagged this payment, no
-    # retry-shaped action may proceed no matter what was proposed.
-    if evidence.debit_confirmation_flag and action in RETRY_SHAPED_ACTIONS:
-        return None, "hard_block:debit_confirmation_flag forbids retry-shaped action"
-    if evidence.error_reason == "RISK_BLOCKED" and action in RETRY_SHAPED_ACTIONS:
-        return None, "hard_block:risk_flagged forbids retry-shaped action"
-
+        return None, action, "no action; no authority needed"
     if action == "escalate_human":
-        return "L3", "routed to human agent"
-
-    if action in LINK_ACTIONS or action == "verify_then_reassure" or action == "refund":
-        # A payment link / reassurance / refund always requires the customer
-        # to actively authenticate (PIN/OTP) or is a merchant-side reversal —
-        # this is "live approval", not a standing mandate being pulled.
-        return "L1", "requires live customer action (PIN/OTP) or merchant-side refund"
-
+        return "L3", action, "human agent owns the case"
+    if action in LINK_ACTIONS or action in ("verify_then_reassure", "refund"):
+        return "L1", action, "customer authenticates live (PIN/OTP) or merchant-side reversal"
     if action in RETRY_SHAPED_ACTIONS:
+        if action == "retry_alternate_method":
+            return "L1", "send_payment_link", "alternate method is not covered by any mandate -> link with method fallback"
         if evidence.mandate_status == "active":
-            return "L2", "standing mandate, within RBI pre-debit-notification terms"
-        return None, "blocked: no active mandate and no live approval for a retry"
-
-    return None, f"blocked: action '{action}' has no defined authority path"
-
-
-def static_safety(
-    evidence: EvidencePacket,
-    root_cause: str,
-    action: str,
-    confidence: float,
-    contacts_in_window: int,
-    now: datetime,
-    dnc: set[str],
-    budget_spent_today: float,
-) -> tuple[bool, str]:
-    if action not in ACTIONS:
-        return False, "blocked: action not in fixed allowlist"
-
-    if evidence.customer_id in dnc:
-        return False, "blocked: customer on do-not-contact list"
-
-    if action != "no_action" and confidence < CONFIDENCE_THRESHOLD:
-        return False, "blocked: confidence below threshold, requires human"
-
-    if action != "no_action" and contacts_in_window >= CONTACT_CAP_PER_WINDOW:
-        return False, f"blocked: contact cap ({CONTACT_CAP_PER_WINDOW}/{CONTACT_WINDOW_DAYS}d) reached"
-
-    t = now.time()
-    is_quiet = t >= QUIET_HOURS_START or t < QUIET_HOURS_END
-    if action != "no_action" and is_quiet:
-        return False, "blocked: within TRAI quiet hours (21:00-09:00 IST)"
-
-    cost = ACTION_COST.get(action, 0.0)
-    if budget_spent_today + cost > DAILY_BUDGET:
-        return False, "blocked: daily recovery budget exceeded"
-
-    return True, "static safety passed"
+            if action == "retry_now" and not evidence.predebit_notified:
+                return "L2", "retry_delayed", "standing mandate; RBI pre-debit notice not yet sent -> delayed retry after notice"
+            return "L2", action, "standing mandate within cap; pre-debit notice respected"
+        return "L1", "send_payment_link", "no standing mandate -> cannot pull; customer must approve via link"
+    return None, "escalate_human", f"no authority path for '{action}'"
 
 
+# ---------------------------------------------------------------------------
+# stateful gate
+# ---------------------------------------------------------------------------
 @dataclass
 class Gate:
-    """Stateful gate: tracks contacts, budget, DNC, idempotency keys, and
-    the adaptive circuit breaker across a batch run."""
+    cfg: GateConfig = field(default_factory=lambda: DEFAULT_CONFIG)
+    dnc: set = field(default_factory=set)
+    halted: bool = False
+    halted_by: Optional[str] = None
+    breaker_events: list = field(default_factory=list)
+    _contacts: dict = field(default_factory=dict)
+    _keys: dict = field(default_factory=dict)            # idempotency key -> state
+    _budget_by_day: dict = field(default_factory=dict)
+    _human_by_day: dict = field(default_factory=dict)
+    _breaker_outcomes: dict = field(default_factory=dict)
+    _breaker_suspended: set = field(default_factory=set)
+    _scheduled: list = field(default_factory=list)
 
-    dnc: set[str] = field(default_factory=set)
-    _contacts: dict[str, list[datetime]] = field(default_factory=dict)
-    _used_keys: set[tuple] = field(default_factory=set)
-    _budget_spent_by_day: dict[str, float] = field(default_factory=dict)
-    _breaker_outcomes: dict[tuple, list[bool]] = field(default_factory=dict)
-    _breaker_suspended: set[tuple] = field(default_factory=set)
-
+    # -- bookkeeping ---------------------------------------------------------
     def contacts_in_window(self, customer_id: str, now: datetime) -> int:
-        history = self._contacts.get(customer_id, [])
-        cutoff = now.timestamp() - CONTACT_WINDOW_DAYS * 86400
-        return sum(1 for t in history if t.timestamp() >= cutoff)
+        cutoff = to_ist(now) - timedelta(days=self.cfg.contact_window_days)
+        return sum(1 for t in self._contacts.get(customer_id, []) if t >= cutoff)
 
-    def record_contact(self, customer_id: str, now: datetime) -> None:
-        self._contacts.setdefault(customer_id, []).append(now)
+    def record_contact(self, customer_id: str, when: datetime) -> None:
+        self._contacts.setdefault(customer_id, []).append(to_ist(when))
 
-    def idempotency_check(self, customer_id: str, invoice_id: str, attempt_no: int) -> bool:
-        """Returns True if this is a NEW action (safe to proceed), False if a
-        duplicate (must not execute again)."""
-        key = (customer_id, invoice_id, attempt_no)
-        if key in self._used_keys:
-            return False
-        self._used_keys.add(key)
-        return True
+    def budget_spent_today(self, now: datetime) -> float:
+        return self._budget_by_day.get(to_ist(now).date().isoformat(), 0.0)
 
+    def humans_today(self, now: datetime) -> int:
+        return self._human_by_day.get(to_ist(now).date().isoformat(), 0)
+
+    def key_state(self, customer_id: str, invoice_id: str, attempt_no: int) -> Optional[str]:
+        return self._keys.get((customer_id, invoice_id, attempt_no))
+
+    # -- kill switch ---------------------------------------------------------
+    def halt(self, operator_id: str) -> dict:
+        if not operator_id:
+            raise ValueError("kill switch requires a named operator")
+        self.halted, self.halted_by = True, operator_id
+        cancelled = self.cancel_scheduled()
+        return {"type": "kill_switch", "by": operator_id, "scheduled_cancelled": cancelled}
+
+    def resume(self, operator_id: str) -> None:
+        if not operator_id:
+            raise ValueError("resume requires a named operator")
+        self.halted, self.halted_by = False, None
+
+    def cancel_scheduled(self) -> int:
+        n = 0
+        for key, _when in self._scheduled:
+            if self._keys.get(key) == "scheduled":
+                self._keys[key] = "cancelled"
+                n += 1
+        self._scheduled.clear()
+        return n
+
+    # -- circuit breaker -----------------------------------------------------
     def circuit_breaker_check(self, root_cause: str, action: str) -> tuple[bool, str]:
         key = (root_cause, action)
         if key in self._breaker_suspended:
-            return False, f"blocked: circuit breaker tripped for ({root_cause}, {action})"
+            return False, f"circuit breaker: ({root_cause}, {action}) suspended"
         return True, "breaker ok"
 
     def circuit_breaker_record(self, root_cause: str, action: str, complaint: bool) -> None:
+        if action == "no_action":
+            return                                  # nobody was contacted
         key = (root_cause, action)
-        outcomes = self._breaker_outcomes.setdefault(key, [])
-        outcomes.append(complaint)
-        if len(outcomes) >= BREAKER_MIN_VOLUME:
-            recent = outcomes[-BREAKER_MIN_VOLUME:]
-            rate = sum(recent) / len(recent)
-            if rate >= BREAKER_COMPLAINT_RATE_THRESHOLD:
-                self._breaker_suspended.add(key)  # fail-closed; human-only re-enable
+        if key in self._breaker_suspended:
+            return
+        hist = self._breaker_outcomes.setdefault(key, [])
+        hist.append(bool(complaint))
+        if len(hist) > self.cfg.breaker_window:
+            del hist[0]
+        if len(hist) >= self.cfg.breaker_min_volume:
+            rate = sum(hist) / len(hist)
+            if rate >= self.cfg.breaker_complaint_rate:
+                self._breaker_suspended.add(key)
+                self.breaker_events.append({
+                    "type": "breaker_tripped", "root_cause": root_cause, "action": action,
+                    "complaint_rate": round(rate, 3), "volume": len(hist),
+                })
 
-    def spend(self, now: datetime, action: str) -> None:
-        day = now.date().isoformat()
-        self._budget_spent_by_day[day] = self._budget_spent_by_day.get(day, 0.0) + ACTION_COST.get(action, 0.0)
+    def reenable(self, root_cause: str, action: str, operator_id: str) -> dict:
+        """Fail-closed: only a named human can re-enable a suspended pair."""
+        if not operator_id:
+            raise ValueError("fail-closed: re-enable requires a named human operator")
+        key = (root_cause, action)
+        self._breaker_suspended.discard(key)
+        self._breaker_outcomes.pop(key, None)       # hysteresis: must re-accumulate min volume
+        event = {"type": "breaker_reenabled", "root_cause": root_cause, "action": action, "by": operator_id}
+        self.breaker_events.append(event)
+        return event
 
-    def budget_spent_today(self, now: datetime) -> float:
-        return self._budget_spent_by_day.get(now.date().isoformat(), 0.0)
-
-    def decide(self, evidence: EvidencePacket, diagnosis: dict, now: datetime) -> dict:
-        """Full pipeline: authority -> static safety -> breaker -> idempotency.
-        Returns a decision dict ready to be logged to the ledger."""
-        root_cause = diagnosis["root_cause"]
-        proposed_action = diagnosis["action"]
-        confidence = diagnosis["confidence"]
-        contacts_before = self.contacts_in_window(evidence.customer_id, now)
-
-        auth_level, auth_reason = authority(evidence, root_cause, proposed_action)
-        final_action = proposed_action
-        blocked_reason = None
-
-        if auth_level is None and proposed_action != "no_action":
-            blocked_reason = auth_reason
-            if auth_reason.startswith("hard_block:debit_confirmation_flag"):
-                final_action = "verify_then_reassure"
-            elif auth_reason.startswith("hard_block:risk_flagged"):
-                final_action = "escalate_human"
-            else:
-                # No clear authority path (e.g. retry with no active
-                # mandate and no live approval) -> hand to a human rather
-                # than silently drop it or invent authority.
-                final_action = "escalate_human"
-            auth_level, _ = authority(evidence, root_cause, final_action)
-
-        ok_static, static_reason = static_safety(
-            evidence, root_cause, final_action, confidence,
-            contacts_before,
-            now, self.dnc, self.budget_spent_today(now),
-        )
-        if not ok_static:
-            blocked_reason = blocked_reason or static_reason
-            final_action = "no_action"
-            auth_level = None
-
-        ok_breaker, breaker_reason = self.circuit_breaker_check(root_cause, final_action)
-        if not ok_breaker:
-            blocked_reason = blocked_reason or breaker_reason
-            final_action = "escalate_human"
-            auth_level = "L3"
-
-        is_new = self.idempotency_check(evidence.customer_id, evidence.invoice_id, evidence.attempt_no)
-        if not is_new:
-            blocked_reason = "blocked: duplicate action (idempotency key already used)"
-            final_action = "no_action"
-            auth_level = None
-
-        approved = final_action != "no_action" or proposed_action == "no_action"
-        if final_action != "no_action":
-            self.record_contact(evidence.customer_id, now)
-            self.spend(now, final_action)
-
+    def breaker_status(self) -> dict:
         return {
-            "event_id": evidence.event_id,
-            "customer_id": evidence.customer_id,
-            "invoice_id": evidence.invoice_id,
-            "proposed_action": proposed_action,
-            "final_action": final_action,
-            "root_cause": root_cause,
-            "confidence": confidence,
-            "authority": auth_level,
-            "blocked_reason": blocked_reason,
-            "diagnosis_source": diagnosis.get("source"),
-            "policy_result": "approved" if blocked_reason is None else "modified_or_blocked",
-            "contacts_before": contacts_before,
+            "suspended": sorted(list(k) for k in self._breaker_suspended),
+            "rates": {f"{c}|{a}": round(sum(h) / len(h), 3) for (c, a), h in self._breaker_outcomes.items() if h},
         }
+
+    # -- the decision --------------------------------------------------------
+    def decide(self, evidence: EvidencePacket, diagnosis: dict, now: datetime) -> dict:
+        cfg = self.cfg
+        now = to_ist(now)
+        day = now.date().isoformat()
+        root_cause = diagnosis["root_cause"]
+        proposed = diagnosis["action"]
+        confidence = float(diagnosis.get("confidence", 0.0))
+        trace: list[str] = []
+        contacts_before = self.contacts_in_window(evidence.customer_id, now)
+        key = (evidence.customer_id, evidence.invoice_id, evidence.attempt_no)
+
+        def row(final_action, level, auth_reason, policy_result, blocked_reason=None, scheduled_for=None):
+            deferred_h = round((scheduled_for - now).total_seconds() / 3600, 2) if scheduled_for else 0.0
+            return {
+                "event_id": evidence.event_id,
+                "customer_id": evidence.customer_id,
+                "invoice_id": evidence.invoice_id,
+                "attempt_no": evidence.attempt_no,
+                "amount": evidence.amount,
+                "decided_at": now.isoformat(),
+                "proposed_action": proposed,
+                "final_action": final_action,
+                "root_cause": root_cause,
+                "confidence": confidence,
+                "diagnosis_source": diagnosis.get("source"),
+                "authority": level,
+                "authority_reason": auth_reason,
+                "policy_result": policy_result,
+                "blocked_reason": blocked_reason,
+                "scheduled_for": scheduled_for.isoformat() if scheduled_for else None,
+                "deferred_hours": deferred_h,
+                "gate_trace": list(trace),
+                "contacts_before": contacts_before,
+                "action_cost_inr": ACTION_COST_INR.get(final_action, 0.0) if final_action != "no_action" else 0.0,
+            }
+
+        # 0. kill switch
+        if self.halted:
+            trace.append(f"kill switch active (halted by {self.halted_by})")
+            return row("no_action", None, "kill switch", "blocked", blocked_reason="blocked: kill switch active")
+
+        # 1. idempotency
+        if self._keys.get(key) in ("executed", "scheduled"):
+            trace.append("idempotency: key already consumed")
+            return row("no_action", None, "duplicate", "duplicate",
+                       blocked_reason="blocked: duplicate action (idempotency key already consumed)")
+
+        # 2. allowlist
+        action = proposed
+        if action not in ACTIONS:
+            trace.append(f"allowlist: '{action}' is off-menu -> escalate_human")
+            action = "escalate_human"
+
+        # 3. confidence
+        if action not in HUMAN_ONLY and confidence < cfg.confidence_threshold:
+            trace.append(f"confidence {confidence:.2f} < {cfg.confidence_threshold} -> escalate_human")
+            action = "escalate_human"
+
+        # 4. hard safety
+        action, hard_reason = hard_safety(evidence, action)
+        if hard_reason:
+            trace.append(hard_reason)
+
+        # 5. authority
+        level, action, auth_reason = authority(evidence, action)
+        trace.append(f"authority {level or 'none'}: {auth_reason}")
+
+        # 6. circuit breaker
+        ok_breaker, breaker_reason = self.circuit_breaker_check(root_cause, action)
+        if not ok_breaker:
+            trace.append(breaker_reason + " -> escalate_human")
+            action, level, auth_reason = "escalate_human", "L3", "circuit breaker redirected to human"
+
+        if action == "no_action":                    # only reachable when proposed == no_action
+            self._keys[key] = "cancelled"
+            return row("no_action", None, auth_reason, "approved")
+
+        # 7. static safety
+        cost = ACTION_COST_INR.get(action, 0.0)
+        blocked = None
+        if evidence.customer_id in self.dnc:
+            blocked = "blocked: customer on do-not-contact list"
+        elif contacts_before >= cfg.contact_cap_per_window:
+            blocked = f"blocked: contact cap ({cfg.contact_cap_per_window}/{cfg.contact_window_days}d) reached"
+        elif action == "escalate_human" and self.humans_today(now) >= cfg.human_capacity_per_day:
+            blocked = f"blocked: human capacity ({cfg.human_capacity_per_day}/day) exhausted"
+        elif self.budget_spent_today(now) + cost > cfg.daily_budget_inr:
+            blocked = "blocked: daily recovery budget exceeded"
+        if blocked:
+            trace.append(blocked)
+            self._keys[key] = "cancelled"
+            return row("no_action", None, auth_reason, "blocked", blocked_reason=blocked)
+
+        scheduled_for = None
+        if is_quiet_hours(now, cfg):
+            scheduled_for = next_allowed_time(now, cfg)
+            trace.append(f"TRAI quiet hours (21:00-09:00 IST) -> deferred to {scheduled_for.isoformat()}")
+
+        # 8. execute
+        self.record_contact(evidence.customer_id, scheduled_for or now)
+        self._budget_by_day[day] = self._budget_by_day.get(day, 0.0) + cost
+        if action == "escalate_human":
+            self._human_by_day[day] = self._human_by_day.get(day, 0) + 1
+        if scheduled_for:
+            self._keys[key] = "scheduled"
+            self._scheduled.append((key, scheduled_for))
+            result = "deferred"
+        else:
+            self._keys[key] = "executed"
+            result = "approved" if action == proposed else "modified"
+        return row(action, level, auth_reason, result, scheduled_for=scheduled_for)

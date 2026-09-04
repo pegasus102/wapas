@@ -1,46 +1,57 @@
 """
 wapas.executor
 --------------
-Turns an APPROVED gate decision into an outcome. This file is the only
-place allowed to know the hidden `true_cause` — because it is standing in
-for the real world (a real customer's bank either does or doesn't recover
-the payment), not for any part of the diagnosis/decision pipeline.
+Turns a gate decision into an outcome. This is the ONLY module allowed to
+see the hidden true cause — it stands in for the real world (the customer's
+bank either does or doesn't recover the payment), not for any part of the
+diagnosis/decision pipeline.
 
 Common random numbers: each event's outcome draw is seeded from the
-event_id itself, NOT from a shared sequential stream. This matters because
-several "lines" in the measurement report (rules-only, oracle, WAPAS) are
-evaluated on the exact same 500-event set — if event evt_00042 gets the
-SAME action under two different lines, it must get the SAME simulated
-outcome, so that any measured gap between lines reflects a real difference
-in which action was chosen, not independent sampling noise stacked on top.
-This is a standard simulation variance-reduction technique, not a shortcut.
+event_id, not from a shared sequential stream, so two lines that pick the
+same action for the same event get the same outcome and any measured gap
+is attributable to where their actions actually differ.
 
-Two backends:
-  - sim: uses response_model.simulate_outcome() against the hidden truth.
-  - razorpay_test: (Phase-2 add-on) drives real Razorpay TEST MODE Orders /
-    Payment Links / Refunds APIs for the video demo. Not required for the
-    batch experiment to run or score.
+Backends:
+  - sim (this file): response_model.simulate_outcome() against hidden truth
+  - razorpay_test (later step): real test-mode Orders / Payment Links /
+    Refunds for the on-camera demo
 """
 
 from __future__ import annotations
 import hashlib
 import random
-from .response_model import simulate_outcome
+from .response_model import simulate_outcome, ResponseParams
 
 
 def event_rng(event_id: str, salt: str = "outcome") -> random.Random:
-    """Deterministic per-event RNG, stable across which line/arm is asking."""
     h = hashlib.sha256(f"{event_id}:{salt}".encode()).hexdigest()
     return random.Random(int(h[:16], 16))
 
 
-def execute_sim(decision: dict, true_cause: str, prior_contacts: int, rng: random.Random | None = None) -> dict:
+def execute_sim(
+    decision: dict,
+    true_cause: str,
+    prior_contacts: int,
+    rng: random.Random | None = None,
+    params: ResponseParams | None = None,
+) -> dict:
     action = decision["final_action"]
     r = rng if rng is not None else event_rng(decision["event_id"])
-    outcome = simulate_outcome(true_cause, action, prior_contacts, r)
+    outcome = simulate_outcome(true_cause, action, prior_contacts, r, params)
+
+    ttr = outcome["time_to_recovery_hours"]
+    if ttr is not None:
+        ttr = round(ttr + float(decision.get("deferred_hours") or 0.0), 1)
+
+    amount = float(decision.get("amount", 0.0))
+    cost = float(decision.get("action_cost_inr", 0.0))
+    recovered_inr = amount if outcome["recovered"] else 0.0
     return {
         "event_id": decision["event_id"],
         "action_executed": action,
         **outcome,
+        "time_to_recovery_hours": ttr,
+        "recovered_inr": recovered_inr,
+        "action_cost_inr": cost,
+        "net_inr": round(recovered_inr - cost, 2),
     }
-

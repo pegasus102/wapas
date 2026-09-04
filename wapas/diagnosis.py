@@ -1,22 +1,24 @@
 """
 wapas.diagnosis
 ----------------
-Top-level entry point the rest of the system calls. Orchestrates:
+Top-level entry point:
 
-    rules_tier.diagnose()  -- always runs first, free, deterministic
+    rules_tier.diagnose()  -- always first; free; deterministic
         |
-        +-- resolved=True  -> done, no LLM call, source="rules"
+        +-- resolved       -> done, source="rules", no LLM call
         |
-        +-- needs_llm=True -> llm_agent.diagnose() (cached / heuristic / live)
+        +-- needs_llm      -> llm_agent.diagnose() (cache / fallback / --live)
                 |
-                +-- if LLM's root_cause DISAGREES with the rules hint AND
-                |   the LLM's own confidence is not high -> route to human
-                |   (this is the "second opinion" disagreement rule)
-                +-- else -> accept LLM output, source="llm"
+                +-- the ACTION is always the policy table applied to the
+                |   LLM's root_cause. If the LLM's own stated action
+                |   disagrees with that table, it is treated as an
+                |   off-menu proposal and routed to a human.
+                +-- if the LLM disagrees with the rules hint AND its own
+                    confidence is low -> human (second-opinion rule)
 """
 
 from __future__ import annotations
-from .schema import EvidencePacket
+from .schema import EvidencePacket, CAUSE_ACTION_POLICY
 from . import rules_tier, llm_agent
 
 DISAGREEMENT_CONFIDENCE_THRESHOLD = 0.50
@@ -33,22 +35,32 @@ def diagnose_event(evidence: EvidencePacket, live: bool = False) -> dict:
             "source": "rules",
             "routed_to_llm": False,
             "routed_to_human": False,
+            "human_reason": None,
             "basis": hint["basis"],
+            "draft_message": None,
+            "llm_model": None,
         }
 
-    llm_result = llm_agent.diagnose(evidence, rules_hint=hint, live=live)
+    llm = llm_agent.diagnose(evidence, rules_hint=hint, live=live)
+    root = llm["root_cause"]
+    policy_action = CAUSE_ACTION_POLICY[root]
 
-    disagree = llm_result["root_cause"] != hint["root_cause"]
-    low_conf = llm_result["confidence"] < DISAGREEMENT_CONFIDENCE_THRESHOLD
-    routed_to_human = disagree and low_conf
+    reasons = []
+    if root != hint["root_cause"] and llm["confidence"] < DISAGREEMENT_CONFIDENCE_THRESHOLD:
+        reasons.append(f"disagrees with rules hint ({hint['root_cause']}) at confidence {llm['confidence']:.2f}")
+    if llm.get("action") not in (None, policy_action):
+        reasons.append(f"proposed action '{llm.get('action')}' inconsistent with cause '{root}'")
+    routed_to_human = bool(reasons)
 
     return {
-        "root_cause": llm_result["root_cause"],
-        "confidence": llm_result["confidence"],
-        "action": "escalate_human" if routed_to_human else llm_result["action"],
-        "source": llm_result.get("source", "llm"),
+        "root_cause": root,
+        "confidence": llm["confidence"],
+        "action": "escalate_human" if routed_to_human else policy_action,
+        "source": llm.get("source", "llm"),
         "routed_to_llm": True,
         "routed_to_human": routed_to_human,
-        "basis": f"rules_hint={hint['root_cause']}, llm={llm_result['root_cause']}",
-        "draft_message": llm_result.get("draft_message"),
+        "human_reason": "; ".join(reasons) or None,
+        "basis": f"rules_hint={hint['root_cause']} ({hint['basis']}); llm={root}",
+        "draft_message": llm.get("draft_message"),
+        "llm_model": llm.get("model"),
     }
