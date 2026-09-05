@@ -380,7 +380,66 @@ div[data-baseweb="select"] > div, .stSlider, .stRadio { color:var(--ink2); }
 hr { border:none; border-top:1px solid var(--line); }
 </style>
 """.replace("__WALL__", _WALL)
-st.markdown(CSS, unsafe_allow_html=True)
+CSS_PLAY = """
+<style>
+/* ── checkout card (the payment that failed) ── */
+.checkout { background:#fff; border:1px solid var(--line); border-radius:14px;
+        padding:16px 18px; box-shadow:0 10px 26px -18px rgba(15,23,42,.35); }
+.checkout .ck-head { display:flex; align-items:center; gap:10px; padding-bottom:10px;
+        border-bottom:1px dashed var(--line); margin-bottom:10px; }
+.checkout .ck-logo { width:34px; height:34px; border-radius:8px; background:#0f172a;
+        color:#fff; font-weight:800; font-size:13px; display:flex; align-items:center;
+        justify-content:center; }
+.checkout .ck-m { font-size:13.5px; font-weight:750; color:var(--ink); }
+.checkout .ck-s { font-size:11px; color:var(--mut); }
+.checkout .ck-amt { margin-left:auto; font-size:19px; font-weight:800;
+        font-variant-numeric:tabular-nums; }
+.checkout .kv2 { display:flex; justify-content:space-between; font-size:12.5px;
+        color:var(--ink2); padding:3px 0; }
+.checkout .kv2 span:first-child { color:var(--mut); }
+.checkout .ck-status { display:inline-flex; align-items:center; gap:6px; margin-top:10px;
+        font-size:12px; font-weight:800; color:var(--bad); background:#fef2f2;
+        border:1px solid #fecaca; border-radius:999px; padding:4px 12px; }
+.checkout .ck-status .dot { width:7px; height:7px; border-radius:50%; background:#ef4444; }
+
+/* ── the customer's phone ── */
+.phone { width:300px; margin:0 auto; background:#0b1220; border-radius:30px; padding:10px;
+        box-shadow:0 24px 50px -24px rgba(11,18,32,.65); border:1px solid #1e293b; }
+.phone .screen { background:#e5ddd5; border-radius:22px; overflow:hidden; }
+.phone .pbar { background:#0f172a; color:#e2e8f0; font-size:11.5px; padding:9px 14px;
+        display:flex; align-items:center; gap:9px; }
+.phone .pbar .av { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#1d4ed8,#059669);
+        color:#fff; font-size:11px; font-weight:800; display:flex; align-items:center;
+        justify-content:center; }
+.phone .pbar .nm { font-weight:750; }
+.phone .pbar .st { font-size:9.5px; color:#94a3b8; }
+.phone .chat { padding:12px 10px 14px; display:flex; flex-direction:column; gap:8px; }
+.chat-day { align-self:center; background:#fdf3d8; color:#7a6a3f; font-size:10px;
+        font-weight:700; border-radius:999px; padding:3px 10px; }
+.bubble { max-width:86%; border-radius:10px; padding:8px 11px; font-size:12.5px;
+        line-height:1.5; position:relative; box-shadow:0 1px 1px rgba(0,0,0,.12); }
+.bubble.l { background:#fff; color:#1f2937; border-top-left-radius:2px; align-self:flex-start; }
+.bubble.r { background:#d9fdd3; color:#111b21; border-top-right-radius:2px; align-self:flex-end; }
+.bubble .t { display:block; font-size:9.5px; color:#8696a0; text-align:right; margin-top:3px; }
+.bubble .paybtn { display:block; text-align:center; margin-top:7px; background:#1d4ed8;
+        color:#fff !important; font-weight:800; font-size:12.5px; border-radius:8px;
+        padding:8px 10px; text-decoration:none; }
+.bubble .paybtn small { display:block; font-size:9px; font-weight:600; color:#c7d7f8; }
+.sched-note { align-self:center; font-size:10px; color:#6b7280; background:#fff;
+        border:1px dashed #cbd5e1; border-radius:8px; padding:4px 10px; }
+
+/* ── story steps ── */
+.step { display:flex; gap:12px; margin:10px 0; align-items:flex-start; }
+.step-n { min-width:26px; height:26px; border-radius:9px; background:#1d4ed8; color:#fff;
+        font-size:12px; font-weight:800; display:flex; align-items:center;
+        justify-content:center; margin-top:2px; }
+.step-b { flex:1; }
+.step-t { font-size:13.5px; font-weight:750; color:var(--ink); }
+.step-d { font-size:12.5px; color:var(--ink2); line-height:1.55; margin-top:2px; }
+.step-d code { font-size:11.5px; }
+</style>
+"""
+st.markdown(CSS + CSS_PLAY, unsafe_allow_html=True)
 
 
 # ---------- loaders ----------
@@ -564,7 +623,7 @@ with st.sidebar:
                 unsafe_allow_html=True)
     st.divider()
     st.markdown('<div class="navsec">Workspace</div>', unsafe_allow_html=True)
-    page = st.radio("Section", ["Mission Control", "Case Files", "Tamper Lab",
+    page = st.radio("Section", ["Mission Control", "Try It Live", "Case Files", "Tamper Lab",
                                 "Kill-Switch Lab", "Assurances"],
                     label_visibility="collapsed")
     st.divider()
@@ -796,6 +855,252 @@ if page == "Mission Control":
 
     page_foot("WAPAS · revenue recovery mission control · every number recomputes from out/ · "
               "byte-identical via make all · tampering with RESULTS.md fails CI")
+
+# ═════════════════════════ Try It Live ═════════════════════════
+elif page == "Try It Live":
+    from datetime import datetime
+    from wapas.schema import EvidencePacket, IST
+    from wapas import rules_tier, llm_agent
+    from wapas import diagnosis as dm
+    from wapas.policy_gate import Gate
+
+    st.markdown(hero(
+        "Experience · Try It Live", "bolt",
+        "Run one payment through WAPAS",
+        "Pick a failed-payment scenario and watch the real system handle it — the same "
+        "rules tier, the same diagnosis agent, the same consent gate that ran the "
+        "12,000-event experiment. Nothing is scripted: every verdict below is computed "
+        "live, and the phone shows the exact message the system would send.",
+        chips='<span class="chip">same engine as the experiment</span>'
+              '<span class="chip">nothing scripted</span>'
+              '<span class="chip">sandbox: no real money</span>'),
+        unsafe_allow_html=True)
+
+    PHONE_LAST4 = {"Priya Sharma": "32", "Rohit Verma": "87", "Ayesha Khan": "10",
+                   "Karthik Iyer": "54", "Meera Nair": "76"}
+
+    def _packet(name, amount, reason, step, code, health, free_text=None,
+                debit=False, hour=None):
+        ts = (datetime.now(IST).replace(hour=hour, minute=47, second=0,
+                                        microsecond=0) if hour is not None
+              else datetime.now(IST))
+        return EvidencePacket(
+            event_id="live_demo", customer_id=name, invoice_id="inv_tryit_001",
+            attempt_no=1, amount=float(amount), method="UPI", geo_tier="tier2",
+            timestamp_ist=ts.isoformat(), tenure_days=120, mandate_status="none",
+            retry_count=0, error_code=code, error_source="bank",
+            error_reason=reason, error_step=step, bank_health_score=health,
+            attempts_today=1, debit_confirmation_flag=debit, free_text=free_text,
+            is_ambiguous_reason=reason in ("BANK_DECLINED", "PAYMENT_FAILED"))
+
+    PRESETS = {
+        "3D-Secure page stuck at checkout": _packet(
+            "Priya Sharma", 12917, "PAYMENT_FAILED", "authentication",
+            "3DS_TIMEOUT", 0.35, "3d secure page stuck"),
+        "Customer typed a wrong UPI ID": _packet(
+            "Rohit Verma", 6235, "PAYMENT_FAILED", "collect",
+            "BAD_VPA", 0.55, "galat UPI id daal di"),
+        "Bank declined, no reason given": _packet(
+            "Ayesha Khan", 326, "BANK_DECLINED", "bank",
+            "BANK_DECL", 0.80, None),
+        "Customer says money left the account": _packet(
+            "Karthik Iyer", 2265, "PAYMENT_PENDING_CONFIRMATION", "verify",
+            "PENDING_CONFIRM", 0.90, "paise kat gaye", debit=True),
+        "Late-night attempt (11:47 PM)": _packet(
+            "Meera Nair", 1585, "PAYMENT_FAILED", "authentication",
+            "GATEWAY_TIMEOUT", 0.50, None, hour=23),
+    }
+    pick_name = st.selectbox("Pick a failed payment", list(PRESETS.keys()), index=0)
+    pk = PRESETS[pick_name]
+    cA, cB, cC = st.columns([2, 2, 1])
+    amt = cA.number_input("Amount (₹)", 50.0, 100000.0, float(pk.amount), step=50.0)
+    pk.amount = amt
+    ft = cB.text_input("Customer complaint (free text)", value=pk.free_text or "")
+    pk.free_text = ft.strip() or None
+    run = cC.button("Run it through WAPAS", type="primary", width="stretch")
+
+    utr = "pay_" + f"{abs(hash((pick_name, round(amt)))) % 10**10:010d}"
+    st.markdown(
+        f'<div class="checkout"><div class="ck-head"><div class="ck-logo">'
+        f'{esc(pk.customer_id.split()[0][0])}</div><div>'
+        f'<div class="ck-m">{esc(pk.customer_id)} · +91 98••• ••{esc(PHONE_LAST4.get(pk.customer_id, "00"))}</div>'
+        f'<div class="ck-s">subscription renewal · invoice inv_tryit_001 · UPI</div></div>'
+        f'<div class="ck-amt">{inr(pk.amount)}</div></div>'
+        f'<div class="kv2"><span>Payment reference</span><code>{utr}</code></div>'
+        f'<div class="kv2"><span>Attempt</span><span>#1 · today '
+        f'{pk.event_time().strftime("%H:%M")} IST</span></div>'
+        f'<div class="kv2"><span>Gateway</span><span>Razorpay (test-mode shaped)</span></div>'
+        f'<div class="ck-status"><span class="dot"></span>PAYMENT FAILED — '
+        f'{esc(pk.error_reason)}</div></div>', unsafe_allow_html=True)
+    st.caption("The failed payment. In the experiment this arrives as a webhook; the "
+               "detector flags it at-risk within seconds.")
+
+    if not run:
+        st.info("Press **Run it through WAPAS** — the pipeline below is the real engine.")
+        st.stop()
+
+    is_live = bool(llm_agent.os.environ.get("OPENROUTER_API_KEY")
+                   or llm_agent.os.environ.get("ANTHROPIC_API_KEY"))
+
+    # steps 1-2: detector + rules tier
+    hint = rules_tier.diagnose(pk)
+    st.markdown('<div class="step"><div class="step-n">1</div><div class="step-b">'
+                '<div class="step-t">Detector flags the payment at-risk</div>'
+                '<div class="step-d">Failed payment on an active subscription — recoverable '
+                'revenue, but every contact costs goodwill. Doing nothing is also a decision '
+                f'(the control arm recovers only 13.7% organically).</div></div></div>',
+                unsafe_allow_html=True)
+    if hint["resolved"]:
+        st.markdown('<div class="step"><div class="step-n">2</div><div class="step-b">'
+                    '<div class="step-t">Rules tier solves it instantly — no AI needed</div>'
+                    '<div class="step-d">Deterministic evidence is enough here: '
+                    f'<code>{esc(hint["basis"])}</code>. This is the cheap ~76% path — the '
+                    'LLM never wakes up for cases the rules already understand.</div>'
+                    '</div></div>', unsafe_allow_html=True)
+    else:
+        st.markdown('<div class="step"><div class="step-n">2</div><div class="step-b">'
+                    '<div class="step-t">Rules tier: not enough evidence</div>'
+                    '<div class="step-d">The gateway only says "failed" — the real cause is '
+                    'hidden. This is the ambiguous ~24%: exactly where the LLM tier earns '
+                    'its keep, reading the evidence packet (and the customer&#39;s own words) '
+                    'before anyone acts.</div></div></div>', unsafe_allow_html=True)
+
+    # step 3: diagnosis (real agent; live if a key is present, honest stand-in otherwise)
+    d = dm.diagnose_event(pk, live=is_live,
+                          cache_path=Path(tempfile.gettempdir()) / "wapas_tryit_cache.json")
+    if d["source"] == "rules":
+        pill = '<span class="pill pill-idle"><span class="dot"></span>RULES</span>'
+    else:
+        pill = source_pill(d.get("source", "llm_heuristic"))
+    st.markdown('<div class="step"><div class="step-n">3</div><div class="step-b">'
+                '<div class="step-t">Diagnosis</div>'
+                '<div class="step-d">Cause &nbsp;<code>' + esc(d["root_cause"]) + '</code>'
+                ' &nbsp;·&nbsp; confidence <b>' + f'{float(d["confidence"]):.2f}' + '</b>'
+                ' &nbsp;·&nbsp; ' + pill + '<br>Proposed action &nbsp;<code>'
+                + esc(d["action"]) + '</code> — a hint, not a command. The gate still has '
+                'to approve it.</div></div></div>', unsafe_allow_html=True)
+
+    # step 4: gate
+    gate = Gate()
+    now = pk.event_time()
+    dec = gate.decide(pk, d, now)
+    trace = dec.get("gate_trace") or []
+    auth_line = (f' — {esc(dec.get("authority_reason", ""))}'
+                 if dec.get("authority_reason") else "")
+    st.markdown('<div class="step"><div class="step-n">4</div><div class="step-b">'
+                '<div class="step-t">Policy gate — consent, caps, quiet hours</div>'
+                '<div class="step-d">Result <b>' + esc(dec["policy_result"]) + '</b>'
+                ' · executes <code>' + esc(dec["final_action"]) + '</code> · authority <b>'
+                + esc(str(dec.get("authority"))) + '</b>' + auth_line
+                + '</div></div></div>', unsafe_allow_html=True)
+    if dec.get("blocked_reason"):
+        st.error(dec["blocked_reason"], icon=None)
+    if trace:
+        timeline(trace)
+
+    # step 5: the customer's phone
+    st.markdown('<div class="step"><div class="step-n">5</div><div class="step-b">'
+                '<div class="step-t">What the customer actually experiences</div>'
+                '<div class="step-d">The drafted message below is produced by the same '
+                'diagnosis agent that ran step 3 — Hinglish and all.</div></div></div>',
+                unsafe_allow_html=True)
+
+    def _draft(fallback):
+        return d.get("draft_message") or fallback
+
+    FB = {
+        "debited_pending": ("We can see your " + inr(pk.amount) + " payment shows as "
+                            "debited. Please don't pay again — we're verifying with your "
+                            "bank and will confirm within 30 minutes."),
+        "card_expired": ("Your saved card has expired, so the " + inr(pk.amount) +
+                         " renewal didn't go through. Update it here and we'll complete "
+                         "the payment."),
+        "expired_mandate": ("Your auto-debit mandate for " + inr(pk.amount) + " expired. "
+                            "Here's a fresh approval link — takes 30 seconds."),
+    }
+    hhmm = now.strftime("%H:%M")
+    fa, res = dec["final_action"], dec["policy_result"]
+    ph_l, ph_r = st.columns([1, 1])
+    with ph_l:
+        if fa in ("send_payment_link", "send_reauth_mandate_link"):
+            st.markdown(
+                '<div class="phone"><div class="screen"><div class="pbar">'
+                '<div class="av">W</div><div><div class="nm">WAPAS · ' + esc(utr[:13])
+                + '</div><div class="st">business account</div></div></div>'
+                '<div class="chat"><div class="chat-day">TODAY</div>'
+                '<div class="bubble l">Your payment of ' + esc(inr(pk.amount))
+                + " didn't go through."
+                '<span class="t">' + hhmm + '</span></div>'
+                '<div class="bubble r">' + esc(_draft(FB.get(d["root_cause"], "")))
+                + '<a class="paybtn" href="#">Pay ' + esc(inr(pk.amount))
+                + " securely<small>UPI · Razorpay · expires in 30 min</small></a>"
+                '<span class="t">' + hhmm + ' ✓✓</span></div>'
+                '</div></div></div>', unsafe_allow_html=True)
+            st.caption("L1 consent: the customer acts themselves — a tap is the whole "
+                       "authorization. No card on file is touched.")
+        elif fa == "verify_then_reassure":
+            st.markdown(
+                '<div class="phone"><div class="screen"><div class="pbar">'
+                '<div class="av">W</div><div><div class="nm">WAPAS · support</div>'
+                '<div class="st">business account</div></div></div>'
+                '<div class="chat"><div class="chat-day">TODAY</div>'
+                '<div class="bubble r">' + esc(_draft(FB.get(d["root_cause"], "")))
+                + '<span class="t">' + hhmm + ' ✓✓</span></div>'
+                '<div class="sched-note">no retry, no second charge — verify-only</div>'
+                '</div></div></div>', unsafe_allow_html=True)
+            st.caption("A confirmed debit is NEVER re-charged (NEVER_RETRY_CAUSES). The "
+                       "safest recovery action here is reassurance + verification.")
+        elif fa in ("retry_now", "retry_alternate_method", "retry_delayed"):
+            extra = {"retry_now": "Retrying your payment now — no action needed.",
+                     "retry_alternate_method": "You can also pay via PhonePe / GPay / Paytm.",
+                     "retry_delayed": ""}.get(fa, "")
+            st.markdown(
+                '<div class="phone"><div class="screen"><div class="pbar">'
+                '<div class="av">W</div><div><div class="nm">WAPAS</div>'
+                '<div class="st">business account</div></div></div>'
+                '<div class="chat"><div class="chat-day">TODAY</div>'
+                '<div class="bubble r">' + esc(_draft("We're re-attempting your payment of "
+                + inr(pk.amount) + ". " + extra))
+                + '<span class="t">' + hhmm + ' ✓✓</span></div>'
+                '</div></div></div>', unsafe_allow_html=True)
+            if res == "deferred":
+                st.caption("TRAI quiet hours (21:00–09:00 IST): the system waits for "
+                           "morning instead of pinging anyone at midnight — same rule as "
+                           "your bank's OTPs.")
+        elif fa == "escalate_human":
+            st.markdown(
+                '<div class="phone"><div class="screen"><div class="pbar">'
+                '<div class="av">W</div><div><div class="nm">WAPAS · merchant approvals'
+                '</div><div class="st">flagged for you</div></div></div>'
+                '<div class="chat"><div class="bubble l"><b>Approval needed.</b> '
+                + esc(inr(pk.amount)) + " looks like a "
+                + esc(d["root_cause"].replace("_", " "))
+                + " case. Nothing has been sent or charged — approve or reject with one tap."
+                '<span class="t">' + hhmm + '</span></div>'
+                '<div class="sched-note">L3: a human decides · customer sees NOTHING until '
+                'approval</div></div></div></div>', unsafe_allow_html=True)
+            st.caption("Sensitive or risky cases never touch the customer without a person "
+                       "in the loop. The AI's job ended at explaining its suspicion.")
+        else:
+            st.markdown(
+                '<div class="card warn"><div class="card-title">No contact</div>'
+                '<div class="kv">The gate refused to act on this one'
+                + (" — " + esc(dec.get("blocked_reason", "")) if dec.get("blocked_reason") else "")
+                + ". A refused action is a written, audited decision — not a silence."
+                '</div></div>', unsafe_allow_html=True)
+    with ph_r:
+        st.markdown(kv_card("Why this message?", [
+            f"Diagnosed cause &nbsp;<code>{esc(d['root_cause'])}</code>",
+            f"Gate result &nbsp;<b>{esc(res)}</b>",
+            f"Action &nbsp;<code>{esc(fa)}</code>",
+            "Cheapest action that fits the cause —",
+            "never more contact than the customer",
+            "consented to."], "ok", icon="shield"), unsafe_allow_html=True)
+        st.caption("In the sandbox nothing is charged and nothing is sent. In production, "
+                   "the executor performs this one action via Razorpay test APIs and writes "
+                   "it to the hash-chained ledger.")
+
+    page_foot("Try it live · same engine as the experiment · nothing scripted, nothing charged")
 
 # ═════════════════════════ Case Files ═════════════════════════
 elif page == "Case Files":

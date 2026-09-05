@@ -24,7 +24,8 @@ from . import rules_tier, llm_agent
 DISAGREEMENT_CONFIDENCE_THRESHOLD = 0.50
 
 
-def diagnose_event(evidence: EvidencePacket, live: bool = False) -> dict:
+def diagnose_event(evidence: EvidencePacket, live: bool = False,
+                   cache_path=None) -> dict:
     hint = rules_tier.diagnose(evidence)
 
     if hint["resolved"]:
@@ -41,7 +42,8 @@ def diagnose_event(evidence: EvidencePacket, live: bool = False) -> dict:
             "llm_model": None,
         }
 
-    llm = llm_agent.diagnose(evidence, rules_hint=hint, live=live)
+    llm = llm_agent.diagnose(evidence, rules_hint=hint, live=live,
+                             cache_path=cache_path)
     root = llm["root_cause"]
     policy_action = CAUSE_ACTION_POLICY[root]
 
