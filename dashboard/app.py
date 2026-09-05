@@ -1,9 +1,15 @@
 """
-WAPAS — Recovery Control (dashboard)
-------------------------------------
+WAPAS — Recovery Console (dashboard v3.0)
+-----------------------------------------
 Read-only command center over out/, plus two SAFE live labs: the tamper lab
 forges a record on a TEMP COPY; the kill-switch lab runs a small in-memory
 simulation through the real gate.
+
+v3.0 design system: SVG wallpaper hero, hand-drawn stroke icon set, sticky
+topbar with honest live-AI provenance badge, decision-pipeline strip, source
+pills on every AI assessment (REAL MODEL vs STAND-IN), Assurances page.
+Zero changes to loaders, replay math, or gate behavior — the numbers this
+renders are the same audited numbers `make verify-results` guards.
 
 Run:  make dash        (or: streamlit run dashboard/app.py)
 Needs out/ to exist -> run `make batch` first if it doesn't.
@@ -15,6 +21,7 @@ import shutil
 import sys
 import tempfile
 import time
+import urllib.parse
 from pathlib import Path
 
 import streamlit as st
@@ -23,7 +30,9 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 OUT = ROOT / "out"
 
-st.set_page_config(page_title="WAPAS — Recovery Control", layout="wide",
+APP_VERSION = "console v3.0"
+
+st.set_page_config(page_title="WAPAS — Recovery Console", layout="wide",
                    initial_sidebar_state="expanded")
 
 ARMS = ["control", "floor", "rules_only", "wapas", "oracle"]
@@ -44,68 +53,229 @@ DESCR = {
 ARM_COLORS = {"control": "#94a3b8", "floor": "#d97706", "rules_only": "#2563eb",
               "wapas": "#059669", "oracle": "#7c3aed"}
 
+
+# ═════════════════════════ icon set (hand-drawn strokes) ═════════════════════════
+def _svg(body: str) -> str:
+    return (f"<svg viewBox='0 0 24 24' width='100%' height='100%' fill='none' "
+            f"stroke='currentColor' stroke-width='1.7' stroke-linecap='round' "
+            f"stroke-linejoin='round'>{body}</svg>")
+
+
+_IC = {
+    "bolt": _svg("<path d='M13 2 4.5 13.5h5.6L9 22l8.5-11.5h-5.6L13 2z'/>"),
+    "gauge": _svg("<path d='M20.2 14.5a8.5 8.5 0 1 0-16.4 0'/><path d='M12 14.5 16.2 10'/>"
+                  "<circle cx='12' cy='14.5' r='1' fill='currentColor' stroke='none'/>"),
+    "search": _svg("<circle cx='11' cy='11' r='7'/><path d='m21 21-4.3-4.3'/>"),
+    "shield_off": _svg("<path d='M12 3l7 3v5c0 4.6-3 7.6-7 9-4-1.4-7-4.4-7-9V6l7-3z'/>"
+                       "<path d='m5 5 14 14'/>"),
+    "power": _svg("<path d='M12 3v8'/><path d='M6.6 6.8a8 8 0 1 0 10.8 0'/>"),
+    "shield": _svg("<path d='M12 3l7 3v5c0 4.6-3 7.6-7 9-4-1.4-7-4.4-7-9V6l7-3z'/>"
+                   "<path d='m9 12 2 2 4-4'/>"),
+    "cpu": _svg("<rect x='7' y='7' width='10' height='10' rx='2'/>"
+                "<path d='M10 2v3M14 2v3M10 19v3M14 19v3M2 10h3M2 14h3M19 10h3M19 14h3'/>"),
+    "layers": _svg("<path d='m12 3 9 5-9 5-9-5 9-5z'/><path d='m3 13 9 5 9-5'/>"),
+    "lock": _svg("<rect x='5' y='11' width='14' height='9' rx='2'/>"
+                 "<path d='M8 11V8a4 4 0 0 1 8 0v3'/>"
+                 "<circle cx='12' cy='15.5' r='1' fill='currentColor' stroke='none'/>"),
+    "clock": _svg("<circle cx='12' cy='12' r='8.5'/><path d='M12 7v5l3.5 2'/>"),
+    "scale": _svg("<path d='M12 4v16'/><path d='M6 6.5h12'/>"
+                  "<path d='m6 6.5-2.6 5.4a3 3 0 0 0 5.8 0L6 6.5z'/>"
+                  "<path d='m18 6.5-2.6 5.4a3 3 0 0 0 5.8 0L18 6.5z'/><path d='M9 20h6'/>"),
+    "users": _svg("<circle cx='9' cy='8.5' r='3.2'/>"
+                  "<path d='M3.5 19.5c0-3 2.5-5.5 5.5-5.5s5.5 2.5 5.5 5.5'/>"
+                  "<circle cx='17' cy='9.5' r='2.4'/>"
+                  "<path d='M16.5 14.2c2.3.4 4 2.3 4 4.8'/>"),
+    "banknote": _svg("<rect x='3' y='7' width='18' height='10' rx='2'/>"
+                     "<circle cx='12' cy='12' r='2.4'/><path d='M6.5 10v.01M17.5 14v.01'/>"),
+    "crosshair": _svg("<circle cx='12' cy='12' r='7.5'/>"
+                      "<path d='M12 2.5V6M12 18v3.5M2.5 12H6M18 12h3.5'/>"
+                      "<circle cx='12' cy='12' r='1' fill='currentColor' stroke='none'/>"),
+    "filter": _svg("<path d='M4 5h16l-6.2 7.2V18l-3.6 2v-7.8L4 5z'/>"),
+    "doc": _svg("<path d='M6.5 2.5h8l4 4v15h-12v-19z'/><path d='M14.5 2.5v4h4'/>"
+                "<path d='M10 12h4.5M10 15.5h4.5'/>"),
+    "branch": _svg("<circle cx='6' cy='5.5' r='2.2'/><circle cx='6' cy='18.5' r='2.2'/>"
+                   "<circle cx='18' cy='12' r='2.2'/><path d='M6 7.7v8.6'/>"
+                   "<path d='M8.2 6.1c4 .8 7 2.4 7.6 4.3'/>"),
+    "check": _svg("<path d='m5 12.5 4.5 4.5L19 7.5'/>"),
+    "list": _svg("<path d='M9 6.5h11M9 12h11M9 17.5h11'/>"
+                 "<path d='M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01'/>"),
+    "pause": _svg("<circle cx='12' cy='12' r='8.5'/><path d='M10 9v6M14 9v6'/>"),
+}
+
+
+def ic(name: str, size: int = 14) -> str:
+    if name not in _IC:
+        return ""
+    return (f"<span style='display:inline-flex;width:{size}px;height:{size}px;"
+            f"vertical-align:-2px'>{_IC[name]}</span>")
+
+
+# ═════════════════════════ wallpaper (inline SVG, offline-safe) ═════════════════════════
+_WALL_SVG = ("<?xml version='1.0' encoding='UTF-8'?>"
+             "<svg xmlns='http://www.w3.org/2000/svg' width='1240' height='320' "
+             "viewBox='0 0 1240 320'>"
+             "<defs>"
+             "<linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'>"
+             "<stop offset='0' stop-color='#0b1220'/><stop offset='.55' stop-color='#132a5c'/>"
+             "<stop offset='1' stop-color='#1d4ed8'/></linearGradient>"
+             "<radialGradient id='g1' cx='.16' cy='.08' r='.55'>"
+             "<stop offset='0' stop-color='#3b82f6' stop-opacity='.5'/>"
+             "<stop offset='1' stop-color='#3b82f6' stop-opacity='0'/></radialGradient>"
+             "<radialGradient id='g2' cx='.86' cy='.92' r='.6'>"
+             "<stop offset='0' stop-color='#10b981' stop-opacity='.34'/>"
+             "<stop offset='1' stop-color='#10b981' stop-opacity='0'/></radialGradient>"
+             "<radialGradient id='g3' cx='.62' cy='.02' r='.45'>"
+             "<stop offset='0' stop-color='#8b5cf6' stop-opacity='.3'/>"
+             "<stop offset='1' stop-color='#8b5cf6' stop-opacity='0'/></radialGradient>"
+             "<pattern id='grid' width='44' height='44' patternUnits='userSpaceOnUse'>"
+             "<path d='M44 0H0V44' fill='none' stroke='#ffffff' stroke-opacity='.055'/></pattern>"
+             "<linearGradient id='rail' x1='0' y1='0' x2='1' y2='0'>"
+             "<stop offset='0' stop-color='#60a5fa' stop-opacity='0'/>"
+             "<stop offset='.5' stop-color='#93c5fd' stop-opacity='.85'/>"
+             "<stop offset='1' stop-color='#6ee7b7' stop-opacity='0'/></linearGradient>"
+             "</defs>"
+             "<rect width='1240' height='320' fill='url(#bg)'/>"
+             "<rect width='1240' height='320' fill='url(#grid)'/>"
+             "<rect width='1240' height='320' fill='url(#g1)'/>"
+             "<rect width='1240' height='320' fill='url(#g2)'/>"
+             "<rect width='1240' height='320' fill='url(#g3)'/>"
+             "<path d='M-20 250 C 240 220, 420 280, 700 230 S 1120 145, 1280 180' "
+             "fill='none' stroke='url(#rail)' stroke-width='2'/>"
+             "<path d='M-20 278 C 260 256, 480 302, 760 262 S 1160 196, 1280 221' "
+             "fill='none' stroke='url(#rail)' stroke-width='1.2' opacity='.6'/>"
+             "<path d='M-20 128 C 200 104, 520 158, 820 104 S 1180 68, 1280 92' "
+             "fill='none' stroke='url(#rail)' stroke-width='1' opacity='.35'/>"
+             "<circle cx='700' cy='230' r='3.4' fill='#93c5fd'/>"
+             "<circle cx='700' cy='230' r='9' fill='none' stroke='#93c5fd' stroke-opacity='.4'/>"
+             "<circle cx='968' cy='184' r='2.6' fill='#6ee7b7'/>"
+             "<circle cx='352' cy='242' r='2.6' fill='#c4b5fd'/>"
+             "</svg>")
+_WALL = "url(\"data:image/svg+xml," + urllib.parse.quote(_WALL_SVG, safe="") + "\")"
+
 CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root { --ink:#0f172a; --ink2:#334155; --mut:#64748b; --line:#e4e9f1;
-        --bg:#f4f6fa; --accent:#1d4ed8; --ok:#047857; --warn:#b45309; --bad:#b91c1c; }
+        --bg:#f6f8fc; --accent:#1d4ed8; --ok:#047857; --warn:#b45309; --bad:#b91c1c; }
 
 html, body, .stApp { background: var(--bg) !important; color: var(--ink) !important; }
-[data-testid="stAppViewContainer"] { background: var(--bg) !important; }
+body { background:
+       radial-gradient(1100px 260px at 50% -90px, rgba(29,78,216,.07), transparent 70%),
+       var(--bg) !important; }
+[data-testid="stAppViewContainer"] { background: transparent !important; }
 [data-testid="stHeader"] { background: transparent !important; height: 0px !important; }
+[data-testid="stToolbar"], [data-testid="stDecoration"],
+[data-testid="stStatusWidget"], #MainMenu, footer { visibility: hidden !important; }
 section[data-testid="stMain"], section[data-testid="stMain"] > div,
 .block-container { background: transparent !important; }
-.block-container { padding: 1.4rem 2.4rem 3rem; max-width: 1220px; }
-#MainMenu, footer, [data-testid="stStatusWidget"] { visibility: hidden; }
+.block-container { padding: 1.1rem 2.4rem 3rem; max-width: 1220px; }
 html, body, [class*="css"], button, input { font-family: Inter, -apple-system, "Segoe UI",
         Roboto, "Helvetica Neue", Arial, sans-serif !important; }
 h1 { font-size: 22px !important; font-weight: 800 !important; letter-spacing: -0.015em; }
 p, li, span, label { font-size: 13.5px; }
+::selection { background:#dbe7ff; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background:#cdd6e4; border-radius:8px; border:2px solid var(--bg); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* ── sticky topbar ── */
+.topbar { position: sticky; top: 0; z-index: 90; display: flex; align-items: center;
+          gap: 14px; padding: 9px 2px 9px; margin-bottom: 12px;
+          background: rgba(246,248,252,.86) !important; backdrop-filter: blur(10px);
+          border-bottom: 1px solid var(--line); }
+.tb-crumb { font-size: 11px; font-weight: 800; letter-spacing: .12em;
+            text-transform: uppercase; color: var(--mut); display: flex;
+            align-items: center; gap: 8px; }
+.tb-crumb b { color: var(--ink); }
+.tb-spacer { flex: 1; }
+.tb-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px;
+            font-weight: 700; padding: 4px 12px; border-radius: 999px;
+            border: 1px solid var(--line); background: #fff; color: var(--ink2); }
+.tb-badge .dot { width: 7px; height: 7px; border-radius: 50%; }
+.tb-badge.live { border-color: #a7f3d0; background: #ecfdf5; color: #047857; }
+.tb-badge.live .dot { background: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,.18); }
+.tb-badge.idle { color: var(--mut); }
+.tb-badge.idle .dot { background: #94a3b8; }
+.tb-ver { font-size: 11px; font-weight: 700; color: var(--mut);
+          border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
+          background: #fff; }
 
 /* ── sidebar: dark navy console rail ── */
-[data-testid="stSidebar"] { background: #0e1726 !important; border-right: none !important; }
+[data-testid="stSidebar"] { background: linear-gradient(180deg,#0c1524 0%,#0e1726 30%,#101d33 100%) !important;
+        border-right: none !important; }
 [data-testid="stSidebar"] * { color: #cbd5e1 !important; }
 [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3
         { color: #ffffff !important; }
 [data-testid="stSidebar"] hr { border-top: 1px solid #1e293b !important; }
 .brand { display:flex; align-items:center; gap:10px; padding:6px 2px 2px; }
-.brand-mark { width:34px; height:34px; border-radius:9px;
+.brand-mark { width:36px; height:36px; border-radius:10px;
         background:linear-gradient(135deg,#1d4ed8,#059669); color:#fff; font-weight:800;
-        font-size:15px; display:flex; align-items:center; justify-content:center; }
+        font-size:15px; display:flex; align-items:center; justify-content:center;
+        box-shadow: 0 0 0 1px rgba(255,255,255,.14) inset, 0 6px 16px rgba(29,78,216,.35); }
 .brand-name { font-size:17px; font-weight:800; color:#fff !important; letter-spacing:-0.01em; }
 .brand-sub { font-size:11px; color:#7c8db0 !important; margin-top:1px; }
+.navsec { font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+          color:#5b6c8f !important; margin:4px 0 2px; }
 .side-stat { background:#16223a; border:1px solid #243350; border-radius:10px;
         padding:10px 12px; margin:6px 0; }
 .side-stat .n { font-size:19px; font-weight:800; color:#fff !important;
         font-variant-numeric:tabular-nums; }
 .side-stat .l { font-size:10.5px; font-weight:700; letter-spacing:.07em;
         text-transform:uppercase; color:#7c8db0 !important; margin-bottom:3px; }
+.side-live { display:flex; align-items:center; gap:8px; font-size:11.5px; font-weight:600;
+        color:#a5b4cd !important; padding:7px 2px; }
+.side-live .dot { width:7px; height:7px; border-radius:50%; flex:none; }
+.side-live .dot.on { background:#34d399; box-shadow:0 0 0 3px rgba(52,211,153,.16); }
+.side-live .dot.off { background:#64748b; }
 [data-testid="stSidebar"] .radio label { padding: 7px 10px !important; border-radius: 8px;
-        font-weight: 550 !important; }
+        font-weight: 550 !important; transition: background .12s ease; }
 [data-testid="stSidebar"] .radio label:hover { background:#16223a !important; }
 [data-testid="stSidebar"] .radio p { font-size: 14px !important; }
 [data-testid="stSidebar"] caption, [data-testid="stSidebar"] .stCaption
         { color:#7c8db0 !important; font-size:11px !important; }
 
-/* ── hero ── */
-.hero { background: linear-gradient(120deg,#0e1726 0%,#15306b 55%,#1d4ed8 100%);
-        border-radius:14px; padding:22px 26px; color:#fff; margin-bottom:18px; }
-.hero h1 { color:#fff !important; margin:0 0 4px !important; font-size:20px !important; }
-.hero p { color:#c7d2e8 !important; margin:0; font-size:13px; }
-.hero-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
-.chip { background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18);
+/* ── hero with SVG wallpaper ── */
+.hero { border-radius:16px; padding:26px 30px 24px; color:#fff; margin-bottom:20px;
+        background-image: linear-gradient(90deg, rgba(9,15,30,.90) 0%, rgba(13,30,66,.72) 52%,
+                          rgba(19,42,92,.38) 100%), __WALL__;
+        background-size: cover, cover; background-position: center, center;
+        box-shadow: 0 18px 40px -18px rgba(13,30,66,.45); position: relative; overflow: hidden; }
+.hero-kicker { display:inline-flex; align-items:center; gap:8px; font-size:10.5px;
+        font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c7d7f8;
+        background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.16);
+        border-radius:999px; padding:5px 12px; margin-bottom:12px; }
+.hero h1 { color:#fff !important; margin:0 0 6px !important; font-size:23px !important;
+        letter-spacing:-.02em; }
+.hero p { color:#c7d2e8 !important; margin:0; font-size:13.5px; max-width:760px; line-height:1.55; }
+.hero-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.chip { display:inline-flex; align-items:center; gap:6px;
+        background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18);
         color:#fff; border-radius:999px; padding:4px 12px; font-size:12px; font-weight:600; }
 .chip b { font-weight:800; }
 
 /* ── micro headers ── */
 .micro-h { font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
-           color:var(--mut); margin:22px 0 10px; display:flex; align-items:center; gap:10px; }
+           color:var(--mut); margin:22px 0 10px; display:flex; align-items:center; gap:9px; }
+.micro-h .mh-ic { width:15px; height:15px; color:#94a3b8; display:inline-flex; }
 .micro-h::after { content:""; flex:1; height:1px; background:var(--line); }
 .meta { font-size:12.5px; color:var(--mut); margin:2px 0 12px; }
 
+/* ── decision pipeline strip ── */
+.pipe { display:flex; align-items:stretch; gap:8px; flex-wrap:wrap; background:#fff;
+        border:1px solid var(--line); border-radius:14px; padding:14px 16px; }
+.pipe-node { display:flex; align-items:center; gap:10px; padding:8px 12px; flex:1;
+        min-width:150px; border:1px solid var(--line); border-radius:11px;
+        background:linear-gradient(180deg,#ffffff,#f8fafd); transition: box-shadow .15s ease; }
+.pipe-node:hover { box-shadow:0 6px 16px rgba(15,23,42,.08); }
+.pipe-ic { width:32px; height:32px; border-radius:9px; display:flex; align-items:center;
+        justify-content:center; flex:none; background:#eef4ff; color:var(--accent); }
+.pipe-t { font-size:13px; font-weight:750; color:var(--ink); line-height:1.2; }
+.pipe-d { font-size:11px; color:var(--mut); margin-top:2px; }
+.pipe-arrow { align-self:center; color:#94a3b8; font-size:15px; font-weight:700; padding:0 1px; }
+
 /* ── KPI cards ── */
-.kpi { background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px 12px;
+.kpi { background:#fff; border:1px solid var(--line); border-radius:13px; padding:14px 16px 12px;
        height:100%; border-top:3px solid var(--accent); position:relative;
        transition:box-shadow .15s ease, transform .15s ease; }
 .kpi:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(15,23,42,.09); }
@@ -121,6 +291,24 @@ p, li, span, label { font-size: 13.5px; }
 .kpi .s { font-size:11.5px; color:var(--mut); margin-top:6px; }
 .kpi.g { border-top-color:#059669; } .kpi.o { border-top-color:#d97706; }
 .kpi.p { border-top-color:#7c3aed; } .kpi.n { border-top-color:#94a3b8; }
+.kpi-ic { position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:9px;
+          display:flex; align-items:center; justify-content:center; padding:6px;
+          background:#eef4ff; color:var(--accent); }
+.kpi.g .kpi-ic { background:#ecfdf5; color:#059669; }
+.kpi.o .kpi-ic { background:#fffbeb; color:#d97706; }
+.kpi.p .kpi-ic { background:#f5f3ff; color:#7c3aed; }
+.kpi.n .kpi-ic { background:#f1f5f9; color:#64748b; }
+
+/* ── provenance pills (honest AI sourcing) ── */
+.pill { display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:800;
+        letter-spacing:.05em; padding:2px 9px; border-radius:999px; vertical-align:1px; }
+.pill .dot { width:6px; height:6px; border-radius:50%; }
+.pill-live { background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; }
+.pill-live .dot { background:#10b981; }
+.pill-idle { background:#f1f5f9; color:#64748b; border:1px solid #e2e8f0; }
+.pill-idle .dot { background:#94a3b8; }
+.pill-bad { background:#fef2f2; color:#b91c1c; border:1px solid #fecaca; }
+.pill-bad .dot { background:#ef4444; }
 
 /* ── bars ── */
 .bar-row { display:grid; grid-template-columns:240px 1fr 150px; gap:14px; align-items:center;
@@ -142,7 +330,8 @@ p, li, span, label { font-size: 13.5px; }
 .card.acc { border-left:3px solid var(--accent); } .card.ok { border-left:3px solid var(--ok); }
 .card.warn { border-left:3px solid var(--warn); }
 .card-title { font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;
-              color:var(--mut); margin-bottom:10px; }
+              color:var(--mut); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.card-title .ct-ic { width:15px; height:15px; color:#94a3b8; display:inline-flex; }
 .kv { display:flex; gap:8px; font-size:13px; padding:4px 0; color:var(--ink2); line-height:1.45; }
 .kv b { color:var(--ink); font-weight:650; }
 code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px;
@@ -159,7 +348,8 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12
 
 .console { background:#0b1220; color:#d7e0ee; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
            font-size:12.5px; line-height:1.7; border-radius:12px; padding:16px 20px;
-           overflow-x:auto; border:1px solid #16223a; }
+           overflow-x:auto; border:1px solid #16223a;
+           box-shadow: 0 14px 34px -18px rgba(11,18,32,.55); }
 .console .g { color:#6ee7b7; } .console .r { color:#fca5a5; } .console .d { color:#8ea3c0; }
 
 .tl-item { display:flex; gap:12px; padding:8px 2px; border-bottom:1px dashed #e8edf5;
@@ -175,13 +365,21 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12
 
 div[data-baseweb="button"] { border:1px solid #cbd5e1 !important; border-radius:9px !important;
         background:#fff !important; color:var(--ink) !important; font-weight:650 !important;
-        font-size:13.5px !important; }
+        font-size:13.5px !important; transition: transform .06s ease, box-shadow .15s ease !important; }
+div[data-baseweb="button"]:hover { box-shadow:0 4px 12px rgba(15,23,42,.10) !important; }
+div[data-baseweb="button"]:active { transform: translateY(1px) scale(.995) !important;
+        box-shadow: none !important; }
 button[kind="primary"] { background:var(--accent) !important; border-color:var(--accent) !important;
-        color:#fff !important; }
+        color:#fff !important; box-shadow:0 8px 18px -8px rgba(29,78,216,.55) !important; }
 div[data-baseweb="select"] > div, .stSlider, .stRadio { color:var(--ink2); }
+[data-baseweb="slider"] [role="slider"] { background-color: var(--accent) !important;
+        border: 2px solid #fff; box-shadow: 0 1px 4px rgba(15,23,42,.25); }
+[data-baseweb="progress-bar"] > div { background: var(--accent) !important; }
+[data-baseweb="progress-bar"] { background: #e8edf5 !important; }
+[data-baseweb="progress-bar"] > div > div { color: var(--ink2) !important; }
 hr { border:none; border-top:1px solid var(--line); }
 </style>
-"""
+""".replace("__WALL__", _WALL)
 st.markdown(CSS, unsafe_allow_html=True)
 
 
@@ -212,21 +410,80 @@ def load_ledger_rows(arm: str):
     return rows
 
 
+@st.cache_data(show_spinner=False)
+def load_live_stats():
+    """Honest provenance for the live-AI tier: what's in the LIVE cache right
+    now. Only real provider responses ever get persisted there (enforced in
+    llm_agent.diagnose) — so its existence is itself a receipt."""
+    p = ROOT / "cache" / "diagnosis_cache_live.json"
+    if not p.exists():
+        return None
+    try:
+        c = json.loads(p.read_text())
+    except Exception:
+        return None
+    from collections import Counter
+    mix = Counter(str(v.get("source", "?")) for v in c.values())
+    return {"n": len(c), "mix": dict(mix)}
+
+
 # ---------- helpers ----------
 def rate(x): return f"{x:.1%}" if isinstance(x, (int, float)) else "—"
 def inr(x): return f"₹{x:,.0f}" if isinstance(x, (int, float)) else "—"
 def esc(x): return html.escape(str(x))
 
 
-def kpi(label, value, sub=None, delta=None, kind="pos", accent=""):
+def model_short(src: str) -> str:
+    """'llm_openrouter:minimax/minimax-m3:free' -> 'minimax-m3' (display only)."""
+    m = src.split(":", 1)[1] if ":" in src else src
+    return m.split("/")[-1].replace(":free", "")
+
+
+def source_pill(src: str) -> str:
+    s = str(src)
+    if s.startswith("llm_openrouter") or s == "llm_live":
+        return (f'<span class="pill pill-live"><span class="dot"></span>'
+                f'REAL MODEL · {esc(model_short(s))}</span>')
+    if s == "llm_heuristic":
+        return '<span class="pill pill-idle"><span class="dot"></span>STAND-IN</span>'
+    return '<span class="pill pill-bad"><span class="dot"></span>REPAIR</span>'
+
+
+def hero(kicker: str, kicker_icon: str, title: str, sub: str, chips: str = "") -> str:
+    ch = f'<div class="hero-chips">{chips}</div>' if chips else ""
+    return (f'<div class="hero"><div class="hero-kicker">{ic(kicker_icon, 13)}'
+            f'{esc(kicker)}</div><h1>{esc(title)}</h1><p>{sub}</p>{ch}</div>')
+
+
+def topbar(section: str):
+    stats = load_live_stats()
+    if stats and stats["n"]:
+        models = sorted({k.split(":", 1)[1] for k in stats["mix"]
+                         if k.startswith("llm_openrouter")},
+                        key=lambda s: -stats["mix"].get("llm_openrouter:" + s, 0))
+        who = model_short("x:" + models[0]) if models else "live"
+        badge = (f'<div class="tb-badge live"><span class="dot"></span>'
+                 f'REAL LLM · {stats["n"]:,} live diagnoses · {esc(who)}</div>')
+    else:
+        badge = ('<div class="tb-badge idle"><span class="dot"></span>'
+                 'LLM tier wired · official run: stand-in</div>')
+    st.markdown(
+        f'<div class="topbar"><div class="tb-crumb">WAPAS <b>· {esc(section)}</b></div>'
+        f'<div class="tb-spacer"></div>{badge}'
+        f'<div class="tb-ver">{APP_VERSION}</div></div>', unsafe_allow_html=True)
+
+
+def kpi(label, value, sub=None, delta=None, kind="pos", accent="", icon=None):
     d = f'<div class="d {kind}">{esc(delta)}</div>' if delta else ""
     s = f'<div class="s">{esc(sub)}</div>' if sub else ""
-    return (f'<div class="kpi {accent}"><div class="l">{esc(label)}</div>'
+    i = f'<div class="kpi-ic">{ic(icon, 16)}</div>' if icon else ""
+    return (f'<div class="kpi {accent}">{i}<div class="l">{esc(label)}</div>'
             f'<div class="v">{esc(value)}</div>{d}{s}</div>')
 
 
-def micro(text):
-    st.markdown(f'<div class="micro-h">{esc(text)}</div>', unsafe_allow_html=True)
+def micro(text, icon=None):
+    i = f'<span class="mh-ic">{ic(icon, 14)}</span>' if icon else ""
+    st.markdown(f'<div class="micro-h">{i}{esc(text)}</div>', unsafe_allow_html=True)
 
 
 def console_block(lines):
@@ -264,8 +521,9 @@ def timeline(steps):
         unsafe_allow_html=True)
 
 
-def kv_card(title, pairs, kind="acc"):
-    return (f'<div class="card {kind}"><div class="card-title">{esc(title)}</div>'
+def kv_card(title, pairs, kind="acc", icon=None):
+    t = f'<span class="ct-ic">{ic(icon, 14)}</span>{esc(title)}' if icon else esc(title)
+    return (f'<div class="card {kind}"><div class="card-title">{t}</div>'
             + "".join(f'<div class="kv">{k}</div>' for k in pairs) + "</div>")
 
 
@@ -280,14 +538,34 @@ def htable(headers, rows, hl_row=None):
                 unsafe_allow_html=True)
 
 
+def pipe(nodes):
+    """Decision-pipeline strip: [(icon, title, sub), ...] joined by arrows."""
+    parts = []
+    for i, (icon, title, sub) in enumerate(nodes):
+        if i:
+            parts.append('<div class="pipe-arrow">→</div>')
+        parts.append(f'<div class="pipe-node"><div class="pipe-ic">{ic(icon, 17)}</div>'
+                     f'<div><div class="pipe-t">{esc(title)}</div>'
+                     f'<div class="pipe-d">{esc(sub)}</div></div></div>')
+    st.markdown('<div class="pipe">' + "".join(parts) + "</div>", unsafe_allow_html=True)
+
+
+def page_foot(left):
+    st.markdown(f'<div class="foot"><span>{left}</span>'
+                f'<span>no authority, no action · human approval on every customer-facing '
+                f'step · {APP_VERSION}</span></div>', unsafe_allow_html=True)
+
+
 # ---------- sidebar ----------
 with st.sidebar:
     st.markdown('<div class="brand"><div class="brand-mark">W</div><div>'
                 '<div class="brand-name">WAPAS</div>'
-                '<div class="brand-sub">recovery control</div></div></div>',
+                '<div class="brand-sub">recovery console</div></div></div>',
                 unsafe_allow_html=True)
     st.divider()
-    page = st.radio("Section", ["Mission Control", "Case Files", "Tamper Lab", "Kill-Switch Lab"],
+    st.markdown('<div class="navsec">Workspace</div>', unsafe_allow_html=True)
+    page = st.radio("Section", ["Mission Control", "Case Files", "Tamper Lab",
+                                "Kill-Switch Lab", "Assurances"],
                     label_visibility="collapsed")
     st.divider()
     res = load_results()
@@ -305,36 +583,55 @@ with st.sidebar:
         if ev:
             st.markdown(f'<div class="side-stat"><div class="l">diagnosis accuracy</div>'
                         f'<div class="n">{ev["accuracy"]:.0%}</div></div>', unsafe_allow_html=True)
+    stats = load_live_stats()
+    if stats and stats["n"]:
+        st.markdown(f'<div class="side-live"><span class="dot on"></span>'
+                    f'live AI: {stats["n"]:,} real diagnoses</div>', unsafe_allow_html=True)
+    else:
+        st.markdown('<div class="side-live"><span class="dot off"></span>'
+                    'live AI: wired · no live responses yet</div>', unsafe_allow_html=True)
     st.divider()
     st.caption("n = 12,000 synthetic at-risk events · seeds 42 / 2026 · byte-identical "
                "repro via make all · Razorpay test-mode shaped")
 
+topbar(page)
+
 # ═════════════════════════ Mission Control ═════════════════════════
 if page == "Mission Control":
-    st.markdown('<div class="hero"><h1>Recovery experiment — mission control</h1>'
-                '<p>Five decision policies over the same merchant mix, identical contact '
-                'budget. The only variable: are recovery actions diagnosed before they are '
-                'chosen?</p>'
-                '<div class="hero-chips">'
-                '<span class="chip">n = 12,000</span>'
-                '<span class="chip">WAPAS <b>27.8%</b></span>'
-                '<span class="chip">vs playbook <b>p = 0.0001</b></span>'
-                '<span class="chip">ceiling captured <b>98.7%</b></span>'
-                '<span class="chip">violations <b>0</b></span>'
-                '</div></div>', unsafe_allow_html=True)
+    st.markdown(hero(
+        "Monitor · Mission Control", "gauge",
+        "Recovery experiment — mission control",
+        "Five decision policies over the same merchant mix, identical contact budget. "
+        "The only variable: are recovery actions diagnosed before they are chosen?",
+        chips='<span class="chip">n = 12,000</span>'
+              '<span class="chip">WAPAS <b>27.8%</b></span>'
+              '<span class="chip">vs playbook <b>p = 0.0001</b></span>'
+              '<span class="chip">ceiling captured <b>98.7%</b></span>'
+              '<span class="chip">violations <b>0</b></span>'),
+        unsafe_allow_html=True)
     if res is None:
         st.error("No results found. Run `make batch` (or `make all`) first.")
         st.stop()
 
+    micro("Decision pipeline — every case walks this path", "branch")
+    pipe([
+        ("crosshair", "Detector", "at-risk event flagged"),
+        ("filter", "Rules tier", "resolves ~80% outright"),
+        ("cpu", "LLM tier", "only the ambiguous rest"),
+        ("shield", "Policy gate", "consent L1 / L2 / L3"),
+        ("bolt", "Executor", "one action, logged"),
+        ("layers", "Hash ledger", "tamper-evident record"),
+    ])
+
     # ── live replay: watch the official run execute, case by case ──
-    micro("Live replay — watch the run execute")
+    micro("Live replay — watch the run execute", "clock")
     st.markdown('<div class="meta">Case-by-case replay of the official experiment, rebuilt '
                 'from the audit ledgers. Deterministic: it always lands on exactly the '
                 'numbers below — that is the reproducibility guarantee, demonstrated.</div>',
                 unsafe_allow_html=True)
     cA, cB = st.columns([3, 1])
     speed = cA.slider("Replay speed (cases per second)", 100, 1200, 450, 50)
-    go = cB.button("Replay the run, live", type="primary", use_container_width=True)
+    go = cB.button("Replay the run, live", type="primary", width="stretch")
     if go:
         try:
             arm_rows = {k: sorted(load_ledger_rows(k), key=lambda x: x["decided_at"])
@@ -407,36 +704,40 @@ if page == "Mission Control":
     ppc = (r["wapas"]["recovery_rate"] - r["control"]["recovery_rate"]) * 100
     net_gap = r["wapas"]["net_amount"] - r["floor"]["net_amount"]
 
-    micro("Headline")
+    micro("Headline", "bolt")
     a, b, c, d, e = st.columns(5)
     a.markdown(kpi("WAPAS recovery", rate(r["wapas"]["recovery_rate"]),
                    delta=f"+{ppc:.1f}pp vs control", kind="pos",
-                   sub=f"n = {r['wapas']['n']:,} at-risk payments"), unsafe_allow_html=True)
+                   sub=f"n = {r['wapas']['n']:,} at-risk payments", icon="bolt"),
+              unsafe_allow_html=True)
     b.markdown(kpi("Generic playbook", rate(r["floor"]["recovery_rate"]),
-                   sub="Razorpay's published advice", accent="o"), unsafe_allow_html=True)
+                   sub="Razorpay's published advice", accent="o", icon="doc"),
+               unsafe_allow_html=True)
     c.markdown(kpi("No action", rate(r["control"]["recovery_rate"]),
-                   sub="organic recovery only", accent="n"), unsafe_allow_html=True)
+                   sub="organic recovery only", accent="n", icon="pause"),
+               unsafe_allow_html=True)
     d.markdown(kpi("Ceiling captured", f"{ceiling:.1f}%",
-                   sub="of perfect diagnosis", accent="p"), unsafe_allow_html=True)
+                   sub="of perfect diagnosis", accent="p", icon="gauge"),
+               unsafe_allow_html=True)
     e.markdown(kpi("WAPAS vs playbook", f"+{pp:.1f}pp",
                    delta=f"p = {z_fw['p_value']:.4f}",
                    kind=("pos" if z_fw["p_value"] < 0.05 else "neu"),
-                   sub=f"power {power_fw:.2f}"), unsafe_allow_html=True)
+                   sub=f"power {power_fw:.2f}", icon="scale"), unsafe_allow_html=True)
 
-    micro("Recovery rate by line")
+    micro("Recovery rate by line", "scale")
     hbars([(LABELS[k], DESCR[k], r[k]["recovery_rate"], ARM_COLORS[k], k) for k in ARMS],
           maxv=max(r[k]["recovery_rate"] for k in ARMS) * 1.12, best="wapas")
     st.caption("WAPAS lands within 0.4pp of the analytic oracle: the gate and execution layer "
                "capture nearly everything correct diagnosis makes possible.")
 
-    micro("What the experiment says")
+    micro("What the experiment says", "check")
     left, mid, right = st.columns(3)
     with left:
         st.markdown(kv_card("Statistics", [
             f"Control vs WAPAS &nbsp;<b>p = {z_cw['p_value']:.4f}</b>",
             f"Floor vs WAPAS &nbsp;<b>p = {z_fw['p_value']:.4f}</b>",
             f"Power &nbsp;<b>{power_fw:.2f}</b> &nbsp;·&nbsp; Wilson 95% CIs",
-            f"Net ₹ edge over playbook &nbsp;<b>{inr(net_gap)}</b>"], "acc"),
+            f"Net ₹ edge over playbook &nbsp;<b>{inr(net_gap)}</b>"], "acc", icon="scale"),
             unsafe_allow_html=True)
     with mid:
         acc_txt = (f"{ev['accuracy']:.1%} on {ev['n']:,} held-out" if ev else "run make batch")
@@ -444,16 +745,18 @@ if page == "Mission Control":
             f"Accuracy &nbsp;<b>{acc_txt}</b>",
             f"Confusion cost &nbsp;<b>{ev.get('avg_confusion_cost', 0):.3f}</b>" if ev else "—",
             "Ground truth hidden inside the simulator:",
-            "a graded exam, not vibes."]), unsafe_allow_html=True)
+            "a graded exam, not vibes."], "ok", icon="cpu"),
+            unsafe_allow_html=True)
     with right:
         st.markdown(kv_card("Read honestly", [
             "Rules ≈ WAPAS on recovery rate. The LLM tier",
             "earns its place on ambiguous free text, drift",
             "and the audit explainer — not raw rate.",
             "Contact caps protect every arm equally; no",
-            "goodwill advantage is claimed."], "warn"), unsafe_allow_html=True)
+            "goodwill advantage is claimed."], "warn", icon="shield"),
+            unsafe_allow_html=True)
 
-    micro("Cost and friction by arm")
+    micro("Cost and friction by arm", "banknote")
     htable(
         ["Line", "n", "Recovered", "Rate", "95% CI", "₹ recovered", "Net ₹",
          "Complaints", "To human", "Deferred", "Blocked"],
@@ -468,16 +771,40 @@ if page == "Mission Control":
                "Deferred = deliberately scheduled later (quiet hours, cash-cycle timing). "
                "Blocked = the gate refused to act, with a written reason.")
 
-    st.markdown('<div class="foot"><span>WAPAS · revenue recovery mission control</span>'
-                '<span>every number recomputes from out/ · byte-identical via make all · '
-                'tampering with RESULTS.md fails CI</span></div>', unsafe_allow_html=True)
+    stats = load_live_stats()
+    if stats and stats["n"]:
+        micro("AI provenance — who actually diagnosed", "cpu")
+        rows = []
+        for src in sorted(stats["mix"], key=lambda s: -stats["mix"][s]):
+            n = stats["mix"][src]
+            if src.startswith("llm_openrouter") or src == "llm_live":
+                dot = '<span class="pill pill-live"><span class="dot"></span>REAL</span>'
+                name = f"<code>{esc(src.split(':', 1)[1])}</code>"
+            elif src == "llm_heuristic":
+                dot = '<span class="pill pill-idle"><span class="dot"></span>STAND-IN</span>'
+                name = "<code>llm_heuristic</code>"
+            else:
+                dot = '<span class="pill pill-bad"><span class="dot"></span>REPAIR</span>'
+                name = f"<code>{esc(src)}</code>"
+            rows.append([dot, name, f"{n:,}",
+                         f"{n / stats['n']:.1%}"])
+        htable(["Class", "Source", "Responses", "Share"], rows)
+        st.caption("Live cache holds ONLY real provider responses (enforced in code, "
+                   "guarded by tests). The official results table above remains the "
+                   "deterministic stand-in era until an official --live run replaces it — "
+                   "one run, one source of truth.")
+
+    page_foot("WAPAS · revenue recovery mission control · every number recomputes from out/ · "
+              "byte-identical via make all · tampering with RESULTS.md fails CI")
 
 # ═════════════════════════ Case Files ═════════════════════════
 elif page == "Case Files":
-    st.markdown('<div class="hero"><h1>Case files</h1>'
-                '<p>One row = one at-risk payment: the AI assessment, the deterministic gate '
-                'decision with its written reasoning, the consent level used, and the outcome.'
-                '</p></div>', unsafe_allow_html=True)
+    st.markdown(hero(
+        "Investigate · Case Files", "search",
+        "Case files",
+        "One row = one at-risk payment: the AI assessment, the deterministic gate "
+        "decision with its written reasoning, the consent level used, and the outcome."),
+        unsafe_allow_html=True)
     arm = st.selectbox("Ledger", ARMS, index=3, format_func=lambda k: LABELS[k])
     try:
         rows = load_ledger_rows(arm)
@@ -509,35 +836,39 @@ elif page == "Case Files":
     pick = st.selectbox("Open a case", list(options.keys()))
     x = options[pick]
 
-    micro("Outcome")
+    micro("Outcome", "banknote")
     p1, p2, p3, p4 = st.columns(4)
     if x["recovered"]:
         p1.markdown(kpi("Recovered", inr(x.get("recovered_inr", 0)), delta="success",
-                        kind="pos", sub=f"of {inr(x['amount'])} at risk"), unsafe_allow_html=True)
+                        kind="pos", sub=f"of {inr(x['amount'])} at risk", icon="check"),
+                    unsafe_allow_html=True)
     elif x.get("policy_result") == "blocked":
         p1.markdown(kpi("Blocked by policy", "₹0", delta="no contact", kind="neg",
-                        sub="the gate refused, with a reason"), unsafe_allow_html=True)
+                        sub="the gate refused, with a reason", icon="shield_off"),
+                    unsafe_allow_html=True)
     else:
         p1.markdown(kpi(x.get("policy_result", "—").title(), "₹0", delta=None,
-                        sub=f"of {inr(x['amount'])} at risk", accent="n"), unsafe_allow_html=True)
-    p2.markdown(kpi("Amount", inr(x["amount"]), sub=f"attempt {x['attempt_no']}"),
-                unsafe_allow_html=True)
+                        sub=f"of {inr(x['amount'])} at risk", accent="n", icon="clock"),
+                    unsafe_allow_html=True)
+    p2.markdown(kpi("Amount", inr(x["amount"]), sub=f"attempt {x['attempt_no']}",
+                    icon="banknote"), unsafe_allow_html=True)
     p3.markdown(kpi("Decided", str(x["decided_at"])[:16].replace("T", " "),
-                    sub=x["customer_id"], accent="n"), unsafe_allow_html=True)
+                    sub=x["customer_id"], accent="n", icon="clock"), unsafe_allow_html=True)
     p4.markdown(kpi("Complaint", "yes" if x.get("complaint") else "none",
                     kind=("neg" if x.get("complaint") else "pos"),
-                    sub="churn cost tracked at ₹150", accent="o" if x.get("complaint") else "g"),
+                    sub="churn cost tracked at ₹150",
+                    accent="o" if x.get("complaint") else "g", icon="users"),
                 unsafe_allow_html=True)
 
-    micro("Decision")
+    micro("Decision", "shield")
     l, rr = st.columns(2)
     with l:
         st.markdown(kv_card("AI assessment", [
             f"Cause &nbsp;<code>{esc(x['root_cause'])}</code>",
             f"Confidence &nbsp;<b>{float(x['confidence']):.2f}</b> · "
-            f"source &nbsp;{esc(x.get('diagnosis_source', '—'))}",
+            f"source &nbsp;{source_pill(x.get('diagnosis_source', 'llm_heuristic'))}",
             f"Proposed &nbsp;<code>{esc(x['proposed_action'])}</code>",
-            "Rules resolve ~80% free; the LLM sees the ambiguous rest."]),
+            "Rules resolve ~80% free; the LLM sees the ambiguous rest."], "acc", icon="cpu"),
             unsafe_allow_html=True)
     with rr:
         st.markdown(kv_card("Gate decision", [
@@ -546,26 +877,32 @@ elif page == "Case Files":
             + (f" ({esc(x['action_variant'])})" if x.get("action_variant") else ""),
             f"Authority &nbsp;<b>{esc(str(x.get('authority')))}</b> — "
             f"<span style='font-size:12px'>{esc(x.get('authority_reason', ''))}</span>"],
-            "ok"), unsafe_allow_html=True)
+            "ok", icon="shield"), unsafe_allow_html=True)
         if x.get("blocked_reason"):
             st.error(x["blocked_reason"], icon=None)
         if x.get("scheduled_for"):
             st.caption(f"Scheduled for {x['scheduled_for'][:16].replace('T', ' ')} "
                        f"(+{x.get('deferred_hours', 0)}h)")
 
-    micro("Gate trace — the reasoning, in order")
+    micro("Gate trace — the reasoning, in order", "list")
     timeline(x["gate_trace"])
 
     with st.expander("Raw ledger row (what the hash chain protects)"):
         st.json(x)
 
+    page_foot("Case files · one row = one hash-protected decision")
+
 # ═════════════════════════ Tamper Lab ═════════════════════════
 elif page == "Tamper Lab":
-    st.markdown('<div class="hero"><h1>Tamper lab</h1>'
-                '<p>The audit ledger is hash-chained: every entry embeds the hash of the '
-                'previous one. Editing one field anywhere breaks every subsequent hash. '
-                'This lab forges a record on a temp copy — the official out/ directory is '
-                'never touched.</p></div>', unsafe_allow_html=True)
+    st.markdown(hero(
+        "Investigate · Tamper Lab", "shield_off",
+        "Tamper lab",
+        "The audit ledger is hash-chained: every entry embeds the hash of the "
+        "previous one. Editing one field anywhere breaks every subsequent hash. "
+        "This lab forges a record on a temp copy — the official out/ directory is "
+        "never touched.",
+        chips='<span class="chip">expected result: <b>CHAIN BROKEN</b></span>'),
+        unsafe_allow_html=True)
     arm = st.selectbox("Chain to test", ARMS, index=3, format_func=lambda k: LABELS[k])
     if st.button("Forge a recovery, then verify", type="primary"):
         from wapas.ledger import Ledger, GENESIS_HASH
@@ -602,22 +939,25 @@ elif page == "Tamper Lab":
         else:
             lines.append(f'<span class="r">FAIL  CHAIN BROKEN at entry #{broken["broken_at"]}'
                          '</span>')
-        micro("Session")
+        micro("Session", "power")
         console_block(lines)
         st.caption("The forged row's content no longer matches its recorded hash. Faking "
                    "history means re-mining every later hash — the same reason blockchains work.")
     st.divider()
     st.caption("CLI version: edit out/ledger_*.jsonl by hand, run make verify, watch it fail — "
                "then make batch && make verify to deterministically rebuild the truth.")
+    page_foot("Tamper lab · forges on temp copies only · official out/ never touched")
 
 # ═════════════════════════ Kill-Switch Lab ═════════════════════════
-else:
-    st.markdown('<div class="hero"><h1>Kill-switch lab</h1>'
-                '<p>A live mini-run through the real gate: genuine diagnosis from the offline '
-                'cache, genuine outcomes, chronological order. Halfway through, an operator '
-                'pulls the kill switch — scheduled actions are cancelled and every later '
-                'request is refused with a written reason. Fully in-memory.</p></div>',
-                unsafe_allow_html=True)
+elif page == "Kill-Switch Lab":
+    st.markdown(hero(
+        "Control · Kill-Switch Lab", "power",
+        "Kill-switch lab",
+        "A live mini-run through the real gate: genuine diagnosis from the offline "
+        "cache, genuine outcomes, chronological order. Halfway through, an operator "
+        "pulls the kill switch — scheduled actions are cancelled and every later "
+        "request is refused with a written reason. Fully in-memory."),
+        unsafe_allow_html=True)
     n_events = st.slider("Events", 10, 60, 40)
     halt_at = st.slider("Pull the switch after event #", 5, n_events - 5, n_events // 2)
     if st.button("Run the mini-batch", type="primary"):
@@ -647,16 +987,17 @@ else:
         blocked_after = sum(1 for x in rows[boundary:] if x["policy_result"] == "blocked")
         acted_before = sum(1 for x in rows[:boundary] if x["final_action"] != "no_action")
 
-        micro("Halt summary")
+        micro("Halt summary", "power")
         a, b, c = st.columns(3)
         a.markdown(kpi("Executed before halt", str(acted_before),
-                       sub="normal operations"), unsafe_allow_html=True)
-        b.markdown(kpi("Scheduled cancelled", str(cancelled), delta="safe drain", kind="neu"),
-                   unsafe_allow_html=True)
+                       sub="normal operations", icon="check"), unsafe_allow_html=True)
+        b.markdown(kpi("Scheduled cancelled", str(cancelled), delta="safe drain",
+                       kind="neu", icon="clock"), unsafe_allow_html=True)
         c.markdown(kpi("Refused after halt", str(blocked_after),
-                       sub="each with a written reason", accent="o"), unsafe_allow_html=True)
+                       sub="each with a written reason", accent="o", icon="shield_off"),
+                   unsafe_allow_html=True)
 
-        micro("Console")
+        micro("Console", "list")
         console_block([
             "<span class='d'>$ operator dashboard-operator: halt</span>",
             f"<span class='r'>KILL SWITCH</span>  engaged after event #{boundary} — "
@@ -665,7 +1006,7 @@ else:
             "<span class='g'>blocked</span>  kill switch active (halted by dashboard-operator) "
             "— zero half-done money actions"])
 
-        micro("Run log")
+        micro("Run log", "layers")
         htable(["#", "event", "proposed", "executed", "result", "reason"],
                [[str(i), esc(x["event_id"]), esc(x["proposed_action"]),
                  esc(x["final_action"]),
@@ -674,3 +1015,77 @@ else:
                 for i, x in enumerate(rows)])
         st.caption("Rows before the halt include quiet-hour deferrals and consent downgrades — "
                    "the system was safe before the switch and safe after it.")
+    page_foot("Kill-switch lab · in-memory only · one operator halt drains everything safely")
+
+# ═════════════════════════ Assurances ═════════════════════════
+else:
+    st.markdown(hero(
+        "Governance · Assurances", "shield",
+        "Why this is safe to ship",
+        "WAPAS never decides on its own authority. The AI reads evidence and drafts; a "
+        "deterministic gate approves; a human approves anything that needs approval. "
+        "Every money-touching action traces to explicit customer consent.",
+        chips='<span class="chip"><b>no authority, no action</b></span>'
+              '<span class="chip">consent tiers <b>L1 / L2 / L3</b></span>'
+              '<span class="chip">kill switch <b>built in</b></span>'),
+        unsafe_allow_html=True)
+
+    micro("The three consent tiers — what authorizes each action", "lock")
+    t1, t2, t3 = st.columns(3)
+    t1.markdown(kv_card("L1 — consent right now", [
+        f"{ic('lock', 13)} &nbsp;Customer is present and acts themselves",
+        "PIN / OTP / in-app confirm",
+        "Example: you send a fresh payment",
+        "link; they choose to pay it."], "ok", icon="lock"), unsafe_allow_html=True)
+    t2.markdown(kv_card("L2 — signed mandate", [
+        f"{ic('doc', 13)} &nbsp;Customer signed an auto-debit mandate earlier",
+        "RBI e-mandate framework: advance",
+        "notice before every debit, and a",
+        "window to cancel."], "acc", icon="doc"), unsafe_allow_html=True)
+    t3.markdown(kv_card("L3 — a human decides", [
+        f"{ic('users', 13)} &nbsp;Anything big, odd, or sensitive",
+        "escalate_human with the full evidence",
+        "packet; no message, no retry, no",
+        "action until a person approves."], "warn", icon="users"), unsafe_allow_html=True)
+
+    micro("Where we deliberately do NOT use AI", "shield_off")
+    na, nb = st.columns(2)
+    na.markdown(kv_card("Not in the decision seat", [
+        "The policy gate is deterministic code:",
+        "fixed caps, fixed consent rules, fixed",
+        "quiet hours. The LLM cannot invent an",
+        "action, raise a cap, or skip a human.",
+        "Its proposal is a hint with citations —",
+        "the gate, not the model, decides."], "warn", icon="shield_off"),
+        unsafe_allow_html=True)
+    nb.markdown(kv_card("Not in the money path", [
+        "The executor performs exactly one",
+        "pre-approved action and writes it to",
+        "the hash-chained ledger. No autonomous",
+        "retries, no self-directed payment flows,",
+        "no agent-initiated mandates — ever."], "acc", icon="banknote"),
+        unsafe_allow_html=True)
+
+    micro("Named rules this respects", "doc")
+    rc1, rc2, rc3 = st.columns(3)
+    rc1.markdown(kv_card("RBI — e-mandate framework", [
+        "Advance notice before every",
+        "auto-debit; customer can cancel;",
+        "mandates are the only L2 authority."], "ok", icon="doc"), unsafe_allow_html=True)
+    rc2.markdown(kv_card("TRAI — TCCCPR / DLT", [
+        "Consent-based messaging, registered",
+        "templates, quiet hours observed by",
+        "the deferral layer (21:00–09:00)."], "acc", icon="clock"), unsafe_allow_html=True)
+    rc3.markdown(kv_card("DPDP Act, 2023", [
+        "Purpose-limited data: evidence",
+        "packets carry the minimum needed",
+        "to diagnose, nothing more."], "p", icon="lock"), unsafe_allow_html=True)
+
+    micro("If a human says stop, everything stops", "power")
+    st.markdown(kv_card("Kill switch", [
+        "One operator halt cancels every scheduled action and refuses all",
+        "later requests with a written reason — demonstrated live in the",
+        "Kill-Switch Lab, and enforced in the same gate code the batch uses."],
+        "warn", icon="power"), unsafe_allow_html=True)
+
+    page_foot("Assurances · consent tiers, named regulators, auditable ledgers")
