@@ -766,6 +766,24 @@
     "root_cause": "bank_decline",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "0d0a32679f1b93d5da3e2589": {
+    "action": "retry_alternate_method",
+    "confidence": 0.52,
+    "draft_message": "Aapka payment abhi complete nahi hua hai, par tension mat lijiye \u2014 aapke account se koi paisa deduct nahi hua hai. Kyunki app beech mein band ho gaya, payment properly shuru hi nahi ho paya. Kya aap ek baar fir se try kar sakte hain, ya hum aapko ek direct payment link bhej dein taaki payment jaldi ho jaye? Apna bataiye, hum help kar denge!",
+    "evidence_citations": [
+      "error_code: SERVER_ERROR",
+      "error_source: internal",
+      "error_step: payment_initiation",
+      "free_text: app khul ke band ho gaya",
+      "is_ambiguous_reason: true",
+      "bank_health_score: 1.0",
+      "debit_confirmation_flag: false",
+      "predebit_notified: false"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "gateway_timeout",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "0d0a99308a2f3724f62027ef": {
     "action": "retry_alternate_method",
     "confidence": 0.55,
@@ -817,6 +835,24 @@
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "gateway_timeout",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "0e6a0c5b14a2c6d7da82a03e": {
+    "action": "retry_alternate_method",
+    "confidence": 0.72,
+    "draft_message": "Namaste! Aapka \u20b9690.72 ka payment abhi bank se decline ho gaya hai (kyunki UPI pe issue aaya). Tension mat lijiye \u2014 paisa katke nahi gaya. Kya aap ek baar card ya netbanking se try kar sakte hain? Agar prefer karein toh hum ek fresh payment link bhi bhej dete hain. Batayein kya theek rahega? \ud83d\ude4f",
+    "evidence_citations": [
+      "error_code: BAD_REQUEST_ERROR",
+      "error_source: bank",
+      "error_reason: BANK_DECLINED",
+      "error_step: payment_authorization",
+      "is_ambiguous_reason: true",
+      "debit_confirmation_flag: false",
+      "bank_health_score: 0.416",
+      "method: upi"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
   "0f88f026c95dcbb9d0eadc21": {
@@ -1309,6 +1345,24 @@
     "root_cause": "card_expired",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "1a57f1b6763174a5a3b24f24": {
+    "action": "retry_alternate_method",
+    "confidence": 0.55,
+    "draft_message": "Aapka payment UPI se fail ho gaya hai \u2014 yeh aksar daily UPI limit cross hone ya thoda network issue ki wajah se hota hai. Aap isko debit card, credit card ya Netbanking se try kar sakte hain, ya phir thodi der baad UPI se retry karein. Koi deduction nahi hua hai aapke account se. Help chahiye toh reply karein \ud83d\ude4f",
+    "evidence_citations": [
+      "method=upi",
+      "error_code=BAD_REQUEST_ERROR",
+      "error_step=payment_initiation",
+      "is_ambiguous_reason=true",
+      "error_source=customer",
+      "attempts_today=1",
+      "amount=8449.69",
+      "value_band=high"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "upi_daily_limit",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "1a663d9747d8606d45dd646b": {
     "action": "retry_alternate_method",
     "confidence": 0.62,
@@ -1664,6 +1718,24 @@
       "is_ambiguous_reason: true",
       "debit_confirmation_flag: false",
       "predebit_notified: false"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "1f68162a0b1bdecdb9aec452": {
+    "action": "retry_alternate_method",
+    "confidence": 0.62,
+    "draft_message": "Aapka payment bank ne decline kar diya hai aur ye message thoda unclear aaya hai. Kuch der baad ek aur baar try karein, ya same amount ko card / netbanking se pay karein \u2014 dono options checkout pe available hain. Koi help chahiye toh reply karein, hum turant assist karenge.",
+    "evidence_citations": [
+      "error_code: GATEWAY_ERROR",
+      "error_source: bank",
+      "error_reason: BANK_DECLINED",
+      "bank_health_score: 0.255 (low)",
+      "is_repeat_failure: true",
+      "is_ambiguous_reason: true",
+      "method: upi",
+      "attempt_no: 3"
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "bank_decline",
@@ -2053,6 +2125,26 @@
     "root_cause": "gateway_timeout",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "290bdabca45d7bef62b9704f": {
+    "action": "retry_alternate_method",
+    "confidence": 0.62,
+    "draft_message": "Namaste \ud83d\ude4f Aapka payment abhi bank se decline ho gaya hai \u2014 tension mat lijiye, paise katte nahi hain. Kuch bank servers abhi thode slow hain aur reason thoda generic aaya hai, isliye humne UPI se retry nahi karne ki salah dete hain. Kya aap isi amount ke liye debit card / credit card / netbanking try kar sakte hain? Agar help chahiye toh yahi reply kar dijiye, hum turant kar denge. \ud83d\ude4f",
+    "evidence_citations": [
+      "error_code: GATEWAY_ERROR",
+      "error_source: bank",
+      "error_reason: BANK_DECLINED",
+      "error_step: payment_authorization",
+      "bank_health_score: 0.44",
+      "is_ambiguous_reason: true",
+      "debit_confirmation_flag: false",
+      "method: upi",
+      "value_band: high",
+      "attempt_no: 1"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "2961b0efa565b61acdf8c972": {
     "action": "retry_alternate_method",
     "confidence": 0.72,
@@ -2437,6 +2529,24 @@
     "root_cause": "bank_decline",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "2e78bcb7e94064736fac265a": {
+    "action": "retry_alternate_method",
+    "confidence": 0.55,
+    "draft_message": "Namaste \ud83d\ude4f Aapka payment abhi complete nahi hua \u2014 system pe ek technical issue aaya tha aur amount debit nahi hua hai. Please tension na lein, kuch hi min me alternate UPI ID ya Card se retry karein. Koi help chahiye toh reply karein. \ud83d\ude4f",
+    "evidence_citations": [
+      "error_code: SERVER_ERROR",
+      "error_source: internal",
+      "error_step: payment_initiation",
+      "error_reason: PAYMENT_FAILED",
+      "is_ambiguous_reason: true",
+      "debit_confirmation_flag: false",
+      "predebit_notified: false",
+      "bank_health_score: 0.628 (moderate, not full outage)"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "gateway_timeout",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "2f4afb5b86388ab9818a9b5c": {
     "action": "retry_alternate_method",
     "confidence": 0.62,
@@ -2702,6 +2812,25 @@
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "373d1bbdcc33756c3486f16e": {
+    "action": "retry_alternate_method",
+    "confidence": 0.55,
+    "draft_message": "Namaste! Aapka UPI payment shuru hi nahi ho paya \u2014 usually iska matlab hai ki payment screen par 'Pay' button dabane ke baad UPI app open nahi hua ya time pe confirm nahi hua. Koi paisa kat nahi hai. Please dobara try karein, ya agar issue aaye toh Card / Net Banking use karein. Help chahiye toh reply karein!",
+    "evidence_citations": [
+      "method=upi",
+      "error_step=payment_initiation",
+      "error_source=customer",
+      "error_reason=PAYMENT_FAILED",
+      "is_ambiguous_reason=true",
+      "error_code=BAD_REQUEST_ERROR",
+      "debit_confirmation_flag=false",
+      "attempt_no=2",
+      "predebit_notified=false"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "intent_drop",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
   "374a0c32894ad6f12603a319": {
@@ -3187,6 +3316,25 @@
       "error_reason: BANK_DECLINED",
       "error_step: payment_authentication",
       "is_ambiguous_reason: true",
+      "debit_confirmation_flag: false"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "3efb1112d80745cbd3fb387d": {
+    "action": "retry_alternate_method",
+    "confidence": 0.62,
+    "draft_message": "Namaste! Aapke UPI payment ki koshish bank ne abhi decline kar di hai (\u20b9871.89). Paisa kataya nahi gaya hai. Kripya thodi der baad dobara try karein, ya card/netbanking se pay karne ka option choose karein. Koi sawaal ho toh yahan reply karein. Dhanyavaad!",
+    "evidence_citations": [
+      "error_code: GATEWAY_ERROR",
+      "error_source: gateway",
+      "error_reason: BANK_DECLINED",
+      "error_step: payment_authorization",
+      "is_ambiguous_reason: true",
+      "bank_health_score: 0.415",
+      "method: upi",
+      "predebit_notified: false",
       "debit_confirmation_flag: false"
     ],
     "model": "minimax/minimax-m3:free",
@@ -4144,6 +4292,27 @@
     "root_cause": "bank_decline",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "4e93b8bffb33033ff68a20cc": {
+    "action": "retry_alternate_method",
+    "confidence": 0.62,
+    "draft_message": "Aapka payment bank ki taraf se decline ho gaya hai (BANK_DECLINED). Koi amount debit nahi hua hai. Please ek baar try karein \u2014 yadi phir bhi issue aaye, toh UPI ke bajaye Card ya Net Banking se pay karein, ya hum aapko ek naya payment link bhej dein. Batayein kya karna chahein? \u2014 Team [Brand]",
+    "evidence_citations": [
+      "error_reason: BANK_DECLINED",
+      "error_source: gateway",
+      "error_step: payment_authorization",
+      "error_code: BAD_REQUEST_ERROR",
+      "bank_health_score: 0.273",
+      "is_ambiguous_reason: true",
+      "method: upi",
+      "attempt_no: 2",
+      "retry_count: 1",
+      "debit_confirmation_flag: false",
+      "predebit_notified: false"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "4ea39e7e9a22a904f0f30706": {
     "action": "retry_alternate_method",
     "confidence": 0.78,
@@ -4447,6 +4616,24 @@
     "root_cause": "bank_decline",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "54ecee8e4b4097bd2bc69ed5": {
+    "action": "retry_alternate_method",
+    "confidence": 0.72,
+    "draft_message": "Aapka payment bank se decline ho gaya hai. Koi amount deduct nahi hua hai. Kripya thodi der baad UPI se retry karein, ya phir card / netbanking jaise alternate payment method try karein. Koi help chahiye toh yahan reply karein. \ud83d\ude4f",
+    "evidence_citations": [
+      "error_code: BAD_REQUEST_ERROR",
+      "error_source: bank",
+      "error_reason: BANK_DECLINED",
+      "error_step: payment_authentication",
+      "debit_confirmation_flag: false",
+      "is_ambiguous_reason: true",
+      "bank_health_score: 0.813",
+      "method: upi"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "55295c4808f678c6cff66cb1": {
     "action": "retry_alternate_method",
     "confidence": 0.62,
@@ -4498,6 +4685,24 @@
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "55aecd281c77d71ec4d300c5": {
+    "action": "retry_alternate_method",
+    "confidence": 0.55,
+    "draft_message": "Namaste! Aapka payment abhi complete nahi ho paya \u2014 gateway pe ek chhoti si technical dikkat aayi thi, aur paisa kataya nahi gaya hai. Kya aap ek baar dobara try kar sakte hain, ya hum aapko ek fresh payment link bhej dein? Reply karein, hum turant help karenge.",
+    "evidence_citations": [
+      "error_code: GATEWAY_ERROR",
+      "error_source: gateway",
+      "error_step: payment_initiation",
+      "is_ambiguous_reason: true",
+      "debit_confirmation_flag: false",
+      "predebit_notified: false",
+      "bank_health_score: 0.897",
+      "retry_count: 1"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "gateway_timeout",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
   "56a039add0cfc1cf39d0b29b": {
@@ -4698,6 +4903,23 @@
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "59f10fcbd53864a4ec4644d6": {
+    "action": "retry_now",
+    "confidence": 0.45,
+    "draft_message": "Aapke card payment (\u20b93,539.55) par ek temporary glitch aaya tha authorization step pe, jiske wajah se payment complete nahi ho paya. Paisa abhi kat nahi hai. Kripya thodi der baad retry karein \u2014 yadi phir bhi issue aaye to hum turant help karenge.",
+    "evidence_citations": [
+      "error_code: BAD_REQUEST_ERROR",
+      "error_source: customer",
+      "error_step: payment_authorization",
+      "is_ambiguous_reason: true",
+      "is_subscription: true",
+      "debit_confirmation_flag: false",
+      "bank_health_score: 0.88"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "auth_3ds_drop",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
   "5bb6109af41c0712617c20d0": {
@@ -6135,6 +6357,24 @@
     "root_cause": "upi_daily_limit",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "7525905e23b04c48c1ca77c7": {
+    "action": "retry_alternate_method",
+    "confidence": 0.78,
+    "draft_message": "Namaste! Aapka \u20b94,604.16 ka payment abhi bank se decline ho gaya hai (bank ki taraf se technical issue dikha raha hai). Tension mat lijiye \u2014 paisa katke nahi gaya. Kripya thodi der baad dobara try kijiye, ya same amount ka payment link hum aapko bhej rahe hain jisse aap UPI ke alag app (jaise PhonePe/GPay/Paytm) se ya net banking se pay kar sakein. Agar help chahiye toh yahan reply kijiye. \ud83d\ude4f",
+    "evidence_citations": [
+      "error_code: GATEWAY_ERROR",
+      "error_source: gateway",
+      "error_reason: BANK_DECLINED",
+      "error_step: payment_authorization",
+      "bank_health_score: 0.274 (low)",
+      "is_ambiguous_reason: true",
+      "method: upi",
+      "geo_tier: tier2"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "755c5abed2e53c4afd9490ce": {
     "action": "retry_alternate_method",
     "confidence": 0.52,
@@ -6181,6 +6421,23 @@
       "bank_health_score: 0.927 (healthy, rules out bank outage)",
       "debit_confirmation_flag: false (rules out debited_pending)",
       "free_text: null"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "gateway_timeout",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "7623313be036471acba1edb0": {
+    "action": "retry_alternate_method",
+    "confidence": 0.45,
+    "draft_message": "Namaste! \ud83d\ude4f Aapka payment abhi complete nahi hua hai aur koi amount debit nahi hua hai. Kripya ek baar phir try karein, ya agar dikkat aaye toh humein bataayein \u2014 hum aapko dusre payment option (jaise card/netbanking) se try karne mein madad karenge. Dhanyavaad!",
+    "evidence_citations": [
+      "error_code: SERVER_ERROR",
+      "error_source: internal",
+      "error_step: payment_initiation",
+      "free_text: payment page pe atak gaya",
+      "is_ambiguous_reason: true",
+      "debit_confirmation_flag: false",
+      "bank_health_score: 0.678"
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "gateway_timeout",
@@ -6506,6 +6763,24 @@
     "root_cause": "auth_3ds_drop",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "7d65c058fa2a56875aa7a9b2": {
+    "action": "retry_alternate_method",
+    "confidence": 0.42,
+    "draft_message": "Aapka payment is baar complete nahi ho paya \u2014 isse aksar UPI daily limit cross ho jaane se hota hai. Kya aap is amount ko card/netbanking se try karenge, ya hum aapko ek fresh payment link bhej dein?",
+    "evidence_citations": [
+      "method=upi",
+      "geo_tier=tier3",
+      "bank_health_score=0.826",
+      "error_step=payment_authentication",
+      "is_ambiguous_reason=true",
+      "is_repeat_failure=true",
+      "amount=2925.65 (mid-band)",
+      "predebit_notified=true"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "upi_daily_limit",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "7d769779a877a3fd45ecdc5f": {
     "action": "retry_alternate_method",
     "confidence": 0.95,
@@ -6573,6 +6848,23 @@
       "predebit_notified: false",
       "mandate_status: none",
       "bank_health_score: 0.684"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "7f873cb3011197cdff9f7512": {
+    "action": "retry_alternate_method",
+    "confidence": 0.52,
+    "draft_message": "Aapka payment bank se decline ho gaya hai (error: PAYMENT_FAILED). Koi amount debit nahi hua hai. Aap ek baar UPI ya netbanking se try kar sakte hain \u2014 woh zyada reliably kaam karta hai. Agar phir bhi issue aaye toh hum yahan help ke liye hain!",
+    "evidence_citations": [
+      "error_code: BAD_REQUEST_ERROR",
+      "error_source: customer",
+      "error_step: payment_authentication",
+      "is_ambiguous_reason: true",
+      "debit_confirmation_flag: false",
+      "bank_health_score: 0.591 (moderate, not outage-level)",
+      "error_reason: PAYMENT_FAILED (generic, no specific decline sub-code)"
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "bank_decline",
@@ -6698,6 +6990,24 @@
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "816e0f06ed9a7ef629945bfd": {
+    "action": "retry_alternate_method",
+    "confidence": 0.78,
+    "draft_message": "Namaste! Aapka \u20b98,052.29 ka payment netbanking se attempt karte waqt OTP nahi aane ke wajah se fail ho gaya. Tension na lijiye, paisa katke nahi gaya hai. Kya aap UPI ya card se retry kar sakte hain? Zyada convenient lage toh hum ek naya payment link bhi bhej dete hain \u2014 batayein kya theek rahega. \ud83d\ude4f",
+    "evidence_citations": [
+      "method: netbanking",
+      "error_code: GATEWAY_ERROR",
+      "error_step: payment_authentication",
+      "free_text: OTP nahi aaya",
+      "is_ambiguous_reason: true",
+      "bank_health_score: 0.915 (bank itself healthy)",
+      "debit_confirmation_flag: false",
+      "predebit_notified: true"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "auth_3ds_drop",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
   "81e31d02aa9e43cbc84faec8": {
@@ -9424,6 +9734,23 @@
     "root_cause": "auth_3ds_drop",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "b2097faa9dbf7adba0548b99": {
+    "action": "retry_alternate_method",
+    "confidence": 0.82,
+    "draft_message": "Aapke UPI payment mein 'wrong VPA' issue aaya \u2014 lagta hai aapne jo UPI ID daali thi woh valid nahi thi. Kya aap ek baar UPI ID double-check karke retry kar sakte hain? Agar phir bhi issue aaye toh hum aapko ek alternate payment link bhej dete hain (UPI intent / card / netbanking) \u2014 jisse payment aasaani se ho jaye. Batayein kaunsa option convenient lagega? \ud83d\ude42",
+    "evidence_citations": [
+      "free_text: 'invalid upi address bol raha'",
+      "error_source: customer",
+      "error_step: payment_initiation",
+      "error_code: BAD_REQUEST_ERROR",
+      "is_ambiguous_reason: true (VPA format is common customer-input failure)",
+      "method: upi",
+      "mandate_status: none (no recurring mandate to reauthorize)"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "wrong_vpa",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "b2812ce4a8eb835bb854dc1e": {
     "action": "retry_alternate_method",
     "confidence": 0.62,
@@ -10928,6 +11255,24 @@
     "root_cause": "bank_decline",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "d36b37373c5d24e51aad7768": {
+    "action": "retry_alternate_method",
+    "confidence": 0.72,
+    "draft_message": "Namaste! Aapka \u20b9978.21 ka payment netbanking se bank dwara decline ho gaya hai. Kripya koi aur payment method try karein \u2014 jaise UPI ya debit/credit card. Agar madad chahiye toh hum yahan hain. \u2014 Team [Brand]",
+    "evidence_citations": [
+      "error_code: GATEWAY_ERROR",
+      "error_source: bank",
+      "error_reason: BANK_DECLINED",
+      "error_step: payment_authorization",
+      "bank_health_score: 0.371",
+      "is_ambiguous_reason: true",
+      "retry_count: 2",
+      "method: netbanking"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "d4039dc01adecd53593bf6a5": {
     "action": "retry_alternate_method",
     "confidence": 0.9,
@@ -11393,6 +11738,22 @@
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "de8223a8786cefb91860cd73": {
+    "action": "retry_alternate_method",
+    "confidence": 0.42,
+    "draft_message": "Namaste! Aapka \u20b9533.33 ka payment attempt authentication step par fail ho gaya hai aur amount debit nahi hua hai. Kya aap ek baar UPI ya netbanking se try kar sakte hain? Agar issue repeat ho toh hum alternate payment link bhi share kar denge. Help chahiye toh yahan reply karein.",
+    "evidence_citations": [
+      "error_step: payment_authentication",
+      "error_source: customer",
+      "is_ambiguous_reason: true",
+      "debit_confirmation_flag: false",
+      "error_reason: PAYMENT_FAILED",
+      "error_code: BAD_REQUEST_ERROR"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "auth_3ds_drop",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
   "df159ced1f4906996b79791b": {
@@ -11985,6 +12346,19 @@
     "root_cause": "intent_drop",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "eb8aedacb1a2bdf7a6ba79df": {
+    "action": "retry_delayed",
+    "confidence": 0.86,
+    "draft_message": "Aapka payment bank se decline ho gaya. Thoda wait karke phir se try karein, ya alternative UPI/card se payment kar sakte hain.",
+    "evidence_citations": [
+      "error_reason: BANK_DECLINED",
+      "error_source: bank",
+      "bank_health_score: 0.336"
+    ],
+    "model": "nvidia/nemotron-3-super-120b-a12b:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:nvidia/nemotron-3-super-120b-a12b:free"
+  },
   "ebc0d8fec2a246e11406900b": {
     "action": "retry_alternate_method",
     "confidence": 0.42,
@@ -12187,6 +12561,23 @@
     "root_cause": "bank_outage",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "ee5c63db785d2b4c177e68d6": {
+    "action": "retry_alternate_method",
+    "confidence": 0.72,
+    "draft_message": "Aapka payment bank ki taraf se decline ho gaya hai (\u20b94,962.74). Koi paisa kata nahi hai. Kripya thodi der baad ek alag UPI app (jaise PhonePe, Paytm, ya Google Pay) ya debit/credit card se retry karein. Agar problem aati rahe toh hum payment link bhej sakte hain \u2014 zaroorat ho toh yahan reply karein.",
+    "evidence_citations": [
+      "error_code: GATEWAY_ERROR",
+      "error_source: bank",
+      "error_reason: BANK_DECLINED",
+      "error_step: payment_authorization",
+      "debit_confirmation_flag: false",
+      "is_ambiguous_reason: true",
+      "bank_health_score: 0.758 (moderately healthy)"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "ee65bc8238b50a001380c7ae": {
     "action": "retry_alternate_method",
     "confidence": 0.32,
@@ -12331,6 +12722,43 @@
     "root_cause": "wrong_vpa",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "f196542eae7116885a5733c7": {
+    "action": "retry_now",
+    "confidence": 0.55,
+    "draft_message": "Aapka payment abhi gateway par pending hai aur complete nahi hua. Koi amount debit nahi hua hai. Hum abhi retry kar rahe hain \u2014 agar 5 minute mein auto-success nahi hota toh hum wapas link bhej denge. Koi tension nahi leni hai.",
+    "evidence_citations": [
+      "error_code: GATEWAY_ERROR",
+      "error_source: gateway",
+      "error_step: payment_initiation",
+      "debit_confirmation_flag: false",
+      "is_ambiguous_reason: true",
+      "bank_health_score: 0.836",
+      "error_reason: PAYMENT_FAILED"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "gateway_timeout",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "f28365771f144e39ce35e8a8": {
+    "action": "retry_alternate_method",
+    "confidence": 0.52,
+    "draft_message": "Aapka payment UPI se complete nahi ho paya (\u20b94,774.35). Please ek baar cards/Net Banking se try karein ya neeche diye gaye link se payment karein: <link>. Koi deduction nahi hua hai. Thanks!",
+    "evidence_citations": [
+      "method=upi",
+      "error_code=BAD_REQUEST_ERROR",
+      "error_source=customer",
+      "error_step=payment_authentication",
+      "error_reason=PAYMENT_FAILED",
+      "is_repeat_failure=true",
+      "is_ambiguous_reason=true",
+      "debit_confirmation_flag=false",
+      "bank_health_score=0.814",
+      "amount=4774.35"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "intent_drop",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "f28bd8b7e22227435c610428": {
     "action": "retry_alternate_method",
     "confidence": 0.72,
@@ -12381,6 +12809,24 @@
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "auth_3ds_drop",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "f3afa2798a0bb3ee163327fd": {
+    "action": "retry_alternate_method",
+    "confidence": 0.55,
+    "draft_message": "Namaste! Aapka payment abhi complete nahi hua hai \u2014 gateway pe ek temporary issue aaya tha aur paisa debit nahi hua. Kya aap UPI ke bajaye Card ya Net Banking se try kar sakte hain? Agar problem aaye toh hum yahan hain madad ke liye.",
+    "evidence_citations": [
+      "error_code: GATEWAY_ERROR",
+      "error_source: gateway",
+      "error_step: payment_authentication",
+      "is_ambiguous_reason: true",
+      "debit_confirmation_flag: false",
+      "method: upi",
+      "bank_health_score: 0.693",
+      "retry_count: 2"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "gateway_timeout",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
   "f5053afcea10b46785846e51": {
