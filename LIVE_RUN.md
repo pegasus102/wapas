@@ -19,12 +19,13 @@ we can show exactly why, to the decimal.**
 | Source | Events | Share |
 |---|---|---|
 | rules tier (deterministic) | 2,427 | 76.0% |
-| `llm_openrouter:minimax/minimax-m3:free` | 764 | 23.9% |
-| `llm_heuristic` (documented offline fallback) | 2 | 0.1% |
+| `llm_openrouter:minimax/minimax-m3:free` | 766 | 24.0% |
 | `llm_openrouter:nvidia/nemotron-3-super-120b-a12b:free` | 1 | 0.0% |
 
-- **99.9% of LLM-tier events were decided by a real provider** (765 of 767);
-  the 2 misses are honest, visible fallbacks — never silently relabelled.
+- **100% of LLM-tier events were decided by a real provider** (767 of 767).
+  The overnight pass had 2 honest, visible fallbacks; the afternoon replay —
+  run on the completed cache — retried them automatically. The resume
+  design closed its own gaps; nothing was ever silently relabelled.
 - The single Nemotron response is the failover chain doing its job mid-run.
 - Every real response is stored separately in
   `cache/diagnosis_cache_live.json` (committed), so this run can be replayed
@@ -58,13 +59,13 @@ byte-identical under `make all`, and the basis of every published number.
 
 The simulator knows the true cause of every event but never shows it to any
 diagnostician. We graded both diagnosticians on the wapas arm's ambiguous
-subset (n = 740 graded of 767; the committed cache snapshot covers 97%+ of the
-run's live responses):
+subset (n = 767 — the complete corpus; 757 unique cache entries cover all 767
+events, 10 evidence packets being exact duplicates):
 
 | Diagnostician | Accuracy on ambiguous events |
 |---|---|
-| **Real model (MiniMax-M3)** | **392 / 740 = 53.0%** |
-| Recorded stand-in | 333 / 740 = 45.0% |
+| **Real model (MiniMax-M3)** | **406 / 767 = 52.9%** |
+| Recorded stand-in | 345 / 767 = 45.0% |
 
 Ambiguous events are the hard subset by construction (rules could not resolve
 them); even the oracle-defined ceiling is only reachable by perfect guessing
@@ -79,13 +80,13 @@ Executed actions come from the deterministic policy table
 (`CAUSE_ACTION_POLICY[predicted_cause]`), and the response model scores each
 action by cause-specific cure values (`CURE_MATRIX`). Comparing expected
 recovery `p(true_cause, policy_action(predicted_cause))` for both
-diagnosticians on the same 740 events:
+diagnosticians on the same 767 events:
 
 | | expected recovery per ambiguous event |
 |---|---|
-| live model | 0.2437 |
-| stand-in | 0.2782 |
-| **delta** | **−0.0345 (−3.45pp per ambiguous event)** |
+| live model | 0.2432 |
+| stand-in | 0.2778 |
+| **delta** | **−0.0346 (−3.46pp per ambiguous event)** |
 
 Largest damage by true cause: `intent_drop` (−10.84 summed p), `bank_outage`
 (−7.49), `auth_3ds_drop` (−4.51), `upi_daily_limit` (−3.35). Typical damaged
