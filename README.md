@@ -217,4 +217,3 @@ tested (`tests/test_policy_gate.py`).
 - Cure-matrix recalibration against live merchant outcomes, then re-ranking
   of LLM candidates in-sim (see `LIVE_RUN.md`, section 5).
 - GitHub Actions CI wiring `make all` into every push.
-- CI workflow wiring `make all` into GitHub Actions on every push.
