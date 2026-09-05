@@ -378,6 +378,13 @@ div[data-baseweb="select"] > div, .stSlider, .stRadio { color:var(--ink2); }
 [data-baseweb="progress-bar"] { background: #e8edf5 !important; }
 [data-baseweb="progress-bar"] > div > div { color: var(--ink2) !important; }
 hr { border:none; border-top:1px solid var(--line); }
+[data-testid="stHeader"] { overflow: visible !important; }
+[data-testid="stSidebarCollapseButton"] { visibility: visible !important;
+        opacity: 1 !important; pointer-events: auto !important;
+        position: fixed !important; top: 10px !important; left: 10px !important;
+        z-index: 1000 !important; }
+[data-testid="stSidebar"] [data-testid="stSidebarCollapseButton"] { position: absolute !important;
+        top: 10px !important; right: 10px !important; left: auto !important; }
 </style>
 """.replace("__WALL__", _WALL)
 CSS_PLAY = """
