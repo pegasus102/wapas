@@ -2547,6 +2547,23 @@
     "root_cause": "gateway_timeout",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
+  "2f3ce867f7e56b105ae3c29f": {
+    "action": "retry_alternate_method",
+    "confidence": 0.72,
+    "draft_message": "Namaste! Aapka payment bank ki taraf se decline ho gaya hai (\u20b93,624.92). Paise kat nahi hain. Kripya dobara try karein ya UPI/Net Banking se pay karein \u2014 link: <payment_link>. Koi sawaal ho toh yahan reply karein.",
+    "evidence_citations": [
+      "error_code: GATEWAY_ERROR",
+      "error_source: bank",
+      "error_reason: BANK_DECLINED",
+      "error_step: payment_authorization",
+      "is_ambiguous_reason: true",
+      "debit_confirmation_flag: false",
+      "bank_health_score: 0.44"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "bank_decline",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
   "2f4afb5b86388ab9818a9b5c": {
     "action": "retry_alternate_method",
     "confidence": 0.62,
@@ -10425,6 +10442,25 @@
     ],
     "model": "minimax/minimax-m3:free",
     "root_cause": "auth_3ds_drop",
+    "source": "llm_openrouter:minimax/minimax-m3:free"
+  },
+  "c2eb753b07ddf22efdd10ba9": {
+    "action": "retry_alternate_method",
+    "confidence": 0.32,
+    "draft_message": "Namaste! Aapka \u20b9661.12 ka UPI payment abhi complete nahi hua. Kripya ek baar phir try karein, ya same amount ke liye hum Card / Netbanking / Payment Link use kar sakte hain. Batayein kaun sa option aapko sahi lage? \ud83d\ude4f",
+    "evidence_citations": [
+      "error_step: payment_initiation",
+      "error_source: customer",
+      "error_reason: PAYMENT_FAILED",
+      "error_code: BAD_REQUEST_ERROR",
+      "is_ambiguous_reason: true",
+      "method: upi",
+      "debit_confirmation_flag: false",
+      "predebit_notified: false",
+      "bank_health_score: 0.792"
+    ],
+    "model": "minimax/minimax-m3:free",
+    "root_cause": "intent_drop",
     "source": "llm_openrouter:minimax/minimax-m3:free"
   },
   "c3968f514784518b9a98d725": {
