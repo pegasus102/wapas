@@ -1,0 +1,78 @@
+{
+  "n": 2400,
+  "accuracy": 0.8146,
+  "avg_confusion_cost": 0.2362,
+  "confusion_matrix": {
+    "auth_3ds_drop": {
+      "auth_3ds_drop": 142,
+      "intent_drop": 58,
+      "wrong_vpa": 35,
+      "debited_pending": 7
+    },
+    "bank_decline": {
+      "bank_decline": 294,
+      "upi_daily_limit": 16,
+      "bank_outage": 63,
+      "debited_pending": 6
+    },
+    "gateway_timeout": {
+      "gateway_timeout": 212,
+      "debited_pending": 9
+    },
+    "card_expired": {
+      "card_expired": 101,
+      "debited_pending": 4
+    },
+    "debited_pending": {
+      "debited_pending": 122,
+      "intent_drop": 8
+    },
+    "intent_drop": {
+      "wrong_vpa": 114,
+      "intent_drop": 60,
+      "debited_pending": 6
+    },
+    "bank_outage": {
+      "bank_outage": 157,
+      "bank_decline": 30,
+      "upi_daily_limit": 6,
+      "debited_pending": 5
+    },
+    "upi_daily_limit": {
+      "bank_decline": 47,
+      "upi_daily_limit": 82,
+      "debited_pending": 4
+    },
+    "expired_mandate": {
+      "expired_mandate": 194,
+      "debited_pending": 2
+    },
+    "insufficient_funds": {
+      "insufficient_funds": 388,
+      "debited_pending": 5
+    },
+    "wrong_vpa": {
+      "wrong_vpa": 110,
+      "debited_pending": 2,
+      "intent_drop": 17
+    },
+    "fraud_hold": {
+      "fraud_hold": 93,
+      "debited_pending": 1
+    }
+  },
+  "calibration": {
+    "0.6": {
+      "n": 548,
+      "empirical_accuracy": 0.403
+    },
+    "0.8": {
+      "n": 485,
+      "empirical_accuracy": 0.862
+    },
+    "0.9": {
+      "n": 1367,
+      "empirical_accuracy": 0.963
+    }
+  }
+}

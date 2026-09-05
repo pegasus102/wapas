@@ -1,0 +1,97 @@
+{
+  "control": {
+    "arm": "control",
+    "n": 3203,
+    "recovered": 439,
+    "recovery_rate": 0.13705900718076802,
+    "ci_95": [
+      0.1256,
+      0.1494
+    ],
+    "recovered_amount": 1261981.0,
+    "at_risk_amount": 10031519.67,
+    "net_amount": 1261981.0,
+    "complaints": 0,
+    "complaint_rate": 0.0,
+    "n_actioned": 0,
+    "n_deferred": 0,
+    "n_human": 0,
+    "n_blocked": 0
+  },
+  "floor": {
+    "arm": "floor",
+    "n": 3203,
+    "recovered": 754,
+    "recovery_rate": 0.23540430846081797,
+    "ci_95": [
+      0.221,
+      0.2504
+    ],
+    "recovered_amount": 2339149.87,
+    "at_risk_amount": 9949089.37,
+    "net_amount": 2325561.07,
+    "complaints": 77,
+    "complaint_rate": 0.024039962535123322,
+    "n_actioned": 3185,
+    "n_deferred": 1074,
+    "n_human": 127,
+    "n_blocked": 18
+  },
+  "wapas": {
+    "arm": "wapas",
+    "n": 3194,
+    "recovered": 819,
+    "recovery_rate": 0.2564182842830307,
+    "ci_95": [
+      0.2416,
+      0.2718
+    ],
+    "recovered_amount": 2571246.36,
+    "at_risk_amount": 9921700.19,
+    "net_amount": 2559082.16,
+    "complaints": 67,
+    "complaint_rate": 0.020976831559173452,
+    "n_actioned": 2503,
+    "n_deferred": 1409,
+    "n_human": 180,
+    "n_blocked": 691
+  },
+  "rules_only": {
+    "arm": "rules_only",
+    "n": 3194,
+    "recovered": 886,
+    "recovery_rate": 0.2773951158422041,
+    "ci_95": [
+      0.2621,
+      0.2932
+    ],
+    "recovered_amount": 2777198.59,
+    "at_risk_amount": 9921700.19,
+    "net_amount": 2763309.19,
+    "complaints": 80,
+    "complaint_rate": 0.025046963055729492,
+    "n_actioned": 3176,
+    "n_deferred": 1580,
+    "n_human": 121,
+    "n_blocked": 18
+  },
+  "oracle": {
+    "arm": "oracle",
+    "n": 3194,
+    "recovered": 900,
+    "recovery_rate": 0.2817783343769568,
+    "ci_95": [
+      0.2664,
+      0.2976
+    ],
+    "recovered_amount": 2823457.5,
+    "at_risk_amount": 9921700.19,
+    "net_amount": 2810026.2,
+    "complaints": 77,
+    "complaint_rate": 0.024107701941139637,
+    "n_actioned": 3176,
+    "n_deferred": 1575,
+    "n_human": 121,
+    "n_blocked": 18
+  }
+}
