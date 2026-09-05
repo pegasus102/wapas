@@ -4366,6 +4366,17 @@
     "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
+  "330ef7df196e533effad190c": {
+    "action": "retry_alternate_method",
+    "confidence": 0.8,
+    "draft_message": "Looks like today's UPI limit was hit \u2014 we'll retry tomorrow, or try another method now.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
   "33712462936652e518203b2f": {
     "action": "retry_alternate_method",
     "confidence": 0.794,
@@ -8887,6 +8898,17 @@
     "root_cause": "bank_outage",
     "source": "llm_heuristic"
   },
+  "6790c1ceaed4b00597b2fd8e": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "67a01ca3eae846b8d81971ae": {
     "action": "retry_now",
     "confidence": 0.567,
@@ -11747,6 +11769,17 @@
     "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
+  "89cb37cef52bc2da966b6625": {
+    "action": "retry_now",
+    "confidence": 0.587,
+    "draft_message": "Your last payment attempt didn't go through. We'll retry shortly.",
+    "evidence_citations": [
+      "bank_health_score",
+      "attempts_today"
+    ],
+    "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
   "89cf13dfea483a42a1668b56": {
     "action": "send_payment_link",
     "confidence": 0.55,
@@ -13805,6 +13838,17 @@
     "source": "llm_heuristic"
   },
   "a25b81066fa1dab1d83b3759": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
+    "source": "llm_heuristic"
+  },
+  "a2614547512a72e7060890ea": {
     "action": "send_payment_link",
     "confidence": 0.6,
     "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
@@ -18875,6 +18919,17 @@
     "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
+  "df8f9cbea74fc98476d8788c": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
+    "source": "llm_heuristic"
+  },
   "dfad5e2c554db72ee87d1b32": {
     "action": "send_payment_link",
     "confidence": 0.55,
@@ -19368,6 +19423,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "e5e3885caea29485aa63357b": {
+    "action": "send_payment_link",
+    "confidence": 0.55,
+    "draft_message": "Your checkout didn't complete \u2014 here's a link to finish it.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "intent_drop",
     "source": "llm_heuristic"
   },
   "e5eee396dad097d4786a7864": {
@@ -20281,6 +20347,17 @@
       "attempts_today"
     ],
     "root_cause": "bank_decline",
+    "source": "llm_heuristic"
+  },
+  "f102c8cd51c73f4de25baddc": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "f10a31a819e32feb6552373d": {
@@ -21337,6 +21414,17 @@
       "attempts_today"
     ],
     "root_cause": "upi_daily_limit",
+    "source": "llm_heuristic"
+  },
+  "fd909d8335f07d5236b4e43d": {
+    "action": "send_payment_link",
+    "confidence": 0.6,
+    "draft_message": "The UPI ID entered didn't match \u2014 here's a fresh payment link.",
+    "evidence_citations": [
+      "free_text",
+      "error_source"
+    ],
+    "root_cause": "wrong_vpa",
     "source": "llm_heuristic"
   },
   "fdb3a8bb43fbfb02dac4ffa4": {

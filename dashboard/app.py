@@ -152,6 +152,10 @@ _WALL_SVG = ("<?xml version='1.0' encoding='UTF-8'?>"
              "</svg>")
 _WALL = "url(\"data:image/svg+xml," + urllib.parse.quote(_WALL_SVG, safe="") + "\")"
 
+# Presentation-only hero asset. The inline SVG remains as an offline fallback.
+_HERO_IMAGE = ("https://images.unsplash.com/photo-1551288049-bebda4e38f71?"
+               "auto=format&fit=crop&w=2200&q=88")
+
 CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -238,9 +242,9 @@ p, li, span, label { font-size: 13.5px; }
 
 /* ── hero with SVG wallpaper ── */
 .hero { border-radius:16px; padding:26px 30px 24px; color:#fff; margin-bottom:20px;
-        background-image: linear-gradient(90deg, rgba(9,15,30,.90) 0%, rgba(13,30,66,.72) 52%,
-                          rgba(19,42,92,.38) 100%), __WALL__;
-        background-size: cover, cover; background-position: center, center;
+    background-image: linear-gradient(90deg, rgba(5,12,27,.94) 0%, rgba(11,29,65,.78) 49%,
+              rgba(15,53,88,.42) 100%), url("__HERO_IMAGE__"), __WALL__;
+    background-size: cover, cover, cover; background-position: center, center, center;
         box-shadow: 0 18px 40px -18px rgba(13,30,66,.45); position: relative; overflow: hidden; }
 .hero-kicker { display:inline-flex; align-items:center; gap:8px; font-size:10.5px;
         font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#c7d7f8;
@@ -380,7 +384,7 @@ div[data-baseweb="select"] > div, .stSlider, .stRadio { color:var(--ink2); }
 [data-baseweb="progress-bar"] > div > div { color: var(--ink2) !important; }
 hr { border:none; border-top:1px solid var(--line); }
 </style>
-""".replace("__WALL__", _WALL)
+""".replace("__WALL__", _WALL).replace("__HERO_IMAGE__", _HERO_IMAGE)
 CSS_PLAY = """
 <style>
 /* ── checkout card (the payment that failed) ── */
@@ -441,6 +445,69 @@ CSS_PLAY = """
 </style>
 """
 st.markdown(CSS + CSS_PLAY, unsafe_allow_html=True)
+
+# Enterprise surface layer: Streamlit widgets keep their native behavior while
+# their containers share the same quiet glass, spacing, and focus language.
+ENTERPRISE_CSS = """
+<style>
+:root {
+    --glass: rgba(255,255,255,.78);
+    --glass-strong: rgba(255,255,255,.92);
+    --glass-line: rgba(148,163,184,.25);
+}
+[data-testid="stAppViewContainer"] .block-container { padding-top: .8rem; }
+[data-testid="stVerticalBlockBorderWrapper"] {
+    background: var(--glass) !important;
+    border: 1px solid var(--glass-line) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 14px 34px rgba(15,23,42,.055), inset 0 1px 0 rgba(255,255,255,.8);
+    backdrop-filter: blur(14px);
+    padding: 1rem 1.1rem !important;
+}
+[data-testid="stVerticalBlockBorderWrapper"] [data-testid="stVerticalBlock"] {
+    gap: .7rem;
+}
+[data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] label {
+    color: var(--ink2) !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+[data-baseweb="select"] > div, [data-testid="stTextInput"] input,
+[data-testid="stNumberInput"] input, [data-testid="stTextArea"] textarea {
+    background: var(--glass-strong) !important;
+    border: 1px solid #d7e0ec !important;
+    border-radius: 10px !important;
+    min-height: 42px;
+    box-shadow: 0 2px 8px rgba(15,23,42,.035);
+}
+[data-baseweb="select"] > div:focus-within, [data-testid="stTextInput"] input:focus,
+[data-testid="stNumberInput"] input:focus, [data-testid="stTextArea"] textarea:focus {
+    border-color: #60a5fa !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.12) !important;
+}
+[data-testid="stButton"] button, [data-testid="stDownloadButton"] button {
+    min-height: 42px;
+    border-radius: 10px !important;
+    padding: 0 16px !important;
+}
+[data-testid="stAlert"] { border-radius: 12px !important; border-width: 1px !important; }
+[data-testid="stExpander"] {
+    border: 1px solid var(--glass-line) !important;
+    border-radius: 12px !important;
+    background: rgba(255,255,255,.58) !important;
+}
+@media (max-width: 760px) {
+    .block-container { padding: .7rem .8rem 2rem; }
+    .hero { padding: 24px 20px 22px; }
+    .hero h1 { font-size: 20px !important; }
+    .bar-row { grid-template-columns: 1fr; gap: 5px; }
+    .bar-label { text-align: left; }
+}
+</style>
+"""
+st.markdown(ENTERPRISE_CSS, unsafe_allow_html=True)
 
 FORCE_SIDEBAR = """
 <style>
@@ -682,8 +749,9 @@ with st.sidebar:
 PAGES = ["Mission Control", "Try It Live", "Case Files", "Tamper Lab",
          "Kill-Switch Lab", "Assurances"]
 topbar("recovery console")
-page = st.segmented_control("workspace", PAGES, default="Mission Control",
-                            label_visibility="collapsed")
+with st.container(border=True):
+    page = st.segmented_control("workspace", PAGES, default="Mission Control",
+                                label_visibility="collapsed")
 if page is None:
     page = "Mission Control"
 
