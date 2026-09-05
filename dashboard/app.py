@@ -378,13 +378,6 @@ div[data-baseweb="select"] > div, .stSlider, .stRadio { color:var(--ink2); }
 [data-baseweb="progress-bar"] { background: #e8edf5 !important; }
 [data-baseweb="progress-bar"] > div > div { color: var(--ink2) !important; }
 hr { border:none; border-top:1px solid var(--line); }
-[data-testid="stHeader"] { overflow: visible !important; }
-[data-testid="stSidebarCollapseButton"] { visibility: visible !important;
-        opacity: 1 !important; pointer-events: auto !important;
-        position: fixed !important; top: 10px !important; left: 10px !important;
-        z-index: 1000 !important; }
-[data-testid="stSidebar"] [data-testid="stSidebarCollapseButton"] { position: absolute !important;
-        top: 10px !important; right: 10px !important; left: auto !important; }
 </style>
 """.replace("__WALL__", _WALL)
 CSS_PLAY = """
@@ -450,12 +443,20 @@ st.markdown(CSS + CSS_PLAY, unsafe_allow_html=True)
 
 FORCE_SIDEBAR = """
 <style>
-[data-testid="stSidebar"], [class*="stSidebarCollapsed-"] {
-  display: flex !important; visibility: visible !important; opacity: 1 !important;
-  min-width: 265px !important; width: 265px !important; max-width: 265px !important;
-  transform: none !important; position: relative !important;
+[data-testid="stSidebar"] {
+  min-width: 265px !important; width: 265px !important;
 }
-[data-testid="stSidebarCollapseButton"] { display: none !important; }
+[data-testid="stHeader"] { overflow: visible !important; }
+[data-testid="stSidebarCollapseButton"] {
+  visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+  position: fixed !important; top: 10px !important; left: 12px !important;
+  z-index: 1000 !important; background: #fff !important; border: 1px solid #e4e9f1 !important;
+  border-radius: 8px !important; box-shadow: 0 2px 8px rgba(15,23,42,.10) !important;
+  padding: 4px !important;
+}
+[data-testid="stSidebar"] [data-testid="stSidebarCollapseButton"] {
+  position: absolute !important; top: 8px !important; right: 10px !important; left: auto !important;
+}
 </style>
 """
 st.markdown(FORCE_SIDEBAR, unsafe_allow_html=True)
@@ -673,6 +674,18 @@ with st.sidebar:
                "repro via make all · Razorpay test-mode shaped")
 
 topbar(page)
+
+PLAIN_ACTION = {
+    "retry_now": "Retry the payment now",
+    "retry_delayed": "Retry after 48 hours",
+    "retry_alternate_method": "Ask customer to try another UPI app",
+    "send_payment_link": "Send a fresh pay-here link",
+    "send_reauth_mandate_link": "Send a new auto-pay approval link",
+    "verify_then_reassure": "Verify with bank, reassure customer",
+    "refund": "Refund the customer",
+    "escalate_human": "Ask a human to decide",
+    "no_action": "Do nothing",
+}
 
 # ═════════════════════════ Mission Control ═════════════════════════
 if page == "Mission Control":
@@ -898,6 +911,22 @@ elif page == "Try It Live":
     PHONE_LAST4 = {"Priya Sharma": "32", "Rohit Verma": "87", "Ayesha Khan": "10",
                    "Karthik Iyer": "54", "Meera Nair": "76"}
 
+    PLAIN = {
+        "bank_decline": "Bank declined the payment",
+        "insufficient_funds": "Not enough balance",
+        "auth_3ds_drop": "Security check (OTP page) didn't finish",
+        "expired_mandate": "Auto-pay approval expired",
+        "wrong_vpa": "Wrong UPI ID was entered",
+        "gateway_timeout": "Payment gateway timed out",
+        "fraud_hold": "Looks suspicious — needs a human",
+        "debited_pending": "Money left, order not confirmed",
+        "bank_outage": "Customer's bank is down",
+        "upi_daily_limit": "Daily UPI limit reached",
+        "intent_drop": "Customer left mid-payment",
+        "card_expired": "Card has expired",
+        "unknown": "Cause unclear",
+    }
+
     def _packet(name, amount, reason, step, code, health, free_text=None,
                 debit=False, hour=None):
         ts = (datetime.now(IST).replace(hour=hour, minute=47, second=0,
@@ -991,13 +1020,16 @@ elif page == "Try It Live":
         pill = '<span class="pill pill-idle"><span class="dot"></span>RULES</span>'
     else:
         pill = source_pill(d.get("source", "llm_heuristic"))
+    plain = PLAIN.get(d["root_cause"], d["root_cause"])
     st.markdown('<div class="step"><div class="step-n">3</div><div class="step-b">'
                 '<div class="step-t">Diagnosis</div>'
-                '<div class="step-d">Cause &nbsp;<code>' + esc(d["root_cause"]) + '</code>'
+                '<div class="step-d"><b>' + esc(plain) + '</b>'
+                ' &nbsp;<code>' + esc(d["root_cause"]) + '</code>'
                 ' &nbsp;·&nbsp; confidence <b>' + f'{float(d["confidence"]):.2f}' + '</b>'
-                ' &nbsp;·&nbsp; ' + pill + '<br>Proposed action &nbsp;<code>'
-                + esc(d["action"]) + '</code> — a hint, not a command. The gate still has '
-                'to approve it.</div></div></div>', unsafe_allow_html=True)
+                ' &nbsp;·&nbsp; ' + pill + '<br>Suggested next step &nbsp;<b>'
+                + esc(PLAIN_ACTION.get(d["action"], d["action"])) + '</b> — a hint, not a '
+                'command. The gate still has to approve it.</div></div></div>',
+                unsafe_allow_html=True)
 
     # step 4: gate
     gate = Gate()
@@ -1028,14 +1060,16 @@ elif page == "Try It Live":
         return d.get("draft_message") or fallback
 
     FB = {
-        "debited_pending": ("We can see your " + inr(pk.amount) + " payment shows as "
-                            "debited. Please don't pay again — we're verifying with your "
-                            "bank and will confirm within 30 minutes."),
-        "card_expired": ("Your saved card has expired, so the " + inr(pk.amount) +
-                         " renewal didn't go through. Update it here and we'll complete "
-                         "the payment."),
-        "expired_mandate": ("Your auto-debit mandate for " + inr(pk.amount) + " expired. "
-                            "Here's a fresh approval link — takes 30 seconds."),
+        "debited_pending": ("Hi " + pk.customer_id.split()[0] + ", we can see your "
+                            + inr(pk.amount) + " payment left your account but the order "
+                            "didn't confirm. Don't worry — please don't pay again. We're "
+                            "checking with your bank and will update you within 30 minutes."),
+        "card_expired": ("Hi " + pk.customer_id.split()[0] + ", your card expired, so the "
+                         + inr(pk.amount) + " payment didn't go through. Tap below to "
+                         "update it and finish your payment — takes 30 seconds."),
+        "expired_mandate": ("Hi " + pk.customer_id.split()[0] + ", your auto-pay approval "
+                            "for " + inr(pk.amount) + " has expired. Tap below to approve "
+                            "it again — quick and secure."),
     }
     hhmm = now.strftime("%H:%M")
     fa, res = dec["final_action"], dec["policy_result"]
@@ -1047,8 +1081,8 @@ elif page == "Try It Live":
                 '<div class="av">W</div><div><div class="nm">WAPAS · ' + esc(utr[:13])
                 + '</div><div class="st">business account</div></div></div>'
                 '<div class="chat"><div class="chat-day">TODAY</div>'
-                '<div class="bubble l">Your payment of ' + esc(inr(pk.amount))
-                + " didn't go through."
+                '<div class="bubble l">Hi ' + esc(pk.customer_id.split()[0]) + ', your payment of '
+                + esc(inr(pk.amount)) + " didn't go through — no money was deducted."
                 '<span class="t">' + hhmm + '</span></div>'
                 '<div class="bubble r">' + esc(_draft(FB.get(d["root_cause"], "")))
                 + '<a class="paybtn" href="#">Pay ' + esc(inr(pk.amount))
@@ -1091,10 +1125,11 @@ elif page == "Try It Live":
                 '<div class="phone"><div class="screen"><div class="pbar">'
                 '<div class="av">W</div><div><div class="nm">WAPAS · merchant approvals'
                 '</div><div class="st">flagged for you</div></div></div>'
-                '<div class="chat"><div class="bubble l"><b>Approval needed.</b> '
-                + esc(inr(pk.amount)) + " looks like a "
-                + esc(d["root_cause"].replace("_", " "))
-                + " case. Nothing has been sent or charged — approve or reject with one tap."
+                '<div class="chat"><div class="bubble l"><b>Approve before we act.</b> '
+                + esc(pk.customer_id.split()[0]) + "&#39;s payment of " + esc(inr(pk.amount))
+                + " failed. Our reading: <b>" + esc(plain) + "</b>."
+                " Plan: " + esc((PLAIN_ACTION.get(dec["final_action"], dec["final_action"])).lower())
+                + ". Nothing has been sent or charged yet."
                 '<span class="t">' + hhmm + '</span></div>'
                 '<div class="sched-note">L3: a human decides · customer sees NOTHING until '
                 'approval</div></div></div></div>', unsafe_allow_html=True)
@@ -1109,12 +1144,12 @@ elif page == "Try It Live":
                 '</div></div>', unsafe_allow_html=True)
     with ph_r:
         st.markdown(kv_card("Why this message?", [
-            f"Diagnosed cause &nbsp;<code>{esc(d['root_cause'])}</code>",
-            f"Gate result &nbsp;<b>{esc(res)}</b>",
-            f"Action &nbsp;<code>{esc(fa)}</code>",
-            "Cheapest action that fits the cause —",
+            f"Reading &nbsp;<b>{esc(plain)}</b>",
+            f"Gate said &nbsp;<b>{esc(res)}</b>",
+            f"So we &nbsp;<b>{esc(PLAIN_ACTION.get(fa, fa).lower())}</b>",
+            "Cheapest step that fits the cause —",
             "never more contact than the customer",
-            "consented to."], "ok", icon="shield"), unsafe_allow_html=True)
+            "agreed to."], "ok", icon="shield"), unsafe_allow_html=True)
         st.caption("In the sandbox nothing is charged and nothing is sent. In production, "
                    "the executor performs this one action via Razorpay test APIs and writes "
                    "it to the hash-chained ledger.")
