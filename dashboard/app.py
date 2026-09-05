@@ -30,7 +30,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 OUT = ROOT / "out"
 
-APP_VERSION = "console v3.0"
+APP_VERSION = "console v3.7"
 
 st.set_page_config(page_title="WAPAS — Recovery Console", layout="wide",
                    initial_sidebar_state="expanded")
@@ -164,7 +164,8 @@ body { background:
        radial-gradient(1100px 260px at 50% -90px, rgba(29,78,216,.07), transparent 70%),
        var(--bg) !important; }
 [data-testid="stAppViewContainer"] { background: transparent !important; }
-[data-testid="stHeader"] { background: transparent !important; height: 0px !important; }
+[data-testid="stHeader"] { background: transparent !important;
+        height: 44px !important; min-height: 44px !important; }
 [data-testid="stToolbar"], [data-testid="stDecoration"],
 [data-testid="stStatusWidget"], #MainMenu, footer { visibility: hidden !important; }
 section[data-testid="stMain"], section[data-testid="stMain"] > div,
@@ -461,6 +462,16 @@ FORCE_SIDEBAR = """
 """
 st.markdown(FORCE_SIDEBAR, unsafe_allow_html=True)
 
+NAV_CSS = """
+<style>
+[data-testid="stSegmentedControl"] { margin: 0 0 14px; }
+[data-testid="stSegmentedControl"] [data-baseweb="button"] {
+  border-radius: 999px !important; font-weight: 700 !important; font-size: 13px !important;
+}
+</style>
+"""
+st.markdown(NAV_CSS, unsafe_allow_html=True)
+
 
 # ---------- loaders ----------
 @st.cache_data(show_spinner=False)
@@ -642,11 +653,6 @@ with st.sidebar:
                 '<div class="brand-sub">recovery console</div></div></div>',
                 unsafe_allow_html=True)
     st.divider()
-    st.markdown('<div class="navsec">Workspace</div>', unsafe_allow_html=True)
-    page = st.radio("Section", ["Mission Control", "Try It Live", "Case Files", "Tamper Lab",
-                                "Kill-Switch Lab", "Assurances"],
-                    label_visibility="collapsed")
-    st.divider()
     res = load_results()
     ev = load_eval()
     if res is None:
@@ -673,7 +679,13 @@ with st.sidebar:
     st.caption("n = 12,000 synthetic at-risk events · seeds 42 / 2026 · byte-identical "
                "repro via make all · Razorpay test-mode shaped")
 
-topbar(page)
+PAGES = ["Mission Control", "Try It Live", "Case Files", "Tamper Lab",
+         "Kill-Switch Lab", "Assurances"]
+topbar("recovery console")
+page = st.segmented_control("workspace", PAGES, default="Mission Control",
+                            label_visibility="collapsed")
+if page is None:
+    page = "Mission Control"
 
 PLAIN_ACTION = {
     "retry_now": "Retry the payment now",
