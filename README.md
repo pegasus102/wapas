@@ -80,6 +80,19 @@ Individual targets:
 | `make live-demo` | diagnoses ambiguous cases with a REAL LLM (needs `OPENROUTER_API_KEY` in `.env`) |
 | `make live-batch` | full experiment with real LLM diagnoses (needs key; fallbacks stay honest) |
 
+### Live-model sensitivity study (`LIVE_RUN.md`)
+
+After the official run was frozen, we re-ran the entire experiment with a REAL
+LLM in the diagnosis slot (MiniMax-M3 via OpenRouter from an auto-failover
+chain of five free models; 99.9% of LLM-tier events decided by a live
+provider). The real model is a *better diagnostician* than the recorded
+stand-in — 53.0% vs 45.0% accuracy on the ambiguous subset, graded against
+hidden ground truth — yet scores 25.6% in-sim, because its more accurate cause
+distribution maps to actions the current cure matrix scores lower. We publish
+both runs and the full mechanism analysis in **`LIVE_RUN.md`** rather than
+tune anything to the simulator. The official table above stays the
+deterministic, key-free, byte-identical run.
+
 ### Optional: `--live` mode (real LLM calls)
 
 By default, the diagnosis agent replays from `cache/diagnosis_cache.json`
