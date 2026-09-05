@@ -1,3 +1,4 @@
+
 # WAPAS - AI Revenue Recovery 
 
 WAPAS Diagnoses **why** a payment/subscription/checkout
@@ -47,6 +48,10 @@ wapas/
 ├── cache/diagnosis_cache.json   committed LLM responses — offline-first, forever
 └── HYPOTHESES.md            pre-registered claims (tag this before your official run)
 ```
+
+## Architecture
+
+<img width="1536" height="1024" alt="architecture_diagram" src="https://github.com/user-attachments/assets/19aa22bf-38dd-4b44-839f-0f2bea4a7a37" />
 
 ## Setup
 
