@@ -78,7 +78,7 @@ Individual targets:
 | `make verify-results` | regenerates results from scratch and diffs against the committed copy |
 | `make clean` | wipes generated `out/` only — never the committed diagnosis cache |
 | `make live-demo` | diagnoses ambiguous cases with a REAL LLM (needs `OPENROUTER_API_KEY` in `.env`) |
-| `make live-batch` | full experiment with real LLM diagnoses (needs key; fallbacks stay honest) |
+| `make live-batch` | full experiment with real LLM diagnoses (needs key; fallbacks are labelled, never silent) |
 
 ### Live-model sensitivity study (`LIVE_RUN.md`)
 
@@ -154,8 +154,8 @@ Nothing in the dashboard mutates `out/` — it's the projector, not the engine.
 - Diagnosis accuracy on the 2,400-event held-out split: **81.5%** (avg confusion cost 0.236 — see `out/eval.json`)
 - ~20% of events are ambiguous enough to need the LLM tier; the other ~80% resolve for free via deterministic rules
 
-**Honest readings of this run (we pre-registered these checks in
-HYPOTHESES.md amendment v2 and report the misses too):**
+**Pre-registered readings of this run** (checks committed in HYPOTHESES.md
+amendment v2 before the run; misses reported as well):**
 
 1. *Rules ≈ WAPAS on recovery rate* (+0.1pp, within noise). The LLM's
    measurable recovery contribution on this merchant mix is small. Its
@@ -198,7 +198,7 @@ tested (`tests/test_policy_gate.py`).
 - **Hash-chained ledger** — `make verify` recomputes the chain; editing
   any row is detectable and localized to the exact entry.
 
-## Honest limits
+## Limitations
 
 - ₹ figures are **simulated** — from a documented response model
   (`wapas/response_model.py`), not real transactions. Production path:
@@ -208,13 +208,13 @@ tested (`tests/test_policy_gate.py`).
 - No real customer data anywhere in this repo.
 - `--live` mode exists but is not required or exercised by `make all`.
 
-## Roadmap (not built — cut deliberately for time, listed honestly)
+## Roadmap
 
 - `make sensitivity`: sweep the response-model assumptions and report the
   break-even point where WAPAS stops beating Floor.
 - Real Razorpay **test-mode** executor backend (Orders / Payment Links /
-  Refunds) for a live-money-link demo on camera.
-- Streamlit dashboard (live ₹ counter, case-file timeline, chaos toggle,
-  kill switch).
-- Read-only natural-language explainer over the ledger.
+  Refunds) for a live-money integration demo.
+- Cure-matrix recalibration against live merchant outcomes, then re-ranking
+  of LLM candidates in-sim (see `LIVE_RUN.md`, section 5).
+- GitHub Actions CI wiring `make all` into every push.
 - CI workflow wiring `make all` into GitHub Actions on every push.
