@@ -448,6 +448,18 @@ CSS_PLAY = """
 """
 st.markdown(CSS + CSS_PLAY, unsafe_allow_html=True)
 
+FORCE_SIDEBAR = """
+<style>
+[data-testid="stSidebar"], [class*="stSidebarCollapsed-"] {
+  display: flex !important; visibility: visible !important; opacity: 1 !important;
+  min-width: 265px !important; width: 265px !important; max-width: 265px !important;
+  transform: none !important; position: relative !important;
+}
+[data-testid="stSidebarCollapseButton"] { display: none !important; }
+</style>
+"""
+st.markdown(FORCE_SIDEBAR, unsafe_allow_html=True)
+
 
 # ---------- loaders ----------
 @st.cache_data(show_spinner=False)
