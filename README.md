@@ -1,6 +1,6 @@
-# WAPAS — AI Revenue Recovery (Razorpay Buildathon, Track 03)
+# WAPAS - AI Revenue Recovery 
 
-वापस (wapas) = "back." Diagnoses **why** a payment/subscription/checkout
+WAPAS Diagnoses **why** a payment/subscription/checkout
 event is at risk before acting, executes the cheapest bounded recovery
 behind a 100%-deterministic policy gate, and proves — Control vs Floor
 (Razorpay's own published playbook) vs Rules-only vs WAPAS vs Oracle
