@@ -115,7 +115,7 @@ python3 scripts/run_batch.py --live
 Every response gets cached, so the second run onward is offline again
 regardless of the flag.
 
-## Dashboard (optional UI layer)
+## Dashboard 
 
 The engine is a CLI/experiment system; the dashboard is a read-only command
 center over its artifacts — plus two SAFE live labs (the tamper lab forges a
@@ -125,6 +125,8 @@ simulation through the real gate and pulls the switch mid-flight):
 ```bash
 pip install streamlit --break-system-packages   # the only extra dependency
 make dash                                        # → http://localhost:8501
+
+python3 -m streamlit run dashboard/app.py --server.address 0.0.0.0 --server.port 8501
 ```
 
 - **Mission Control** — the staircase chart, stats (p-values, power, ceiling
